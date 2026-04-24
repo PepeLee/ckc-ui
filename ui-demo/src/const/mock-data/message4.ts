@@ -1,4 +1,4 @@
-export const meassage4 = [
+export const message = [
   {
     "type": "thinking",
     "traceId": "traceId_US6N9n",

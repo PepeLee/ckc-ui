@@ -8,7 +8,7 @@
   import { ref, onMounted } from 'vue';
   import CkcAnswer from '../../../src/components/CkcAnswer/index.ts';
   import type { Message } from '../../../src/components/types/message';
-  import { meassage2 } from '../const/mock-data/message2';
+  import { message } from '../const/mock-data/message4';
   import { setCustomComponents } from 'markstream-vue';
   import CustomComp from '../components/customComp.vue';
 
@@ -20,8 +20,8 @@
   onMounted(() => {
     let index = 0;
     const addMessage = () => {
-      if (index < meassage2.length) {
-        messages.value.push(meassage2[index] as Message);
+      if (index < message.length) {
+        messages.value.push(message[index] as Message);
         index++;
         setTimeout(addMessage, 50); // 每秒添加一条消息，模拟流式返回
       }
