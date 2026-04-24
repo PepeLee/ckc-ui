@@ -2,13 +2,19 @@ import { ref} from 'vue';
 import { MessageType, type Message, type MessageViewInfo } from '../types/message';
 
 export function useMessageView() {
-  const currentMeassageViewInfo = ref<MessageViewInfo[]>([
-    {
-      isExpanded: true,
-      messageGroupInfo: [
-      ]
+    const currentMeassageViewInfo = ref<MessageViewInfo[]>([
+        {
+        isExpanded: true,
+        messageGroupInfo: [
+        ]
+        }
+    ]);
+    const mergingMessage = (message: Message) => { 
+        return {
+            ...message,
+            thinkingIsExpanded: true
+        }
     }
-  ]);
     const handleData = (message: Message) => {
     // 安全保护，避免空消息导致异常
     if (!message) {
@@ -26,7 +32,7 @@ export function useMessageView() {
 
     // 如果当前组为空，则直接将新消息添加到当前组
     if (!previousMessage) {
-      lastItemMessageGroupInfo.push({ ...message });
+      lastItemMessageGroupInfo.push(mergingMessage(message));
       return;
     }
 
@@ -47,7 +53,8 @@ export function useMessageView() {
       previousMessage.type === MessageType.THINKING &&
       message.type === MessageType.ANSWER
     ) {
-      lastItemMessageGroupInfo.push({ ...message });
+      previousMessage.thinkingIsExpanded = false;
+      lastItemMessageGroupInfo.push(mergingMessage(message));
       return;
     }
 
@@ -55,7 +62,7 @@ export function useMessageView() {
     lastMeassageViewInfo.isExpanded = false;
     currentMeassageViewInfo.value.push({
       isExpanded: true,
-      messageGroupInfo: [{ ...message }]
+      messageGroupInfo: [mergingMessage(message)]
     });
   }
   return { currentMeassageViewInfo, handleData };
