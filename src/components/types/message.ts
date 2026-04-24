@@ -20,6 +20,11 @@ export interface Message {
     content: string;
 }
 
-export interface MessageViewInfo extends Message {
+export interface MessageForView extends Message {
+    // todo 增加显示需要的字段
+}
 
+export interface MessageViewInfo {
+    isExpanded: boolean; // 是否展开
+    messageGroupInfo: MessageForView[]; // 消息组信息
 }
