@@ -23,7 +23,7 @@
       if (index < message.length) {
         messages.value.push(message[index] as Message);
         index++;
-        setTimeout(addMessage, 50); // 每秒添加一条消息，模拟流式返回
+        setTimeout(addMessage, 200); // 每秒添加一条消息，模拟流式返回
       }
     };
     addMessage();

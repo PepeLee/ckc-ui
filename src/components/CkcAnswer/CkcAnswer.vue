@@ -4,12 +4,19 @@
     <template v-if="meassageGroupView.isExpanded">  
       <div v-for="message in meassageGroupView.messageGroupInfo">
         <template v-if="message.thinkingIsExpanded">
-          {{ message.type }} -- {{ message.thinkingIsExpanded }}
-          <MarkdownRender 
-            :content= message.content 
-            :custom-html-tags="prop.customHtmlTags" 
-            :loading="true"
-            :custom-id="prop.renderCustomId" />
+          <CkcAnswerThinking 
+            v-if="message.type === MessageType.THINKING"
+            :message="message.content" 
+            :renderCustomId="prop.renderCustomId" 
+            :customHtmlTags="prop.customHtmlTags" /> 
+          <CkcAnswerToolUse
+            v-if="message.type === MessageType.TOOL_USE"
+            :message="message.content" />
+          <CkcAnswerContent
+            v-if="message.type === MessageType.ANSWER"
+            :message="message.content"
+            :renderCustomId="prop.renderCustomId"
+            :customHtmlTags="prop.customHtmlTags" />
         </template>
       </div>
     </template>
@@ -20,9 +27,11 @@
 <script setup lang="ts">
   import { watch } from 'vue';
   import type { CkcAnswerProps } from '../types/ckc-answer-props';
-  import { MarkdownRender } from 'markstream-vue';
-  import { MessageType, type MessageForView, type MessageViewInfo } from '../types/message';
+  import { MessageType, type MessageViewInfo } from '../types/message';
   import { useMessageView } from '../composables/useMessageView';
+  import CkcAnswerThinking from './CkcAnswerThinking.vue';
+  import CkcAnswerToolUse from './CkcAnswerToolUse.vue';
+  import CkcAnswerContent from './CkcAnswerContent.vue';
   const prop = defineProps<CkcAnswerProps>();
   const { currentMeassageViewInfo, handleData } = useMessageView();
 
