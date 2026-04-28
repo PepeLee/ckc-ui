@@ -1,26 +1,25 @@
-import { ref} from 'vue';
-import { MessageType, type Message, type MessageViewInfo } from '../types/message';
+import { ref } from "vue";
+import { MessageType, type Message, type MessageViewInfo } from "../types/message";
 
 export function useMessageView() {
-    const currentMeassageViewInfo = ref<MessageViewInfo[]>([
-        {
-        isExpanded: true,
-        messageGroupInfo: [
-        ]
-        }
-    ]);
-    const mergingMessage = (message: Message) => { 
-        return {
-            ...message,
-            thinkingIsExpanded: true
-        }
+  const currentMeassageViewInfo = ref<MessageViewInfo[]>([
+    {
+      isExpanded: true,
+      messageGroupInfo: [],
+    },
+  ]);
+  const mergingMessage = (message: Message) => {
+    return {
+      ...message,
+      thinkingIsExpanded: true
     }
-    const handleData = (message: Message) => {
+  }
+  const handleData = (message: Message) => {
     // 安全保护，避免空消息导致异常
     if (!message) {
       return;
     }
-    if (message.type === MessageType.END) {
+    if ([MessageType.END,MessageType.HEART,MessageType.TOOL_RESULT].some(t=> t === message.type)) {
       return;
     }
     // 获取当前显示组的最后一项，如果不存在则创建默认组
