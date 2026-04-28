@@ -1,28 +1,30 @@
 <template>
-  <div v-for="meassageGroupView in currentMeassageViewInfo" >
-    <div><button @click="toggleFold(meassageGroupView)">group折叠</button></div>
-    <template v-if="meassageGroupView.isExpanded">  
-      <div v-for="message in meassageGroupView.messageGroupInfo">
-          <template v-if="message.thinkingIsExpanded">
-            <CkcAnswerThinking 
-              v-if="message.type === MessageType.THINKING" 
-              :message="message.content"
-              :renderCustomId="prop.renderCustomId" 
-              :customHtmlTags="prop.customHtmlTags" />
-            <CkcAnswerToolUse 
-              v-if="message.type === MessageType.TOOL_USE" 
-              :message="message.content" />
-            <CkcAnswerContent 
-              v-if="message.type === MessageType.ANSWER" 
-              :message="message.content"
-              :renderCustomId="prop.renderCustomId" 
-              :customHtmlTags="prop.customHtmlTags" />
-          </template>
-        </div>
+  <template v-for="meassageGroupView in currentMeassageViewInfo">
+    <div  v-if="meassageGroupView.messageGroupInfo.length > 0">
+      <div><button @click="toggleFold(meassageGroupView)">group折叠</button></div>
+      <template v-if="meassageGroupView.isExpanded">  
+        <div v-for="message in meassageGroupView.messageGroupInfo">
+            <template v-if="message.thinkingIsExpanded">
+              <CkcAnswerThinking 
+                v-if="message.type === MessageType.THINKING" 
+                :message="message.content"
+                :renderCustomId="prop.renderCustomId" 
+                :customHtmlTags="prop.customHtmlTags" />
+              <CkcAnswerToolUse 
+                v-if="message.type === MessageType.TOOL_USE" 
+                :message="message.content" />
+              <CkcAnswerContent 
+                v-if="message.type === MessageType.ANSWER" 
+                :message="message.content"
+                :renderCustomId="prop.renderCustomId" 
+                :customHtmlTags="prop.customHtmlTags" />
+            </template>
+          </div>
       </template>
       <hr />
     </div>
   </template>
+</template>
 
 <script setup lang="ts">
 import { watch } from 'vue';
