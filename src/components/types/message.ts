@@ -10,7 +10,8 @@ export const MessageType = {
     TOOL_USE_SILENT: 'tool_use_silent',
     TOOL_RESULT: 'tool_result',
     PING: 'ping',
-    END: 'end'
+    END: 'end',
+    HEART: 'heart'
 } as const;
 // 每条消息的原始结构
 export interface Message {
