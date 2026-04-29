@@ -13,6 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "json5": "^2.2.3",
     "markstream-vue": "0.0.13-beta.4",
     "vue": "^3.5.32"
   },

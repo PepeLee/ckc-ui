@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      json5:
+        specifier: ^2.2.3
+        version: 2.2.3
       markstream-vue:
         specifier: 0.0.13-beta.4
         version: 0.0.13-beta.4(vue@3.5.33(typescript@5.9.3))
@@ -582,6 +585,11 @@ packages:
 
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
+
+  json5@2.2.3:
+    resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
+    engines: {node: '>=6'}
+    hasBin: true
 
   jsonfile@6.2.1:
     resolution: {integrity: sha512-zwOTdL3rFQ/lRdBnntKVOX6k5cKJwEc1HdilT71BWEu7J41gXIB2MRp+vxduPSwZJPWBxEzv4yH1wYLJGUHX4Q==}
@@ -1419,6 +1427,8 @@ snapshots:
   jju@1.4.0: {}
 
   json-schema-traverse@1.0.0: {}
+
+  json5@2.2.3: {}
 
   jsonfile@6.2.1:
     dependencies:

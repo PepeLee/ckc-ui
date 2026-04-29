@@ -13,6 +13,7 @@
 
   const formattedJson = computed(() => {
     try {
+        console.log(json5.parse(prop.message))
       return json5.parse(prop.message);
     } catch {
       return null;

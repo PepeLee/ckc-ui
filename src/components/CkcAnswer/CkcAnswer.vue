@@ -1,7 +1,9 @@
 <template>
-  <template v-for="meassageGroupView in currentMeassageViewInfo">
+  <template v-for="(meassageGroupView, index) in currentMeassageViewInfo" :key="index">
     <div  v-if="meassageGroupView.messageGroupInfo.length > 0">
-      <div><button @click="toggleFold(meassageGroupView)">group折叠</button></div>
+      <CkcAnswerThinkingHead 
+        :meassageGroupView="meassageGroupView" 
+        :currentMeassageViewInfo="currentMeassageViewInfo" />
       <template v-if="meassageGroupView.isExpanded">  
         <div v-for="message in meassageGroupView.messageGroupInfo">
             <template v-if="message.thinkingIsExpanded">
@@ -13,6 +15,9 @@
               <CkcAnswerToolUse 
                 v-if="message.type === MessageType.TOOL_USE" 
                 :message="message.content" />
+              <CkcAnswerToolUseSilent
+                v-if="message.type === MessageType.TOOL_USE_SILENT"
+                :message="message.content" />
               <CkcAnswerContent 
                 v-if="message.type === MessageType.ANSWER" 
                 :message="message.content"
@@ -21,7 +26,6 @@
             </template>
           </div>
       </template>
-      <hr />
     </div>
   </template>
 </template>
@@ -29,38 +33,15 @@
 <script setup lang="ts">
 import { watch } from 'vue';
 import type { CkcAnswerProps } from '../types/ckc-answer-props';
-import { MessageType, type MessageViewInfo } from '../types/message';
+import { MessageType } from '../types/message';
 import { useMessageView } from '../composables/useMessageView';
 import CkcAnswerThinking from './CkcAnswerThinking.vue';
 import CkcAnswerToolUse from './CkcAnswerToolUse.vue';
+import CkcAnswerToolUseSilent from './CkcAnswerToolUseSilent.vue';
 import CkcAnswerContent from './CkcAnswerContent.vue';
+import CkcAnswerThinkingHead from './CkcAnswerThinkingHead.vue';
 const prop = defineProps<CkcAnswerProps>();
 const { currentMeassageViewInfo, handleData } = useMessageView();
-
-const toggleFold = (messageGroupView: MessageViewInfo) => {
-  const groupIndex = currentMeassageViewInfo.value.indexOf(messageGroupView);
-  if (groupIndex < 0) {
-    return;
-  }
-
-  const isLastGroup = groupIndex === currentMeassageViewInfo.value.length - 1;
-  const nextGroupExpandState = !messageGroupView.isExpanded;
-  const thinkingMessage = messageGroupView.messageGroupInfo.find(
-      (item) => item.type === MessageType.THINKING
-  );
-
-  // 非最后一个历史组：切换组展开状态，并同步 thinking 消息的折叠状态
-  if (!isLastGroup) {
-    messageGroupView.isExpanded = nextGroupExpandState;
-  }
-
-  // 最后一个组：保留组状态，仅切换思考消息的展开状态
-  if (thinkingMessage) {
-    thinkingMessage.thinkingIsExpanded = isLastGroup
-      ? !thinkingMessage.thinkingIsExpanded
-      : nextGroupExpandState;
-  }
-}
 
 
 watch(() => prop.messages.length, (val) => {
@@ -68,8 +49,10 @@ watch(() => prop.messages.length, (val) => {
     return;
   }
   handleData(prop.messages[val - 1]);
-  // console.log('currentMeassageViewInfo', currentMeassageViewInfo.value)
+  console.log('currentMeassageViewInfo', currentMeassageViewInfo.value)
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+
+</style>

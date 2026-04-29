@@ -1,7 +1,7 @@
 <template>
   <div
+    class="ckc-ui-think-main"
     ref="scrollContainer"
-    class="thinking-container"
     @scroll="handleScroll"
   >
     <MarkdownRender
@@ -64,9 +64,12 @@ onMounted(async () => {
 </script>
 
 <style lang="scss">
-.thinking-container {
+@use "../../styles/index.scss" as *;
+
+.#{$ckcUiPrefix}-think-main {
   max-height: 120px;
   overflow-y: auto;
   word-break: break-word;
+  @include thinkStyle;
 }
 </style>

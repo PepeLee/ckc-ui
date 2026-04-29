@@ -1,0 +1,10 @@
+$ckcUiPrefix: "ckc-ui";
+$thinkBackgroundColor: #F7F8FA;
+$contentFontColor: #17204D;
+
+@mixin thinkStyle {
+  font-size: 13px;
+  color: #7E849F;
+  background-color: $thinkBackgroundColor;
+  padding: 8px;
+}

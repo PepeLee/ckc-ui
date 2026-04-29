@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ckc-ui-content">
     <MarkdownRender 
         :content= prop.message 
         :custom-html-tags="prop.customHtmlTags" 
@@ -18,5 +18,11 @@
 </script>
 
 <style lang="scss">
+@use "../../styles/index.scss" as *;
 
+.#{$ckcUiPrefix}-content {
+    font-size: 14px;
+    color: $contentFontColor;
+    line-height: 24px;
+}
 </style>

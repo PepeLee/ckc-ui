@@ -9,6 +9,7 @@ export const MessageType = {
     TOOL_USE: 'tool_use',
     TOOL_USE_SILENT: 'tool_use_silent',
     TOOL_RESULT: 'tool_result',
+    TOOL_RESULT_SILENT: 'tool_result_silent',
     PING: 'ping',
     END: 'end',
     HEART: 'heart'
