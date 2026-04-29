@@ -4,9 +4,9 @@
       <CkcAnswerThinkingHead 
         :meassageGroupView="meassageGroupView" 
         :currentMeassageViewInfo="currentMeassageViewInfo" />
-      <template v-if="meassageGroupView.isExpanded">  
+      <div v-show="meassageGroupView.isExpanded">  
         <div v-for="message in meassageGroupView.messageGroupInfo">
-            <template v-if="message.thinkingIsExpanded">
+            <div v-show="message.thinkingIsExpanded">
               <CkcAnswerThinking 
                 v-if="message.type === MessageType.THINKING" 
                 :message="message.content"
@@ -23,9 +23,9 @@
                 :message="message.content"
                 :renderCustomId="prop.renderCustomId" 
                 :customHtmlTags="prop.customHtmlTags" />
-            </template>
+            </div>
           </div>
-      </template>
+        </div>
     </div>
   </template>
 </template>

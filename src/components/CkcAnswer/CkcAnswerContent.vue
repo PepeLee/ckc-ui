@@ -24,5 +24,8 @@
     font-size: 14px;
     color: $contentFontColor;
     line-height: 24px;
+    .markstream-vue {
+        --ms-text-body: 14px;
+    }
 }
 </style>

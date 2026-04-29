@@ -71,5 +71,8 @@ onMounted(async () => {
   overflow-y: auto;
   word-break: break-word;
   @include thinkStyle;
+  .markstream-vue {
+    --ms-text-body: 13px;
+  }
 }
 </style>

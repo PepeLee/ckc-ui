@@ -1,3 +1,4 @@
+@import 'markstream-vue/index.css';
 $ckcUiPrefix: "ckc-ui";
 $thinkBackgroundColor: #F7F8FA;
 $contentFontColor: #17204D;
@@ -8,3 +9,33 @@ $contentFontColor: #17204D;
   background-color: $thinkBackgroundColor;
   padding: 8px;
 }
+
+  .markstream-vue {
+    --ms-flow-hr-y: 8px;
+    --ms-leading-h3: 1.5;
+    --ms-flow-table-y: 8px;
+    // margin-top: var(--ms-flow-heading-3-mt);
+    // margin-bottom: var(--ms-flow-heading-3-mb);
+    --ms-text-body: 14px;
+    --ms-text-h1: 30px;
+    --ms-text-h2: 24px;
+    --ms-text-h3: 20px;
+    --ms-text-h4: 18px;
+    --ms-text-h5: 16px;
+    --ms-text-h6: 14px;
+
+    --ms-flow-heading-1-mt: 0;
+    --ms-flow-heading-1-mb: 12px;
+    --ms-flow-heading-2-mt: 0;
+    --ms-flow-heading-2-mb: 10px;
+    --ms-flow-heading-3-mt: 0;
+    --ms-flow-heading-3-mb: 8px;
+    --ms-flow-heading-4-mt: 0;
+    --ms-flow-heading-4-mb: 6px;
+    --ms-flow-heading-5-mt: 0;
+    --ms-flow-heading-5-mb: 6px;
+    --ms-flow-heading-6-mt: 0;
+    --ms-flow-heading-6-mb: 4px;
+    // 段落 上下间距
+    --ms-flow-paragraph-y: 10px;
+  }

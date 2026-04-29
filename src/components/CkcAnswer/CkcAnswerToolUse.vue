@@ -1,5 +1,5 @@
 <template>
-  <div v-if="formattedJson && formattedJson.name">
+  <div class="ckc-ui-tool" v-if="formattedJson && formattedJson.name">
     {{  formattedJson?.name }}
   </div>
 </template>
@@ -21,5 +21,12 @@
 </script>
 
 <style lang="scss">
+@use "../../styles/index.scss" as *;
 
+.#{$ckcUiPrefix}-tool {
+    font-size: 14px;
+    color: #17204D;
+    margin: 10px 0;;
+
+}
 </style>
