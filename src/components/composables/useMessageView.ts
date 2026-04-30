@@ -2,7 +2,9 @@ import { ref } from "vue";
 import { MessageType, type Message, type MessageForView, type MessageViewInfo } from "../types/message";
 
 export function useMessageView() {
-  const currentMeassageViewInfo = ref<MessageViewInfo[]>([]);
+  const currentMeassageViewInfo = ref<MessageViewInfo[]>([]); // 当前展示的消息分组信息，每个分组包含多条消息和分组状态
+  const recommendations = ref<string[]>([]); // 推荐消息内容，单独提取出来方便展示组件使用
+  const end = ref(false);
   const mergingMessage = (message: Message) : MessageForView => {
     return {
       ...message,
@@ -23,6 +25,14 @@ export function useMessageView() {
     if (!message) {
       return;
     }
+    if (message.type === MessageType.END || message.endFlag) {
+      end.value = true;
+    }
+    // 提取推荐问题内容，单独处理后直接返回，不进入消息分组逻辑
+    if (message.type === MessageType.RECOMMENDATIONS) {
+      recommendations.value = message.content as string[];
+      return;
+    }
     if (!message.type) {
       return;
     }
@@ -36,7 +46,6 @@ export function useMessageView() {
       MessageType.TOOL_RESULT_SILENT,
       MessageType.PING,
       MessageType.ALL_ANSWER,
-      MessageType.RECOMMENDATIONS
     ].some(t=> t === message.type)) {
       return;
     }
@@ -109,5 +118,5 @@ export function useMessageView() {
       messageGroupInfo: [mergingMessage(message)]
     });
   }
-  return { currentMeassageViewInfo, handleData };
+  return { currentMeassageViewInfo, recommendations, end, handleData };
 }

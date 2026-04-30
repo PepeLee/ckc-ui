@@ -24,13 +24,17 @@
                   v-if="message.type === MessageType.ANSWER" 
                   :message="message.content as string"
                   :renderCustomId="prop.renderCustomId" 
-                  :customHtmlTags="prop.customHtmlTags" />
+                  :customHtmlTags="prop.customHtmlTags" />  
               </div>
             </div>
           </div>
       </template>
     </div>
   </template>
+  <div v-if="end">
+    action
+  </div>
+  <CkcAnswerRecommendations v-if="recommendations.length > 0" :message="recommendations"  />
 </template>
 
 <script setup lang="ts">
@@ -44,8 +48,9 @@ import CkcAnswerToolUseSilent from './CkcAnswerToolUseSilent.vue';
 import CkcAnswerContent from './CkcAnswerContent.vue';
 import CkcAnswerThinkingHead from './CkcAnswerThinkingHead.vue';
 import CkcAnswerDocuments from './CkcAnswerDocuments.vue';
+import CkcAnswerRecommendations from './CkcAnswerRecommendations.vue';
 const prop = defineProps<CkcAnswerProps>();
-const { currentMeassageViewInfo, handleData } = useMessageView();
+const { currentMeassageViewInfo,recommendations,end, handleData } = useMessageView();
 
 
 watch(() => prop.messages.length, (val) => {

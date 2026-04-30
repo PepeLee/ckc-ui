@@ -7132,7 +7132,7 @@ export const message = [
     "type": "recommendations",
     "traceId": "traceId_QXp9PY",
     "sessionId": "lipeipei-013_DEF001002_20260429143014228",
-    "content": [],
+    "content": ['平安2024年报分析', '太保2023年报分析', '财务年报解读指南'],
     "created_at": 0,
     "position": 0
   },

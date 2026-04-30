@@ -24,7 +24,8 @@ export interface Message {
     type: typeof MessageType[keyof typeof MessageType] | undefined;
     traceId: string;
     sessionId: string;
-    content: string | Document | undefined;
+    content: string | Document | string[] | undefined;
+    endFlag?: boolean; // 用于标识消息是否为结束标志
 }
 
 export interface MessageForView extends Message {
