@@ -35,5 +35,6 @@ export interface MessageForView extends Message {
 export interface MessageViewInfo {
     isExpanded: boolean; // 是否展开:控制当前消息组的折叠显示状态
     isDocumentGroup?: boolean; // 是否为文档消息组
+    thinkState?: 'loading' | 'success' | 'break'; // 仅针对 type 为 THINKING 的消息，表示其思考状态
     messageGroupInfo: MessageForView[]; // 消息组信息
 }

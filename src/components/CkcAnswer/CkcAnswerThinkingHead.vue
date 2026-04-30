@@ -1,7 +1,7 @@
 <template>
   <div v-if="isShow" class="ckc-ui-think-head">
     <img class="ckc-ui-think-img" src="../../assets/imgs/deepThink.gif" alt="avatar" />
-    执行完成
+    执行完成({{ meassageGroupView.thinkState }})
     <button class="ckc-ui-think-btn" @click="toggleFold(meassageGroupView)">
       <img src="../../assets/imgs/arrow-down.png" alt="avatar" />
     </button>

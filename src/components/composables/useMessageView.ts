@@ -1,14 +1,9 @@
 import { ref } from "vue";
-import { MessageType, type Message, type MessageViewInfo } from "../types/message";
+import { MessageType, type Message, type MessageForView, type MessageViewInfo } from "../types/message";
 
 export function useMessageView() {
-  const currentMeassageViewInfo = ref<MessageViewInfo[]>([
-    {
-      isExpanded: true,
-      messageGroupInfo: [],
-    },
-  ]);
-  const mergingMessage = (message: Message) => {
+  const currentMeassageViewInfo = ref<MessageViewInfo[]>([]);
+  const mergingMessage = (message: Message) : MessageForView => {
     return {
       ...message,
       thinkingIsExpanded: true
@@ -45,6 +40,14 @@ export function useMessageView() {
     ].some(t=> t === message.type)) {
       return;
     }
+    if (currentMeassageViewInfo.value.length === 0) {
+      currentMeassageViewInfo.value.push({
+        isExpanded: true,
+        thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
+        messageGroupInfo: [mergingMessage(message)]
+      });
+      return;
+    }
     // 获取当前显示组的最后一项，如果不存在则创建默认组
     const lastMeassageViewInfo = currentMeassageViewInfo.value[currentMeassageViewInfo.value.length - 1];
     const lastItemMessageGroupInfo = lastMeassageViewInfo.messageGroupInfo;
@@ -76,27 +79,33 @@ export function useMessageView() {
       message.type === MessageType.ANSWER
     ) {
       previousMessage.thinkingIsExpanded = false;
+      lastMeassageViewInfo.thinkState = 'success';
       lastItemMessageGroupInfo.push(mergingMessage(message));
       return;
     }
     lastMeassageViewInfo.isExpanded = false;
-    // 其他情况下，将当前分组折叠，并创建一个新的展开分组用于新消息
+    // 处理折叠逻辑：如果当前消息类型为 TOOL_USE 或 DOCUMENTS，则默认展开；否则默认折叠
     if (lastMeassageViewInfo.messageGroupInfo.length === 1 
       && (lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE 
         || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE_SILENT)
       ) { 
         lastMeassageViewInfo.isExpanded = true;
-      }
-      if (message.type === MessageType.DOCUMENTS) {
-        lastMeassageViewInfo.isExpanded = true;
-      }
+    }
+    if (message.type === MessageType.DOCUMENTS) {
+      lastMeassageViewInfo.isExpanded = true;
+    }
+    // 如果当前消息与上一条消息的 trace/session/type 都一致，并且消息类型为 DOCUMENTS，则将其合并到当前分组中
     if (isSameTrace && isSameSession && isSameType && message.content && message.type === MessageType.DOCUMENTS) {
       lastItemMessageGroupInfo.push(mergingMessage(message));
       return;
     }
+    if (lastMeassageViewInfo.thinkState) {
+      lastMeassageViewInfo.thinkState = 'success';
+    }
     currentMeassageViewInfo.value.push({
       isExpanded: true,
       isDocumentGroup: message.type === MessageType.DOCUMENTS,
+      thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
       messageGroupInfo: [mergingMessage(message)]
     });
   }

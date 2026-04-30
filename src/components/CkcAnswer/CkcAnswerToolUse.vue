@@ -15,6 +15,7 @@
     try {
       return json5.parse(prop.message);
     } catch {
+      console.error('Failed to parse JSON5:', prop.message);
       return null;
     }
   });
