@@ -3,6 +3,12 @@
   "version": "0.1.3",
   "main": "./dist/ckc-ui.mjs",
   "module": "./dist/ckc-ui.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/ckc-ui.mjs",
+      "require": "./dist/ckc-ui.es.js"
+    }
+  },
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
