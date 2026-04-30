@@ -9,19 +9,22 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+import { computed } from 'vue';
 import { MessageType, type MessageViewInfo } from '../types/message';
-  const { meassageGroupView, currentMeassageViewInfo } = defineProps<{
-      meassageGroupView: MessageViewInfo;
-      currentMeassageViewInfo: MessageViewInfo[];
-  }>();
+const { meassageGroupView, currentMeassageViewInfo } = defineProps<{
+    meassageGroupView: MessageViewInfo;
+    currentMeassageViewInfo: MessageViewInfo[];
+}>();
 const toggleFold = (messageGroupView: MessageViewInfo) => {
   const groupIndex = currentMeassageViewInfo.indexOf(messageGroupView);
   if (groupIndex < 0) {
     return;
   }
 
-  const isLastGroup = groupIndex === currentMeassageViewInfo.length - 1;
+  const isLastGroup = (groupIndex === currentMeassageViewInfo.length - 1) 
+                      || (groupIndex === currentMeassageViewInfo.length - 2 
+                          && currentMeassageViewInfo[currentMeassageViewInfo.length - 1].messageGroupInfo[0].type === MessageType.DOCUMENTS
+                        );
   const nextGroupExpandState = !messageGroupView.isExpanded;
   const thinkingMessage = messageGroupView.messageGroupInfo.find(
       (item) => item.type === MessageType.THINKING

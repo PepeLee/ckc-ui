@@ -12,14 +12,19 @@ export const MessageType = {
     TOOL_RESULT_SILENT: 'tool_result_silent',
     PING: 'ping',
     END: 'end',
-    HEART: 'heart'
+    HEART: 'heart',
+    ALL_ANSWER: 'all_answer'
 } as const;
+export interface Document {
+    fileName: string;
+    ossUrl: string;
+}
 // 每条消息的原始结构
 export interface Message {
-    type: typeof MessageType[keyof typeof MessageType];
+    type: typeof MessageType[keyof typeof MessageType] | undefined;
     traceId: string;
     sessionId: string;
-    content: string;
+    content: string | Document | undefined;
 }
 
 export interface MessageForView extends Message {
@@ -29,5 +34,6 @@ export interface MessageForView extends Message {
 
 export interface MessageViewInfo {
     isExpanded: boolean; // 是否展开:控制当前消息组的折叠显示状态
+    isDocumentGroup?: boolean; // 是否为文档消息组
     messageGroupInfo: MessageForView[]; // 消息组信息
 }

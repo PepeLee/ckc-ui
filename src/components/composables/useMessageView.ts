@@ -28,7 +28,21 @@ export function useMessageView() {
     if (!message) {
       return;
     }
-    if ([MessageType.END,MessageType.HEART,MessageType.TOOL_RESULT,MessageType.TOOL_RESULT_SILENT,MessageType.PING].some(t=> t === message.type)) {
+    if (!message.type) {
+      return;
+    }
+    if (message.type === MessageType.ANSWER && !message.content) {
+      return;
+    }
+    if ([
+      MessageType.END,
+      MessageType.HEART,
+      MessageType.TOOL_RESULT,
+      MessageType.TOOL_RESULT_SILENT,
+      MessageType.PING,
+      MessageType.ALL_ANSWER,
+      MessageType.RECOMMENDATIONS
+    ].some(t=> t === message.type)) {
       return;
     }
     // 获取当前显示组的最后一项，如果不存在则创建默认组
@@ -50,7 +64,7 @@ export function useMessageView() {
     const isSameType = previousMessage.type === message.type;
 
     // 只有在 trace/session/type 都一致时，才将内容追加到上一条消息中
-    if (isSameTrace && isSameSession && isSameType) {
+    if (isSameTrace && isSameSession && isSameType && message.content && typeof message.content === 'string') {
       previousMessage.content += message.content;
       return;
     }
@@ -65,17 +79,24 @@ export function useMessageView() {
       lastItemMessageGroupInfo.push(mergingMessage(message));
       return;
     }
-
+    lastMeassageViewInfo.isExpanded = false;
     // 其他情况下，将当前分组折叠，并创建一个新的展开分组用于新消息
     if (lastMeassageViewInfo.messageGroupInfo.length === 1 
-      && (lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE_SILENT)
+      && (lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE 
+        || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE_SILENT)
       ) { 
         lastMeassageViewInfo.isExpanded = true;
-      } else {
-        lastMeassageViewInfo.isExpanded = false;
       }
+      if (message.type === MessageType.DOCUMENTS) {
+        lastMeassageViewInfo.isExpanded = true;
+      }
+    if (isSameTrace && isSameSession && isSameType && message.content && message.type === MessageType.DOCUMENTS) {
+      lastItemMessageGroupInfo.push(mergingMessage(message));
+      return;
+    }
     currentMeassageViewInfo.value.push({
       isExpanded: true,
+      isDocumentGroup: message.type === MessageType.DOCUMENTS,
       messageGroupInfo: [mergingMessage(message)]
     });
   }

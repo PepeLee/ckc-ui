@@ -4,28 +4,31 @@
       <CkcAnswerThinkingHead 
         :meassageGroupView="meassageGroupView" 
         :currentMeassageViewInfo="currentMeassageViewInfo" />
-      <div v-show="meassageGroupView.isExpanded">  
-        <div v-for="message in meassageGroupView.messageGroupInfo">
-            <div v-show="message.thinkingIsExpanded">
-              <CkcAnswerThinking 
-                v-if="message.type === MessageType.THINKING" 
-                :message="message.content"
-                :renderCustomId="prop.renderCustomId" 
-                :customHtmlTags="prop.customHtmlTags" />
-              <CkcAnswerToolUse 
-                v-if="message.type === MessageType.TOOL_USE" 
-                :message="message.content" />
-              <CkcAnswerToolUseSilent
-                v-if="message.type === MessageType.TOOL_USE_SILENT"
-                :message="message.content" />
-              <CkcAnswerContent 
-                v-if="message.type === MessageType.ANSWER" 
-                :message="message.content"
-                :renderCustomId="prop.renderCustomId" 
-                :customHtmlTags="prop.customHtmlTags" />
+      <CkcAnswerDocuments v-if="meassageGroupView.isDocumentGroup" :meassageGroupView="meassageGroupView" />
+      <template v-else>
+        <div v-show="meassageGroupView.isExpanded">  
+          <div v-for="message in meassageGroupView.messageGroupInfo">
+              <div v-show="message.thinkingIsExpanded">
+                <CkcAnswerThinking 
+                  v-if="message.type === MessageType.THINKING" 
+                  :message="message.content as string"
+                  :renderCustomId="prop.renderCustomId" 
+                  :customHtmlTags="prop.customHtmlTags" />
+                <CkcAnswerToolUse 
+                  v-if="message.type === MessageType.TOOL_USE" 
+                  :message="message.content as string" />
+                <CkcAnswerToolUseSilent
+                  v-if="message.type === MessageType.TOOL_USE_SILENT"
+                  :message="message.content as string" />
+                <CkcAnswerContent 
+                  v-if="message.type === MessageType.ANSWER" 
+                  :message="message.content as string"
+                  :renderCustomId="prop.renderCustomId" 
+                  :customHtmlTags="prop.customHtmlTags" />
+              </div>
             </div>
           </div>
-        </div>
+      </template>
     </div>
   </template>
 </template>
@@ -40,6 +43,7 @@ import CkcAnswerToolUse from './CkcAnswerToolUse.vue';
 import CkcAnswerToolUseSilent from './CkcAnswerToolUseSilent.vue';
 import CkcAnswerContent from './CkcAnswerContent.vue';
 import CkcAnswerThinkingHead from './CkcAnswerThinkingHead.vue';
+import CkcAnswerDocuments from './CkcAnswerDocuments.vue';
 const prop = defineProps<CkcAnswerProps>();
 const { currentMeassageViewInfo, handleData } = useMessageView();
 
