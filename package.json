@@ -5,8 +5,14 @@
   "module": "./dist/ckc-ui.es.js",
   "exports": {
     ".": {
-      "import": "./dist/ckc-ui.mjs",
-      "require": "./dist/ckc-ui.es.js"
+      "import": { 
+        "types": "./dist/index.d.ts", 
+        "default": "./dist/ckc-ui.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/ckc-ui.es.js"
+      }
     }
   },
   "types": "./dist/index.d.ts",
