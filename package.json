@@ -1,6 +1,6 @@
 {
   "name": "ckc-ui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "./dist/ckc-ui.mjs",
   "module": "./dist/ckc-ui.es.js",
   "types": "./dist/index.d.ts",
