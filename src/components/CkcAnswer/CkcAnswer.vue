@@ -31,10 +31,10 @@
       </template>
     </div>
   </template>
-  <div v-if="end">
-    action
+  <div v-if="end && $slots.actions">
+    <slot name="actions" :messageViewInfo="currentMeassageViewInfo"></slot>
   </div>
-  <CkcAnswerRecommendations v-if="recommendations.length > 0" :message="recommendations"  />
+  <CkcAnswerRecommendations @clickRecomendation="clickRecomendation" v-if="recommendations.length > 0" :messages="recommendations"  />
 </template>
 
 <script setup lang="ts">
@@ -50,8 +50,14 @@ import CkcAnswerThinkingHead from './CkcAnswerThinkingHead.vue';
 import CkcAnswerDocuments from './CkcAnswerDocuments.vue';
 import CkcAnswerRecommendations from './CkcAnswerRecommendations.vue';
 const prop = defineProps<CkcAnswerProps>();
+const emit = defineEmits<{  
+  (e: 'clickRecomendation', message: string) : void 
+}>();
 const { currentMeassageViewInfo,recommendations,end, handleData } = useMessageView();
 
+function clickRecomendation(message: string) {
+  emit('clickRecomendation', message);
+}
 
 watch(() => prop.messages.length, (val) => {
   if (val <= 0) {

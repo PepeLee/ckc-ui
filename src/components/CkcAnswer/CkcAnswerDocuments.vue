@@ -16,7 +16,12 @@
 
     <div v-if="showMoreButton" class="ckc-ui-documents__more">
       <button type="button" @click="expanded = !expanded">
-        {{ expanded ? '收起' : '展开更多' }}
+        <template v-if="expanded">
+          收起
+        </template>
+        <template v-else>
+          展开全部文档{{ documents.length }}个
+        </template>
       </button>
     </div>
   </div>
@@ -47,7 +52,8 @@ const showMoreButton = computed(() => documents.value.length > 3);
     color: $linkColor;
     font-size: 14px;
     background: #F7F7F7;
-    margin-bottom: 4px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
     cursor: pointer;
     overflow: hidden;
     opacity: 0;
@@ -66,32 +72,29 @@ const showMoreButton = computed(() => documents.value.length > 3);
     }
 
     &--fade-2::after {
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.38);
     }
 
     &--fade-3::after {
-      background: rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.68);
     }
   }
 
   &__more {
     display: flex;
     justify-content: center;
-    margin-top: 8px;
+    margin-top: 4px;
 
     button {
       border: none;
-      background: #ffffff;
-      color: $linkColor;
+      background: transparent;
+      color: #7E849F;
       padding: 6px 12px;
-      border-radius: 4px;
       cursor: pointer;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-      transition: background 0.2s ease, transform 0.2s ease;
-
+      border: none;
+      outline: none;
       &:hover {
-        background: #f2f2f2;
-        transform: translateY(-1px);
+        color: $linkColor;
       }
     }
   }

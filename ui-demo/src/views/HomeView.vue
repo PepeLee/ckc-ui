@@ -1,6 +1,14 @@
 <template>
   <div class="about">
-    <CkcAnswer :messages="messages"  render-custom-id="docs" :custom-html-tags="['custom-data']"></CkcAnswer>
+    <CkcAnswer 
+      :messages="messages"  
+      render-custom-id="docs" 
+      :custom-html-tags="['custom-data']"
+      @click-recomendation="recomendationAsk">
+      <template #actions="actionsProps">
+        <button @click="alterMessages(actionsProps)">清空消息</button>
+      </template>
+    </CkcAnswer>
   </div>
 </template>
 
@@ -8,7 +16,7 @@
   import { ref, onMounted } from 'vue';
   import CkcAnswer from '../../../src/components/CkcAnswer/index.ts';
   import type { Message } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message3';
+  import { message } from '../const/mock-data/message8';
   import { setCustomComponents } from 'markstream-vue';
   import CustomComp from '../components/customComp.vue';
 
@@ -16,7 +24,12 @@
     'custom-data': CustomComp,
   })
   const messages = ref<Message[]>([]);
-
+  function alterMessages(actionsProps: any) {
+    console.log('actionsProps', actionsProps)
+  }
+  function recomendationAsk(message: string) {
+    console.log('recomendationAsk', message)
+  }
   onMounted(() => {
     let index = 0;
     const addMessage = () => {
