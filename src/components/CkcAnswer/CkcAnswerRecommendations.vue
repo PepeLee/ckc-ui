@@ -33,8 +33,8 @@
     align-items: center;
     flex: 0 1 auto;
     border-radius: 8px;
-    height: 34px;
-    padding: 0 12px;
+    // height: 34px;
+    padding: 4px 12px;
     border: 1px solid #E5EAEE;
     font-size: 13px;
     margin-bottom: 8px;
