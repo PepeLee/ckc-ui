@@ -12,6 +12,7 @@
       }"
       :style="{ animationDelay: `${index * 0.05}s` }"
     >
+      <img class="ckc-ui-document--img" :src="getIcon(message.content as unknown as Document)" alt="avatar" />
       {{ (message.content as unknown as Document).fileName }}
     </div>
 
@@ -31,9 +32,49 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { MessageViewInfo, Document } from '../types/message';
+import uploadDefault from '../../assets/imgs/ckcDocuments/upload-default.svg'
+import uploadExcel from '../../assets/imgs/ckcDocuments/upload-excel.svg'
+import uploadImage from '../../assets/imgs/ckcDocuments/upload-image.svg'
+import uploadMarkdown from '../../assets/imgs/ckcDocuments/upload-markdown.svg'
+import uploadPdf from '../../assets/imgs/ckcDocuments/upload-pdf.svg'
+import uploadTxt from '../../assets/imgs/ckcDocuments/upload-txt.svg'
+import uploadWord from '../../assets/imgs/ckcDocuments/upload-word.svg'
+import uploadZip from '../../assets/imgs/ckcDocuments/upload-zip.svg'
+
 const { meassageGroupView } = defineProps<{
   meassageGroupView: MessageViewInfo;
 }>();
+function getIcon(message: Document) {
+  const fileExtension = message.fileName.split('.').pop();
+  switch (fileExtension) {
+    case 'pdf':
+      return uploadPdf;
+    case 'docx':
+    case 'doc':
+    case 'docm':
+    case 'dotx':
+    case 'dotm':
+      return uploadWord;
+    case 'xlsx':
+    case 'xls':
+    case 'xlsm':
+    case 'xltx':
+    case 'xltm':
+      return uploadExcel;
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+      return uploadImage;
+    case 'md':
+      return uploadMarkdown;
+    case 'txt':
+      return uploadTxt;
+    case 'zip':
+      return uploadZip;
+    default:
+      return uploadDefault;
+  }
+}
 
 const expanded = ref(false);
 const documents = computed(() => meassageGroupView.messageGroupInfo || []);
@@ -116,5 +157,15 @@ function clickDocument(message: Document) {
     opacity: 1;
     transform: translateY(0);
   }
+}
+.ckc-ui-document {
+  display: flex;
+  align-items: center;
+}
+.ckc-ui-document--img {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  flex-shrink: 0;
 }
 </style>
