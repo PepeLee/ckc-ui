@@ -46,6 +46,9 @@
     <div v-if="humanConfirmMessage && $slots.confirm">
       <slot name="confirm" :confirmInfo="humanConfirmMessage"></slot>
     </div>
+    <div v-if="taskListMessage && $slots.taskList">
+      <slot name="taskList" :taskListInfo="taskListMessage"></slot>
+    </div>
     <div class="ckc-ui-task-run-tip" v-if="!end && !uploadHeartInfo && prop.messages && prop.messages.length > 0">
       <img class="ckc-ui-task-run-tip-loading" src="../../assets/imgs/loading1.png" alt="avatar" />
       任务执行中...
@@ -87,7 +90,8 @@ const {
   end, 
   handleData, 
   uploadHeartInfo, 
-  humanConfirmMessage 
+  humanConfirmMessage,
+  taskListMessage
 } = useMessageView();
 const lastProcessedIndex = ref(0);
 const lastProcessedHistoryIndex = ref(0);
@@ -106,7 +110,7 @@ const stopChat = () => {
       info.thinkState = 'break';
     }
   });
-  console.log('stopChat called');
+  // console.log('stopChat called');
 }
 defineExpose({
   stopChat

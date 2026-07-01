@@ -13,6 +13,9 @@
         {{ confirmProps.confirmInfo }}
         <button @click="alterMessages(confirmProps)">确认信息</button>
       </template>
+      <template #taskList="taskListProps">
+        {{ taskListProps.taskListInfo }}
+      </template>
       <template #actions="actionsProps">
         <button @click="alterMessages(actionsProps)">清空消息</button>
       </template>
@@ -25,7 +28,7 @@
   import { ref, onMounted } from 'vue';
   import CkcAnswer from '../../../src/components/CkcAnswer/index.ts';
   import type { Message, Document } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message-confirm';
+  import { message } from '../const/mock-data/message-task-list';
   import { setCustomComponents } from 'markstream-vue';
   import CustomComp from '../components/customComp.vue';
 
