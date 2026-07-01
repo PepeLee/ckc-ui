@@ -43,6 +43,9 @@
         </template>
       </div>
     </template>
+    <div v-if="humanConfirmMessage && $slots.confirm">
+      <slot name="confirm" :confirmInfo="humanConfirmMessage"></slot>
+    </div>
     <div class="ckc-ui-task-run-tip" v-if="!end && !uploadHeartInfo && prop.messages && prop.messages.length > 0">
       <img class="ckc-ui-task-run-tip-loading" src="../../assets/imgs/loading1.png" alt="avatar" />
       任务执行中...
@@ -78,7 +81,14 @@ const emit = defineEmits<{
   (e: 'clickRecomendation', message: string) : void 
   (e: 'clickDocument', message: Document) : void 
 }>();
-const { currentMeassageViewInfo,recommendations,end, handleData, uploadHeartInfo } = useMessageView();
+const { 
+  currentMeassageViewInfo,
+  recommendations,
+  end, 
+  handleData, 
+  uploadHeartInfo, 
+  humanConfirmMessage 
+} = useMessageView();
 const lastProcessedIndex = ref(0);
 const lastProcessedHistoryIndex = ref(0);
 

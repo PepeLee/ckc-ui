@@ -18,6 +18,7 @@ export const MessageType = {
     // CHATFLOW_RESULT: 'chatflow_result',
     // WORKFLOW_RESULT: 'workflow_result',
     // AGENT_THINKING: 'agent_thinking',
+    HUMAN_CONFIRM: 'human_confirm', // 用户确认消息类型
 } as const;
 export interface Document {
     fileName: string;

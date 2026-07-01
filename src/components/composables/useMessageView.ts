@@ -9,6 +9,7 @@ export function useMessageView() {
     task: string;
     percent: string;
   }>();
+  const humanConfirmMessage = ref<Message | null>(null); // 用于存储 human_confirm 类型的消息，方便后续处理
   const mergingMessage = (message: Message) : MessageForView => {
     return {
       ...message,
@@ -49,6 +50,11 @@ export function useMessageView() {
     }
     if (message.type === MessageType.EXCEPTION) {
       end.value = true;
+    }
+    // 如果是 human_confirm 类型的消息，直接返回，不进入消息分组逻辑
+    if (message.type === MessageType.HUMAN_CONFIRM) {
+      humanConfirmMessage.value = message;
+      return;
     }
     if(message.type === MessageType.HEART_UPLOAD) {
       try {
@@ -164,5 +170,5 @@ export function useMessageView() {
       messageGroupInfo: [mergingMessage(message)]
     });
   }
-  return { currentMeassageViewInfo, recommendations, end, handleData, uploadHeartInfo };
+  return { currentMeassageViewInfo, recommendations, end, handleData, uploadHeartInfo, humanConfirmMessage };
 }
