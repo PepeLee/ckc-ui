@@ -1,12 +1,12 @@
 <template>
   <div class="about">
+    <!-- useSource="mobile" -->
     <CkcAnswer 
       ref="ckcAnswerRef"
       :messages="messages"  
       :historyMessages="historyMessages"
       render-custom-id="docs" 
       :custom-html-tags="['custom-data']"
-      useSource="mobile"
       @click-recomendation="recomendationAsk"
       @click-document="documentClick">
       <template #actions="actionsProps">
@@ -21,7 +21,7 @@
   import { ref, onMounted } from 'vue';
   import CkcAnswer from '../../../src/components/CkcAnswer/index.ts';
   import type { Message, Document } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message7';
+  import { message } from '../const/mock-data/message6';
   import { setCustomComponents } from 'markstream-vue';
   import CustomComp from '../components/customComp.vue';
 
