@@ -1,8 +1,6 @@
 <template>
   <div class="ckc-ui-upload-heart" v-if="uploadHeartInfo && currentMeassageViewInfo.length === 0">
-    <img class="ckc-ui-loading" src="../../assets/imgs/loading.gif" alt="avatar" />
-    正在执行：{{ uploadHeartInfo.task }} 
-    <span style="margin-left: 20px;">进度： {{ uploadHeartInfo.percent }}</span>
+    {{ uploadHeartInfo.task }} 
   </div>
   <div>
     <div v-if="showProgressHead" class="ckc-ui-progress-head" @click="triggerProgress()">
@@ -50,7 +48,7 @@
         </template>
       </div>
     </template>
-    <div class="ckc-ui-task-run-tip" v-if="!end && !uploadHeartInfo && prop.messages && prop.messages.length > 0">
+    <div class="ckc-ui-task-run-tip" v-if="!end && prop.messages && prop.messages.length > 0">
       <img class="ckc-ui-task-run-tip-loading" src="../../assets/imgs/loading1.png" alt="avatar" />
       任务执行中...
     </div>

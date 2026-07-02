@@ -14,10 +14,11 @@ export const MessageType = {
     END: 'end',
     // HEART: 'heart',
     // ALL_ANSWER: 'all_answer',
-    HEART_UPLOAD: 'heart_upload',
+    // HEART_UPLOAD: 'heart_upload',
     // CHATFLOW_RESULT: 'chatflow_result',
     // WORKFLOW_RESULT: 'workflow_result',
     // AGENT_THINKING: 'agent_thinking',
+    ANALYSIS: 'analysis',
 } as const;
 export interface Document {
     fileName: string;

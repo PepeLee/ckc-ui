@@ -9,7 +9,6 @@ export function useMessageView() {
   const hasThinkingMessage = ref(false);
   const uploadHeartInfo = ref<{
     task: string;
-    percent: string;
   }>();
   const mergingMessage = (message: Message) : MessageForView => {
     return {
@@ -55,12 +54,10 @@ export function useMessageView() {
     if (message.type === MessageType.THINKING) {
       hasThinkingMessage.value = true;
     }
-    if(message.type === MessageType.HEART_UPLOAD) {
+    if(message.type === MessageType.ANALYSIS) {
       try {
-        const contentObj = JSON.parse(message.content as string);
         uploadHeartInfo.value = {
-          task: contentObj.task,
-          percent: contentObj.percent
+          task: message.content as string,
         };
       } catch (e) {
         uploadHeartInfo.value = undefined;
