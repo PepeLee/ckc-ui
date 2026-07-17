@@ -5,9 +5,10 @@ export function useMessageView() {
   const currentMeassageViewInfo = ref<MessageViewInfo[]>([]); // 当前展示的消息分组信息，每个分组包含多条消息和分组状态
   const recommendations = ref<string[]>([]); // 推荐消息内容，单独提取出来方便展示组件使用
   const end = ref(false);
+  const progressShow = ref(true);
+  const hasThinkingMessage = ref(false);
   const uploadHeartInfo = ref<{
     task: string;
-    percent: string;
   }>();
   const humanConfirmMessage = ref<Message | null>(null); // 用于存储 human_confirm 类型的消息，方便后续处理
   const taskListMessage = ref<Message | null>(null); // 用于存储 task_list 类型的消息，方便后续处理
@@ -62,12 +63,13 @@ export function useMessageView() {
       taskListMessage.value = message;
       return;
     }
-    if(message.type === MessageType.HEART_UPLOAD) {
+    if (message.type === MessageType.THINKING) {
+      hasThinkingMessage.value = true;
+    }
+    if(message.type === MessageType.ANALYSIS) {
       try {
-        const contentObj = JSON.parse(message.content as string);
         uploadHeartInfo.value = {
-          task: contentObj.task,
-          percent: contentObj.percent
+          task: message.content as string,
         };
       } catch (e) {
         uploadHeartInfo.value = undefined;
@@ -153,7 +155,9 @@ export function useMessageView() {
     // 处理折叠逻辑：如果当前消息类型为 TOOL_USE 或 DOCUMENTS，则默认展开；否则默认折叠
     if (lastMeassageViewInfo.messageGroupInfo.length === 1 
       && (lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE 
-        || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE_SILENT)
+        || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE_SILENT
+        || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.ANSWER
+        || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.EXCEPTION)
       ) { 
         lastMeassageViewInfo.isExpanded = true;
     }
@@ -168,13 +172,16 @@ export function useMessageView() {
     if (lastMeassageViewInfo.thinkState) {
       lastMeassageViewInfo.thinkState = 'success';
     }
+    // 当下一个消息（不是推荐问或者文档）插入到currentMeassageViewInfo时，上一条currentMeassageViewInfo 被判定为执行过程··
+    if (message.type !== MessageType.DOCUMENTS) {
+      lastMeassageViewInfo.isProgress = true;
+    }
     currentMeassageViewInfo.value.push({
       isExpanded: true,
       isDocumentGroup: message.type === MessageType.DOCUMENTS,
       thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
-      // toolUseComplete: message.type === MessageType.TOOL_USE || message.type === MessageType.TOOL_USE_SILENT ? false : undefined,
       messageGroupInfo: [mergingMessage(message)]
     });
   }
-  return { currentMeassageViewInfo, recommendations, end, handleData, uploadHeartInfo, humanConfirmMessage, taskListMessage };
+  return { currentMeassageViewInfo, recommendations, end, handleData, uploadHeartInfo, humanConfirmMessage, taskListMessage, progressShow, hasThinkingMessage };
 }

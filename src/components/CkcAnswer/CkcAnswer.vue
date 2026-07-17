@@ -1,10 +1,15 @@
 <template>
   <div class="ckc-ui-upload-heart" v-if="uploadHeartInfo && currentMeassageViewInfo.length === 0">
-    <img class="ckc-ui-loading" src="../../assets/imgs/loading.gif" alt="avatar" />
-    正在执行：{{ uploadHeartInfo.task }} 
-    <span style="margin-left: 20px;">进度： {{ uploadHeartInfo.percent }}</span>
+    {{ uploadHeartInfo.task }} 
   </div>
   <div>
+    <div v-if="showProgressHead" class="ckc-ui-progress-head" @click="triggerProgress()">
+      已完成
+      <button class="ckc-ui-progress-btn">
+        <img v-if="progressShow" src="../../assets/imgs/arrow-down.png" alt="avatar" />
+        <img v-else src="../../assets/imgs/arrow-right.png" alt="avatar" />
+      </button>
+    </div>
     <template v-for="(meassageGroupView, index) in currentMeassageViewInfo" :key="index">
       <div  v-if="meassageGroupView.messageGroupInfo.length > 0">
         <CkcAnswerThinkingHead 
@@ -49,7 +54,7 @@
     <div v-if="taskListMessage && $slots.taskList">
       <slot name="taskList" :taskListInfo="taskListMessage"></slot>
     </div>
-    <div class="ckc-ui-task-run-tip" v-if="!end && !uploadHeartInfo && prop.messages && prop.messages.length > 0">
+    <div class="ckc-ui-task-run-tip" v-if="!end && prop.messages && prop.messages.length > 0">
       <img class="ckc-ui-task-run-tip-loading" src="../../assets/imgs/loading1.png" alt="avatar" />
       任务执行中...
     </div>
@@ -61,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, provide } from 'vue';
+import { watch, ref, provide, computed } from 'vue';
 import type { CkcAnswerProps } from '../types/ckc-answer-props';
 import { MessageType, type Document } from '../types/message';
 import { useMessageView } from '../composables/useMessageView';
@@ -89,7 +94,7 @@ const {
   recommendations,
   end, 
   handleData, 
-  uploadHeartInfo, 
+  uploadHeartInfo, progressShow, hasThinkingMessage, 
   humanConfirmMessage,
   taskListMessage
 } = useMessageView();
@@ -112,10 +117,36 @@ const stopChat = () => {
   });
   // console.log('stopChat called');
 }
+const triggerProgress = () => {
+  progressShow.value = !progressShow.value;
+  triggerfoldProgress(progressShow.value);
+};
+// 折叠执行过程
+const triggerfoldProgress = (show: boolean) => {
+  if (currentMeassageViewInfo.value.length > 0) {
+    currentMeassageViewInfo.value.forEach(info => {
+      if (info.isProgress) {
+        info.isExpanded = show
+      }
+    });
+  }
+}
+
 defineExpose({
   stopChat
 })
 
+const showProgressHead = computed(() => {
+  return !hasThinkingMessage.value && end.value && currentMeassageViewInfo.value.some(info => info.isProgress);
+})
+
+watch(end, (newVal) => {
+  if (newVal && !hasThinkingMessage.value) {
+    console.log('end changed', newVal);
+    progressShow.value = false;
+    triggerfoldProgress(progressShow.value)
+  }
+})
 watch(() => prop.messages, (newVal) => {
   if (newVal && newVal.length > lastProcessedIndex.value) {
     for (let i = lastProcessedIndex.value; i < newVal.length; i++) {
@@ -123,7 +154,7 @@ watch(() => prop.messages, (newVal) => {
     }
     lastProcessedIndex.value = newVal.length;
   }
-  // console.log('prop.messages', currentMeassageViewInfo.value);
+  console.log('prop.messages', currentMeassageViewInfo.value);
 }, { deep: true, immediate: true });
 
 watch(() => prop.historyMessages, (newVal) => {
@@ -164,6 +195,28 @@ watch(() => prop.historyMessages, (newVal) => {
     width: 20px;
     height: 20px;
     animation: ckc-ui-spin 1s linear infinite;
+  }
+  .#{$ckcUiPrefix}-progress-head {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    color: #7E849F;
+    cursor: pointer;
+  }
+  .#{$ckcUiPrefix}-progress-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
   }
 
   @keyframes ckc-ui-spin {

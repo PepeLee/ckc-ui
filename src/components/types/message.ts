@@ -14,12 +14,13 @@ export const MessageType = {
     END: 'end',
     // HEART: 'heart',
     // ALL_ANSWER: 'all_answer',
-    HEART_UPLOAD: 'heart_upload',
+    // HEART_UPLOAD: 'heart_upload',
     // CHATFLOW_RESULT: 'chatflow_result',
     // WORKFLOW_RESULT: 'workflow_result',
     // AGENT_THINKING: 'agent_thinking',
     HUMAN_CONFIRM: 'human_confirm', // 用户确认消息类型
-    TASK_LIST: 'task_list' // 任务列表消息类型
+    TASK_LIST: 'task_list', // 任务列表消息类型
+    ANALYSIS: 'analysis',
 } as const;
 export interface Document {
     fileName: string;
@@ -44,5 +45,6 @@ export interface MessageViewInfo {
     isDocumentGroup?: boolean; // 是否为文档消息组
     thinkState?: 'loading' | 'success' | 'break'; // 仅针对 type 为 THINKING 的消息，表示其思考状态
     toolUseComplete?: boolean; // 仅针对 TOOL_USE 或 TOOL_USE_SILENT 消息，表示工具调用是否已完成
+    isProgress?: boolean; // 判断是否为执行过程
     messageGroupInfo: MessageForView[]; // 消息组信息
 }

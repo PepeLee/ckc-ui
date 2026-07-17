@@ -1,4 +1,4 @@
-export const message = [
+const rawMessage = [
     {
         type: "thinking",
         traceId: "traceId_DDoj7-",
@@ -6872,6 +6872,102 @@ export const message = [
         created_at: 0,
         position: 0,
     },
+  {
+    "type": "documents",
+    "traceId": "traceId_QXp9PY",
+    "sessionId": "lipeipei-013_DEF001002_20260429143014228",
+    "content": {
+      "fileName": "平安表格_1.pdf",
+      "ossUrl": "http://lf18kg.oss-cn-cd-tbcd-d01-a.ops.cloud-dev.group.cpic.com/fe9c92ef-6d18-4368-8020-6912a9828d2c-1774518410898.pdf?Expires=4887844215&OSSAccessKeyId=nGGPRckjpE9tcVch&Signature=BQdBag%2FQ%2Bu8NXfVwCNSRVB7Dcjs%3D"
+    },
+    "created_at": 0,
+    "position": 0
+  },
+  {
+    "type": "documents",
+    "traceId": "traceId_QXp9PY",
+    "sessionId": "lipeipei-013_DEF001002_20260429143014228",
+    "content": {
+      "fileName": "太保表格_2.docx",
+      "ossUrl": "http://lf18kg.oss-cn-cd-tbcd-d01-a.ops.cloud-dev.group.cpic.com/25be79f1-c51f-4194-ac91-af05073148bb-1774518414634.pdf?Expires=4887844215&OSSAccessKeyId=nGGPRckjpE9tcVch&Signature=p%2F16gpEStp%2FI%2BwsA9YFsjc9zSq0%3D"
+    },
+    "created_at": 0,
+    "position": 0
+  },
+  {
+    "type": "documents",
+    "traceId": "traceId_QXp9PY",
+    "sessionId": "lipeipei-013_DEF001002_20260429143014228",
+    "content": {
+      "fileName": "平安表格3.xlsx",
+      "ossUrl": "http://lf18kg.oss-cn-cd-tbcd-d01-a.ops.cloud-dev.group.cpic.com/55a3f108-2fcc-4840-b176-4d9b216b14d3-1774518408864.pdf?Expires=4887844215&OSSAccessKeyId=nGGPRckjpE9tcVch&Signature=9DWnhqsKBdUbAipnW63qNbPmnZk%3D"
+    },
+    "created_at": 0,
+    "position": 0
+  },
+    {
+    "type": "documents",
+    "traceId": "traceId_QXp9PY",
+    "sessionId": "lipeipei-013_DEF001002_20260429143014228",
+    "content": {
+      "fileName": "平安表格4.jpg",
+      "ossUrl": "http://lf18kg.oss-cn-cd-tbcd-d01-a.ops.cloud-dev.group.cpic.com/55a3f108-2fcc-4840-b176-4d9b216b14d3-1774518408864.pdf?Expires=4887844215&OSSAccessKeyId=nGGPRckjpE9tcVch&Signature=9DWnhqsKBdUbAipnW63qNbPmnZk%3D"
+    },
+    "created_at": 0,
+    "position": 0
+  },
+    {
+    "type": "documents",
+    "traceId": "traceId_QXp9PY",
+    "sessionId": "lipeipei-013_DEF001002_20260429143014228",
+    "content": {
+      "fileName": "平安表格5.md",
+      "ossUrl": "http://lf18kg.oss-cn-cd-tbcd-d01-a.ops.cloud-dev.group.cpic.com/55a3f108-2fcc-4840-b176-4d9b216b14d3-1774518408864.pdf?Expires=4887844215&OSSAccessKeyId=nGGPRckjpE9tcVch&Signature=9DWnhqsKBdUbAipnW63qNbPmnZk%3D"
+    },
+    "created_at": 0,
+    "position": 0
+  },
+    {
+    "type": "documents",
+    "traceId": "traceId_QXp9PY",
+    "sessionId": "lipeipei-013_DEF001002_20260429143014228",
+    "content": {
+      "fileName": "平安表格6平安表格6平安表格6平安表格6平安表格6平安表格6平安表格6平安表格6平安表格6平安表格6平安表格6平安表格6平安表格6.txt",
+      "ossUrl": "http://lf18kg.oss-cn-cd-tbcd-d01-a.ops.cloud-dev.group.cpic.com/55a3f108-2fcc-4840-b176-4d9b216b14d3-1774518408864.pdf?Expires=4887844215&OSSAccessKeyId=nGGPRckjpE9tcVch&Signature=9DWnhqsKBdUbAipnW63qNbPmnZk%3D"
+    },
+    "created_at": 0,
+    "position": 0
+  },
+  {
+    "type": "documents",
+    "traceId": "traceId_QXp9PY",
+    "sessionId": "lipeipei-013_DEF001002_20260429143014228",
+    "content": {
+      "fileName": "平安表格7平安表格7平安表格7平安表格7平安表格7平安表格7平安表格7平安表格7平安表格7平安表格7平安表格7平安表格7.zip",
+      "ossUrl": "http://lf18kg.oss-cn-cd-tbcd-d01-a.ops.cloud-dev.group.cpic.com/55a3f108-2fcc-4840-b176-4d9b216b14d3-1774518408864.pdf?Expires=4887844215&OSSAccessKeyId=nGGPRckjpE9tcVch&Signature=9DWnhqsKBdUbAipnW63qNbPmnZk%3D"
+    },
+    "created_at": 0,
+    "position": 0
+  },
+  {
+    "type": "documents",
+    "traceId": "traceId_QXp9PY",
+    "sessionId": "lipeipei-013_DEF001002_20260429143014228",
+    "content": {
+      "fileName": "平安表格8平安表格8平安表格8平安表格8平安表格8平安表格8平安表格8.msg",
+      "ossUrl": "http://lf18kg.oss-cn-cd-tbcd-d01-a.ops.cloud-dev.group.cpic.com/55a3f108-2fcc-4840-b176-4d9b216b14d3-1774518408864.pdf?Expires=4887844215&OSSAccessKeyId=nGGPRckjpE9tcVch&Signature=9DWnhqsKBdUbAipnW63qNbPmnZk%3D"
+    },
+    "created_at": 0,
+    "position": 0
+  },
+  {
+    "type": "recommendations",
+    "traceId": "traceId_QXp9PY",
+    "sessionId": "lipeipei-013_DEF001002_20260429143014228",
+    "content": ['平安2024年报分析', '太保2023年报分析', '财务年报解读指南'],
+    "created_at": 0,
+    "position": 0
+  },
 
     {
         type: "end",
@@ -6884,3 +6980,6 @@ export const message = [
         position: 0,
     },
 ];
+
+export const message = rawMessage.filter((m) => m.type !== "thinking");
+// export const message = rawMessage

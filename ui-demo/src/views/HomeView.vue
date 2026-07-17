@@ -1,12 +1,12 @@
 <template>
   <div class="about">
+    <!-- useSource="mobile" -->
     <CkcAnswer 
       ref="ckcAnswerRef"
       :messages="messages"  
       :historyMessages="historyMessages"
       render-custom-id="docs" 
       :custom-html-tags="['custom-data']"
-      useSource="mobile"
       @click-recomendation="recomendationAsk"
       @click-document="documentClick">
       <template #confirm="confirmProps">
