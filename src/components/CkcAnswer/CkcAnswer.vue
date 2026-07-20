@@ -3,8 +3,8 @@
     {{ uploadHeartInfo.task }} 
   </div>
   <div>
-    <div v-if="showProgressHead" class="ckc-ui-progress-head" @click="triggerProgress()">
-      已完成
+    <div v-if="end" class="ckc-ui-progress-head" @click="triggerProgress()">
+      所有执行过程
       <button class="ckc-ui-progress-btn">
         <img v-if="progressShow" src="../../assets/imgs/arrow-down.png" alt="avatar" />
         <img v-else src="../../assets/imgs/arrow-right.png" alt="avatar" />
@@ -12,6 +12,9 @@
     </div>
     <template v-for="(meassageGroupView, index) in currentMeassageViewInfo" :key="index">
       <div  v-if="meassageGroupView.messageGroupInfo.length > 0">
+        <div>
+          {{ meassageGroupView.groupTitle }}
+        </div>
         <CkcAnswerThinkingHead 
           :messageGroupView="meassageGroupView" 
           :currentMessageViewInfo="currentMeassageViewInfo" 
@@ -94,7 +97,8 @@ const {
   recommendations,
   end, 
   handleData, 
-  uploadHeartInfo, progressShow, hasThinkingMessage, 
+  uploadHeartInfo, 
+  progressShow,
   humanConfirmMessage,
   taskListMessage
 } = useMessageView();
@@ -137,14 +141,14 @@ defineExpose({
 })
 
 const showProgressHead = computed(() => {
-  return !hasThinkingMessage.value && end.value && currentMeassageViewInfo.value.some(info => info.isProgress);
+  return end.value && currentMeassageViewInfo.value.some(info => info.isProgress);
 })
 
 watch(end, (newVal) => {
-  if (newVal && !hasThinkingMessage.value) {
+  if (newVal) {
     console.log('end changed', newVal);
     progressShow.value = false;
-    triggerfoldProgress(progressShow.value)
+    // triggerfoldProgress(progressShow.value)
   }
 })
 watch(() => prop.messages, (newVal) => {

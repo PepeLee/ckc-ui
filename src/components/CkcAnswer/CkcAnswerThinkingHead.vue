@@ -10,15 +10,15 @@
         <MobileDeepThink v-if="isSuccess"></MobileDeepThink>
       </template>
       <template v-if="loading">
-        执行中...
+        思考中...
         <!-- 思考中... -->
       </template>
       <template v-if="isSuccess">
-        执行完成
+        已深度思考
         <!-- 已深度思考 -->
       </template>
       <template v-if="isBreak">
-        执行终止
+        思考终止
         <!-- 已终止 -->
       </template>
     </div>
@@ -55,23 +55,28 @@ const buttonExpanded = computed(() =>
   isLastGroup.value ? !!thinkingMessage.value?.thinkingIsExpanded : messageGroupView.isExpanded
 );
 const toggleFold = (messageGroupView: MessageViewInfo) => {
-  const groupIndex = currentMessageViewInfo.indexOf(messageGroupView);
-  if (groupIndex < 0) {
+  if (!thinkingMessage.value) {
     return;
   }
-  const nextGroupExpandState = !messageGroupView.isExpanded;
+  thinkingMessage.value.thinkingIsExpanded = !thinkingMessage.value.thinkingIsExpanded;
 
-  // 非最后一个历史组：切换组展开状态，并同步 thinking 消息的折叠状态
-  if (!isLastGroup.value) {
-    messageGroupView.isExpanded = nextGroupExpandState;
-  }
+  // const groupIndex = currentMessageViewInfo.indexOf(messageGroupView);
+  // if (groupIndex < 0) {
+  //   return;
+  // }
+  // const nextGroupExpandState = !messageGroupView.isExpanded;
 
-  // 最后一个组：保留组状态，仅切换思考消息的展开状态
-  if (thinkingMessage.value) {
-    thinkingMessage.value.thinkingIsExpanded = isLastGroup.value
-      ? !thinkingMessage.value.thinkingIsExpanded
-      : nextGroupExpandState;
-  }
+  // // 非最后一个历史组：切换组展开状态，并同步 thinking 消息的折叠状态
+  // if (!isLastGroup.value) {
+  //   messageGroupView.isExpanded = nextGroupExpandState;
+  // }
+
+  // // 最后一个组：保留组状态，仅切换思考消息的展开状态
+  // if (thinkingMessage.value) {
+  //   thinkingMessage.value.thinkingIsExpanded = isLastGroup.value
+  //     ? !thinkingMessage.value.thinkingIsExpanded
+  //     : nextGroupExpandState;
+  // }
 }
 const isShow = computed(() => {
   const thinkingMessage = messageGroupView.messageGroupInfo.find(

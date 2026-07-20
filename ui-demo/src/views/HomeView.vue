@@ -28,7 +28,7 @@
   import { ref, onMounted } from 'vue';
   import CkcAnswer from '../../../src/components/CkcAnswer/index.ts';
   import type { Message, Document } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message-task-list';
+  import { message } from '../const/mock-data/message-new';
   import { setCustomComponents } from 'markstream-vue';
   import CustomComp from '../components/customComp.vue';
 
@@ -56,7 +56,7 @@
       if (index < message.length) {
         messages.value.push(message[index] as Message);
         index++;
-        setTimeout(addMessage, 20); // 每200毫秒添加一条消息，模拟流式返回
+        setTimeout(addMessage, 200); // 每200毫秒添加一条消息，模拟流式返回
       }
     };
     addMessage();

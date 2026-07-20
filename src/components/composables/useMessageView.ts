@@ -1,12 +1,12 @@
 import { ref } from "vue";
 import { MessageType, type Message, type MessageForView, type MessageViewInfo } from "../types/message";
+ import json5 from 'json5';
 
 export function useMessageView() {
   const currentMeassageViewInfo = ref<MessageViewInfo[]>([]); // 当前展示的消息分组信息，每个分组包含多条消息和分组状态
   const recommendations = ref<string[]>([]); // 推荐消息内容，单独提取出来方便展示组件使用
   const end = ref(false);
   const progressShow = ref(true);
-  const hasThinkingMessage = ref(false);
   const uploadHeartInfo = ref<{
     task: string;
   }>();
@@ -32,11 +32,16 @@ export function useMessageView() {
     if (!message) {
       return;
     }
-    if (message.type === MessageType.END || message.endFlag) {
-      end.value = true;
+    if (!message.type) {
       return;
     }
-    if (!message.type) {
+    // 如果类型不在前端处理的类型范围内，则直接忽略该消息
+    if (!Object.values(MessageType).includes(message.type)) {
+      return;
+    }
+    // 对话结束，end标志变为true，后续消息不再处理
+    if (message.type === MessageType.END || message.endFlag) {
+      end.value = true;
       return;
     }
     // 提取推荐问题内容，单独处理后直接返回，不进入消息分组逻辑
@@ -44,9 +49,7 @@ export function useMessageView() {
       recommendations.value = message.content as string[];
       return;
     }
-    if (!Object.values(MessageType).includes(message.type)) {
-      return;
-    }
+    // 如果是 ANSWER 类型的消息，但内容为空，则直接返回，不进入消息分组逻辑
     if (message.type === MessageType.ANSWER && !message.content) {
       return;
     }
@@ -63,9 +66,6 @@ export function useMessageView() {
       taskListMessage.value = message;
       return;
     }
-    if (message.type === MessageType.THINKING) {
-      hasThinkingMessage.value = true;
-    }
     if(message.type === MessageType.ANALYSIS) {
       try {
         uploadHeartInfo.value = {
@@ -78,6 +78,8 @@ export function useMessageView() {
       return;
     }
     uploadHeartInfo.value = undefined;
+
+    // todo: 处理执行工具状态
     // 如果MessageType 是TOOL_RESULT，找到最近一条如果MessageType 为TOOL_USE 的消息的messageGroupInfo，toolUseComplete状态设置为 true
     if(message.type === MessageType.TOOL_RESULT || message.type === MessageType.TOOL_RESULT_SILENT) {
       const filterType = message.type === MessageType.TOOL_RESULT ? MessageType.TOOL_USE : MessageType.TOOL_USE_SILENT;
@@ -95,32 +97,19 @@ export function useMessageView() {
       }
       return;
     }
-    // if ([
-    //   MessageType.END,
-    //   MessageType.HEART,
-    //   MessageType.TOOL_RESULT,
-    //   MessageType.TOOL_RESULT_SILENT,
-    //   MessageType.PING,
-    //   MessageType.ALL_ANSWER,
-    //   MessageType.CHATFLOW_RESULT,
-    //   MessageType.WORKFLOW_RESULT,
-    //   MessageType.AGENT_THINKING
-    // ].some(t=> t === message.type)) {
-    //   return;
-    // }
     if (currentMeassageViewInfo.value.length === 0) {
       currentMeassageViewInfo.value.push({
         isExpanded: true,
+        groupTitle: '',
         thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
-        messageGroupInfo: [mergingMessage(message)]
+        messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: message.type !== MessageType.THINKING }]
       });
       return;
     }
-    // 获取当前显示组的最后一项，如果不存在则创建默认组
+   
     const lastMeassageViewInfo = currentMeassageViewInfo.value[currentMeassageViewInfo.value.length - 1];
     const lastItemMessageGroupInfo = lastMeassageViewInfo.messageGroupInfo;
 
-    // 获取当前组中的最后一条消息，用于判断是否可合并
     const previousMessage = lastItemMessageGroupInfo[lastItemMessageGroupInfo.length - 1];
 
     // 如果当前组为空，则直接将新消息添加到当前组
@@ -139,36 +128,86 @@ export function useMessageView() {
       previousMessage.content += message.content;
       return;
     }
-
-    // THINKING 后紧跟 ANSWER 时，保持在同一个展开分组内展示
-    if (
-      lastItemMessageGroupInfo.length === 1 &&
-      previousMessage.type === MessageType.THINKING &&
-      message.type === MessageType.ANSWER
-    ) {
-      previousMessage.thinkingIsExpanded = false;
-      lastMeassageViewInfo.thinkState = 'success';
+    // 如果当前消息与上一条消息的 trace/session/type 都一致，并且消息类型为 DOCUMENTS，则将其合并到当前分组中
+    if (isSameTrace && isSameSession && isSameType && message.content && message.type === MessageType.DOCUMENTS) {
       lastItemMessageGroupInfo.push(mergingMessage(message));
       return;
     }
-    lastMeassageViewInfo.isExpanded = false;
+    // 如果上一条消息不是 THINKING 类型，则直接将新消息添加到当前组
+    if (message.type !== MessageType.THINKING && message.type !== MessageType.DOCUMENTS) {
+      lastItemMessageGroupInfo.push(mergingMessage(message));
+      
+    }
+    // 如果上一条消息是 THINKING 类型，则将新消息作为一个新的分组添加到 currentMeassageViewInfo 中，并将上一条 THINKING 消息的 thinkState 设置为 success
+    if (message.type === MessageType.THINKING) {
+      currentMeassageViewInfo.value.push({
+        isExpanded: true,
+        groupTitle: '',
+        thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
+        messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: false }]
+      });
+      let title = '';
+      let toolName = '';
+      if (lastMeassageViewInfo.messageGroupInfo.length > 0) {
+        const answerMsgIdex = lastMeassageViewInfo.messageGroupInfo.findIndex((mgx) => {
+          return mgx.type === MessageType.ANSWER
+        })
+        if (answerMsgIdex >= 0) {
+          const answerMsg = lastMeassageViewInfo.messageGroupInfo[answerMsgIdex];
+          title = answerMsg?.content as string || '';
+          lastMeassageViewInfo.messageGroupInfo = lastMeassageViewInfo.messageGroupInfo.filter((_, idx) => idx !== answerMsgIdex)
+        } else {
+          const toolMsgIdx = lastMeassageViewInfo.messageGroupInfo.findIndex((mgx) => {
+            return mgx.type === MessageType.TOOL_USE || mgx.type === MessageType.TOOL_USE_SILENT
+          })
+          if (toolMsgIdx >= 0) {
+            const toolMsg = lastMeassageViewInfo.messageGroupInfo[toolMsgIdx];
+            try {
+              toolName = json5.parse(toolMsg?.content as string).name || '';
+            } catch {
+              toolName = '';
+            }
+            title = toolName;
+            lastMeassageViewInfo.messageGroupInfo = lastMeassageViewInfo.messageGroupInfo.filter((_, idx) => idx !== toolMsgIdx)
+          }
+        }
+        lastMeassageViewInfo.groupTitle = title;
+      }
+      
+    }
+    if (message.type === MessageType.DOCUMENTS) {
+      currentMeassageViewInfo.value.push({
+        isExpanded: true,
+        groupTitle: '',
+        isDocumentGroup: message.type === MessageType.DOCUMENTS,
+        messageGroupInfo: [mergingMessage(message)]
+      });
+    }
+    // 
+    // if (
+    //   lastItemMessageGroupInfo.length === 1 &&
+    //   previousMessage.type === MessageType.THINKING &&
+    //   message.type === MessageType.ANSWER
+    // ) {
+    //   previousMessage.thinkingIsExpanded = true;
+    //   lastMeassageViewInfo.thinkState = 'success';
+    //   lastItemMessageGroupInfo.push(mergingMessage(message));
+    //   return;
+    // }
+    lastMeassageViewInfo.isExpanded = true;
     // 处理折叠逻辑：如果当前消息类型为 TOOL_USE 或 DOCUMENTS，则默认展开；否则默认折叠
-    if (lastMeassageViewInfo.messageGroupInfo.length === 1 
-      && (lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE 
-        || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.TOOL_USE_SILENT
-        || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.ANSWER
-        || lastMeassageViewInfo.messageGroupInfo[0].type === MessageType.EXCEPTION)
+    if (lastItemMessageGroupInfo.length === 1 
+      && (lastItemMessageGroupInfo[0].type === MessageType.TOOL_USE 
+        || lastItemMessageGroupInfo[0].type === MessageType.TOOL_USE_SILENT
+        || lastItemMessageGroupInfo[0].type === MessageType.ANSWER
+        || lastItemMessageGroupInfo[0].type === MessageType.EXCEPTION)
       ) { 
         lastMeassageViewInfo.isExpanded = true;
     }
     if (message.type === MessageType.DOCUMENTS) {
       lastMeassageViewInfo.isExpanded = true;
     }
-    // 如果当前消息与上一条消息的 trace/session/type 都一致，并且消息类型为 DOCUMENTS，则将其合并到当前分组中
-    if (isSameTrace && isSameSession && isSameType && message.content && message.type === MessageType.DOCUMENTS) {
-      lastItemMessageGroupInfo.push(mergingMessage(message));
-      return;
-    }
+
     if (lastMeassageViewInfo.thinkState) {
       lastMeassageViewInfo.thinkState = 'success';
     }
@@ -176,12 +215,12 @@ export function useMessageView() {
     if (message.type !== MessageType.DOCUMENTS) {
       lastMeassageViewInfo.isProgress = true;
     }
-    currentMeassageViewInfo.value.push({
-      isExpanded: true,
-      isDocumentGroup: message.type === MessageType.DOCUMENTS,
-      thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
-      messageGroupInfo: [mergingMessage(message)]
-    });
+    // currentMeassageViewInfo.value.push({
+    //   isExpanded: true,
+    //   isDocumentGroup: message.type === MessageType.DOCUMENTS,
+    //   thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
+    //   messageGroupInfo: [mergingMessage(message)]
+    // });
   }
-  return { currentMeassageViewInfo, recommendations, end, handleData, uploadHeartInfo, humanConfirmMessage, taskListMessage, progressShow, hasThinkingMessage };
+  return { currentMeassageViewInfo, recommendations, end, handleData, uploadHeartInfo, humanConfirmMessage, taskListMessage, progressShow };
 }

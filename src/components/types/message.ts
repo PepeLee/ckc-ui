@@ -46,5 +46,6 @@ export interface MessageViewInfo {
     thinkState?: 'loading' | 'success' | 'break'; // 仅针对 type 为 THINKING 的消息，表示其思考状态
     toolUseComplete?: boolean; // 仅针对 TOOL_USE 或 TOOL_USE_SILENT 消息，表示工具调用是否已完成
     isProgress?: boolean; // 判断是否为执行过程
+    groupTitle: string; // 消息组标题
     messageGroupInfo: MessageForView[]; // 消息组信息
 }
