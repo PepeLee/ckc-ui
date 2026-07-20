@@ -172,6 +172,8 @@ export function useMessageView() {
           }
         }
         lastMeassageViewInfo.groupTitle = title;
+        lastMeassageViewInfo.isProgress = true;
+        // lastMeassageViewInfo.isExpanded = false;
       }
       
     }
@@ -194,7 +196,7 @@ export function useMessageView() {
     //   lastItemMessageGroupInfo.push(mergingMessage(message));
     //   return;
     // }
-    lastMeassageViewInfo.isExpanded = true;
+    // lastMeassageViewInfo.isExpanded = true;
     // 处理折叠逻辑：如果当前消息类型为 TOOL_USE 或 DOCUMENTS，则默认展开；否则默认折叠
     if (lastItemMessageGroupInfo.length === 1 
       && (lastItemMessageGroupInfo[0].type === MessageType.TOOL_USE 
@@ -212,9 +214,9 @@ export function useMessageView() {
       lastMeassageViewInfo.thinkState = 'success';
     }
     // 当下一个消息（不是推荐问或者文档）插入到currentMeassageViewInfo时，上一条currentMeassageViewInfo 被判定为执行过程··
-    if (message.type !== MessageType.DOCUMENTS) {
-      lastMeassageViewInfo.isProgress = true;
-    }
+    // if (message.type !== MessageType.DOCUMENTS) {
+    //   lastMeassageViewInfo.isProgress = true;
+    // }
     // currentMeassageViewInfo.value.push({
     //   isExpanded: true,
     //   isDocumentGroup: message.type === MessageType.DOCUMENTS,

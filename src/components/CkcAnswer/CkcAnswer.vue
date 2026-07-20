@@ -12,7 +12,7 @@
     </div>
     <template v-for="(meassageGroupView, index) in currentMeassageViewInfo" :key="index">
       <div  v-if="meassageGroupView.messageGroupInfo.length > 0">
-        <div>
+        <div class="ckc-ui-group-title" :class="[{ 'isProgress': meassageGroupView.isProgress }]">
           {{ meassageGroupView.groupTitle }}
         </div>
         <CkcAnswerThinkingHead 
@@ -194,6 +194,15 @@ watch(() => prop.historyMessages, (newVal) => {
     letter-spacing: 0.03em;
     font-weight: 500;
     animation: ckc-ui-pulse 1.4s ease-in-out infinite;
+  }
+  .#{$ckcUiPrefix}-group-title {
+    font-size: 14px;
+    color: #7E849F;
+    margin: 10px 0;
+    &.isProgress {
+      // color: red;
+      font-weight: 500;
+    }
   }
   .#{$ckcUiPrefix}-task-run-tip-loading {
     width: 20px;

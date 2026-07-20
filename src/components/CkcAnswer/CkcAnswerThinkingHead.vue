@@ -43,16 +43,16 @@ const { messageGroupView, currentMessageViewInfo } = defineProps<{
 const thinkingMessage = computed(() =>
   messageGroupView.messageGroupInfo.find((item) => item.type === MessageType.THINKING)
 );
-const isLastGroup = computed(() => {
-  const groupIndex = currentMessageViewInfo.indexOf(messageGroupView);
-  return (
-    groupIndex === currentMessageViewInfo.length - 1 ||
-    (groupIndex === currentMessageViewInfo.length - 2 &&
-      currentMessageViewInfo[currentMessageViewInfo.length - 1].messageGroupInfo[0].type === MessageType.DOCUMENTS)
-  );
-});
+// const isLastGroup = computed(() => {
+//   const groupIndex = currentMessageViewInfo.indexOf(messageGroupView);
+//   return (
+//     groupIndex === currentMessageViewInfo.length - 1 ||
+//     (groupIndex === currentMessageViewInfo.length - 2 &&
+//       currentMessageViewInfo[currentMessageViewInfo.length - 1].messageGroupInfo[0].type === MessageType.DOCUMENTS)
+//   );
+// });
 const buttonExpanded = computed(() =>
-  isLastGroup.value ? !!thinkingMessage.value?.thinkingIsExpanded : messageGroupView.isExpanded
+  !!thinkingMessage.value?.thinkingIsExpanded
 );
 const toggleFold = (messageGroupView: MessageViewInfo) => {
   if (!thinkingMessage.value) {
@@ -101,8 +101,8 @@ const isBreak = computed(() => messageGroupView.thinkState === 'break');
     width: auto;
 
     &.is-expanded {
-      display: flex;
-      width: 100%;
+      // display: flex;
+      // width: 100%;
     }
 
     &.is-mobile {
