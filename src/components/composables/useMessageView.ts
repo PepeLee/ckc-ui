@@ -169,7 +169,7 @@ export function useMessageView() {
         groupTitle: '',
         show: true,
         thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
-        messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: message.type !== MessageType.THINKING }]
+        messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: message.type === MessageType.THINKING }]
       });
       return;
     }
@@ -212,7 +212,7 @@ export function useMessageView() {
         groupTitle: '',
         show: true,
         thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
-        messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: false }]
+        messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: true }]
       });
       // let title = '';
       // let toolName = '';

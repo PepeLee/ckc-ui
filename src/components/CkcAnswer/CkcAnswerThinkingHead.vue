@@ -1,6 +1,6 @@
 <template>
   <div v-if="isShow && messageGroupView.isExpanded" :class="['ckc-ui-think-head', 'is-expanded', { 'is-mobile': useSource !== 'pc' }]">
-    <div class="ckc-ui-think-left">
+    <div class="ckc-ui-think-left" @click="toggleFold()">
       <template v-if="useSource==='pc'">
         <img v-if="loading" class="ckc-ui-think-img" src="../../assets/imgs/deepThink.gif" alt="avatar" />
         <DeepThink v-if="isSuccess"></DeepThink>
@@ -22,7 +22,7 @@
         <!-- 已终止 -->
       </template>
     </div>
-    <button class="ckc-ui-think-btn" @click="toggleFold(messageGroupView)">
+    <button class="ckc-ui-think-btn" @click="toggleFold()">
       <img v-if="buttonExpanded" src="../../assets/imgs/arrow-down.png" alt="avatar" />
       <img v-else src="../../assets/imgs/arrow-right.png" alt="avatar" />
     </button>
@@ -35,7 +35,7 @@ import { MessageType, type MessageViewInfo } from '../types/message';
 import DeepThink from '../svg/deepThink.vue';
 import MobileDeepThink from '../svg/mobileThink.vue';
 
-const { messageGroupView, currentMessageViewInfo } = defineProps<{
+const { messageGroupView } = defineProps<{
     messageGroupView: MessageViewInfo;
     currentMessageViewInfo: MessageViewInfo[];
     useSource: string;
@@ -54,7 +54,7 @@ const thinkingMessage = computed(() =>
 const buttonExpanded = computed(() =>
   !!thinkingMessage.value?.thinkingIsExpanded
 );
-const toggleFold = (messageGroupView: MessageViewInfo) => {
+const toggleFold = () => {
   if (!thinkingMessage.value) {
     return;
   }
@@ -100,21 +100,22 @@ const isBreak = computed(() => messageGroupView.thinkState === 'break');
     flex-wrap: wrap;
     width: auto;
 
-    &.is-expanded {
-      // display: flex;
-      // width: 100%;
-    }
+    // &.is-expanded {
+    //   // display: flex;
+    //   // width: 100%;
+    // }
 
-    &.is-mobile {
-      justify-content: space-between;
-      width: 100%;
-    }
+    // &.is-mobile {
+    //   justify-content: space-between;
+    //   width: 100%;
+    // }
 
     .ckc-ui-think-left {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       min-width: 0;
+      cursor: pointer;
     }
 
     .#{$ckcUiPrefix}-think-img {

@@ -8,6 +8,7 @@
       render-custom-id="docs" 
       :custom-html-tags="['custom-data']"
       @click-recomendation="recomendationAsk"
+      useSource="mobile"
       @click-document="documentClick">
       <template #confirm="confirmProps">
         {{ confirmProps.confirmInfo }}
@@ -56,7 +57,7 @@
       if (index < message.length) {
         messages.value.push(message[index] as Message);
         index++;
-        setTimeout(addMessage, 20); // 每200毫秒添加一条消息，模拟流式返回
+        setTimeout(addMessage, 500); // 每200毫秒添加一条消息，模拟流式返回
       }
     };
     addMessage();
