@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isShow" :class="['ckc-ui-think-head', 'is-expanded', { 'is-mobile': useSource !== 'pc' }]">
+  <div v-if="isShow && messageGroupView.isExpanded" :class="['ckc-ui-think-head', 'is-expanded', { 'is-mobile': useSource !== 'pc' }]">
     <div class="ckc-ui-think-left">
       <template v-if="useSource==='pc'">
         <img v-if="loading" class="ckc-ui-think-img" src="../../assets/imgs/deepThink.gif" alt="avatar" />

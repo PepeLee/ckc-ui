@@ -3,7 +3,7 @@
     {{ uploadHeartInfo.task }} 
   </div>
   <div>
-    <div v-if="end" class="ckc-ui-progress-head" @click="triggerProgress()">
+    <div v-if="end && showProgressHead" class="ckc-ui-progress-head" @click="triggerProgress()">
       所有执行过程
       <button class="ckc-ui-progress-btn">
         <img v-if="progressShow" src="../../assets/imgs/arrow-down.png" alt="avatar" />
@@ -11,44 +11,52 @@
       </button>
     </div>
     <template v-for="(meassageGroupView, index) in currentMeassageViewInfo" :key="index">
-      <div  v-if="meassageGroupView.messageGroupInfo.length > 0">
+      <div v-if="meassageGroupView.messageGroupInfo.length > 0">
         <div class="ckc-ui-group-title" :class="[{ 'isProgress': meassageGroupView.isProgress }]">
-          {{ meassageGroupView.groupTitle }}
+          <span v-if="meassageGroupView.isProgress" class="ckc-ui-group-title-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8" />
+              <path d="M10 8.5L14.5 12L10 15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span class="ckc-ui-group-title-text">{{ meassageGroupView.groupTitle }}</span>
         </div>
-        <CkcAnswerThinkingHead 
-          :messageGroupView="meassageGroupView" 
-          :currentMessageViewInfo="currentMeassageViewInfo" 
-          :useSource="prop.useSource"/>
-        <CkcAnswerDocuments 
-          v-if="meassageGroupView.isDocumentGroup" 
-          :meassageGroupView="meassageGroupView"
-          @clickDocument="clickDocument" />
-        <template v-else>
-          <div v-show="meassageGroupView.isExpanded">  
-            <div v-for="message in meassageGroupView.messageGroupInfo">
-                <div v-show="message.thinkingIsExpanded">
-                  <CkcAnswerThinking 
-                    v-if="message.type === MessageType.THINKING" 
-                    :message="message.content as string"
-                    :renderCustomId="prop.renderCustomId" 
-                    :customHtmlTags="prop.customHtmlTags" />
-                  <CkcAnswerToolUse 
-                    v-if="message.type === MessageType.TOOL_USE" 
-                    :toolUseComplete="meassageGroupView.toolUseComplete"
-                    :message="message.content as string" />
-                  <CkcAnswerToolUseSilent
-                    v-if="message.type === MessageType.TOOL_USE_SILENT"
-                    :toolUseComplete="meassageGroupView.toolUseComplete"
-                    :message="message.content as string" />
-                  <CkcAnswerContent 
-                    v-if="message.type === MessageType.ANSWER || message.type === MessageType.EXCEPTION" 
-                    :message="message.content as string"
-                    :renderCustomId="prop.renderCustomId" 
-                    :customHtmlTags="prop.customHtmlTags" />  
+        <div class="ckc-ui-group-body" :class="[{ 'isProgress': meassageGroupView.isProgress }]">
+          <CkcAnswerThinkingHead 
+            :messageGroupView="meassageGroupView" 
+            :currentMessageViewInfo="currentMeassageViewInfo" 
+            :useSource="prop.useSource"/>
+          <CkcAnswerDocuments 
+            v-if="meassageGroupView.isDocumentGroup" 
+            :meassageGroupView="meassageGroupView"
+            @clickDocument="clickDocument" />
+          <template v-else>
+            <div v-show="meassageGroupView.isExpanded">  
+              <div v-for="message in meassageGroupView.messageGroupInfo">
+                  <div v-show="message.thinkingIsExpanded">
+                    <CkcAnswerThinking 
+                      v-if="message.type === MessageType.THINKING" 
+                      :message="message.content as string"
+                      :renderCustomId="prop.renderCustomId" 
+                      :customHtmlTags="prop.customHtmlTags" />
+                    <CkcAnswerToolUse 
+                      v-if="message.type === MessageType.TOOL_USE" 
+                      :toolUseComplete="meassageGroupView.toolUseComplete"
+                      :message="message.content as string" />
+                    <CkcAnswerToolUseSilent
+                      v-if="message.type === MessageType.TOOL_USE_SILENT"
+                      :toolUseComplete="meassageGroupView.toolUseComplete"
+                      :message="message.content as string" />
+                    <CkcAnswerContent 
+                      v-if="message.type === MessageType.ANSWER || message.type === MessageType.EXCEPTION" 
+                      :message="message.content as string"
+                      :renderCustomId="prop.renderCustomId" 
+                      :customHtmlTags="prop.customHtmlTags" />  
+                  </div>
                 </div>
               </div>
-            </div>
-        </template>
+          </template>
+        </div>
       </div>
     </template>
     <div v-if="humanConfirmMessage && $slots.confirm">
@@ -196,12 +204,39 @@ watch(() => prop.historyMessages, (newVal) => {
     animation: ckc-ui-pulse 1.4s ease-in-out infinite;
   }
   .#{$ckcUiPrefix}-group-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 14px;
     color: #7E849F;
-    margin: 10px 0;
+    margin: 6px 0;
     &.isProgress {
-      // color: red;
-      font-weight: 500;
+      color: #4C516D;
+    }
+  }
+  .#{$ckcUiPrefix}-group-title-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #4F7DFF;
+    flex-shrink: 0;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  .#{$ckcUiPrefix}-group-title-text {
+    line-height: 1.4;
+  }
+  .#{$ckcUiPrefix}-group-body {
+    display: flex;
+    flex-direction: column;
+
+    &.isProgress {
+      margin-left: 6px;
+      padding-left: 10px;
+      border-left: 1px solid #DDE4F0;
     }
   }
   .#{$ckcUiPrefix}-task-run-tip-loading {

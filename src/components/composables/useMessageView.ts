@@ -102,7 +102,7 @@ export function useMessageView() {
         isExpanded: true,
         groupTitle: '',
         thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
-        messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: message.type !== MessageType.THINKING }]
+        messageGroupInfo: [{ ...mergingMessage(message) }]
       });
       return;
     }
@@ -173,7 +173,7 @@ export function useMessageView() {
         }
         lastMeassageViewInfo.groupTitle = title;
         lastMeassageViewInfo.isProgress = true;
-        // lastMeassageViewInfo.isExpanded = false;
+        lastMeassageViewInfo.isExpanded = false;
       }
       
     }
