@@ -4,15 +4,23 @@
   </div>
   <div>
     <div v-if="end && showProgressHead" class="ckc-ui-progress-head" @click="triggerProgress()">
-      所有执行过程
+      已完成
       <button class="ckc-ui-progress-btn">
-        <img v-if="progressShow" src="../../assets/imgs/arrow-down.png" alt="avatar" />
+        <img v-if="allProcessShow" src="../../assets/imgs/arrow-down.png" alt="avatar" />
         <img v-else src="../../assets/imgs/arrow-right.png" alt="avatar" />
       </button>
     </div>
     <template v-for="(meassageGroupView, index) in currentMeassageViewInfo" :key="index">
-      <div v-if="meassageGroupView.messageGroupInfo.length > 0">
-        <div class="ckc-ui-group-title" :class="[{ 'isProgress': meassageGroupView.isProgress }]">
+      <div v-if="meassageGroupView.show">
+        <div
+          class="ckc-ui-group-title"
+          :class="[{ 'isProgress': meassageGroupView.isProgress, 'isInteractive': meassageGroupView.isProgress }]"
+          role="button"
+          tabindex="0"
+          @click="toggleGroupExpand(meassageGroupView)"
+          @keydown.enter.prevent="toggleGroupExpand(meassageGroupView)"
+          @keydown.space.prevent="toggleGroupExpand(meassageGroupView)"
+        >
           <span v-if="meassageGroupView.isProgress" class="ckc-ui-group-title-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8" />
@@ -112,6 +120,9 @@ const {
 } = useMessageView();
 const lastProcessedIndex = ref(0);
 const lastProcessedHistoryIndex = ref(0);
+const allProcessShow = computed(() => {
+  return currentMeassageViewInfo.value.every(info => info.show);
+})
 
 function clickRecomendation(message: string) {
   emit('clickRecomendation', message);
@@ -130,15 +141,23 @@ const stopChat = () => {
   // console.log('stopChat called');
 }
 const triggerProgress = () => {
-  progressShow.value = !progressShow.value;
-  triggerfoldProgress(progressShow.value);
+  triggerfoldProgress(!allProcessShow.value);
 };
+
+const toggleGroupExpand = (groupView: typeof currentMeassageViewInfo.value[number]) => {
+  if (!groupView.isProgress) {
+    return;
+  }
+
+  groupView.isExpanded = !groupView.isExpanded;
+};
+
 // 折叠执行过程
 const triggerfoldProgress = (show: boolean) => {
   if (currentMeassageViewInfo.value.length > 0) {
     currentMeassageViewInfo.value.forEach(info => {
       if (info.isProgress) {
-        info.isExpanded = show
+        info.show = show
       }
     });
   }
@@ -156,7 +175,7 @@ watch(end, (newVal) => {
   if (newVal) {
     console.log('end changed', newVal);
     progressShow.value = false;
-    // triggerfoldProgress(progressShow.value)
+    triggerfoldProgress(false)
   }
 })
 watch(() => prop.messages, (newVal) => {
@@ -208,10 +227,17 @@ watch(() => prop.historyMessages, (newVal) => {
     align-items: center;
     gap: 6px;
     font-size: 14px;
-    color: #7E849F;
+    color: #17204D;
     margin: 6px 0;
+    width: fit-content;
+
     &.isProgress {
-      color: #4C516D;
+      color: #17204D;
+    }
+
+    &.isInteractive {
+      cursor: pointer;
+      user-select: none;
     }
   }
   .#{$ckcUiPrefix}-group-title-icon {

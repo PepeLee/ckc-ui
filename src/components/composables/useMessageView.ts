@@ -18,18 +18,83 @@ export function useMessageView() {
       thinkingIsExpanded: true
     }
   }
-  /**
-   * 处理收到的消息数据，并将其加入当前展示组
-   *
-   * 处理逻辑：
-   * 1. 忽略空消息和不需要展示的系统类型消息
-   * 2. 尝试与当前组最后一条消息合并（trace/session/type 全部一致）
-   * 3. 如果 THINKING 后紧接 ANSWER，则保持同一组展示，但展开状态不同
-   * 4. 否则折叠当前组并创建一个新的展开组来展示当前消息
-   */
+  const getGroupTitle = (group: MessageViewInfo) => {
+    if (group.messageGroupInfo.length === 0) {
+      return;
+    }
+    let title = '';
+    let toolName = '';
+    if (group.messageGroupInfo.length > 0) {
+      const answerMsgIdex = group.messageGroupInfo.findIndex((mgx) => {
+        return mgx.type === MessageType.ANSWER
+      })
+      if (answerMsgIdex >= 0) {
+        const answerMsg = group.messageGroupInfo[answerMsgIdex];
+        title = answerMsg?.content as string || '';
+        group.messageGroupInfo = group.messageGroupInfo.filter((_, idx) => idx !== answerMsgIdex)
+      } else {
+        const toolMsgIdx = group.messageGroupInfo.findIndex((mgx) => {
+          return mgx.type === MessageType.TOOL_USE || mgx.type === MessageType.TOOL_USE_SILENT
+        })
+        if (toolMsgIdx >= 0) {
+          const toolMsg = group.messageGroupInfo[toolMsgIdx];
+          try {
+            toolName = json5.parse(toolMsg?.content as string).name || '';
+          } catch {
+            toolName = '';
+          }
+          title = toolName;
+          group.messageGroupInfo = group.messageGroupInfo.filter((_, idx) => idx !== toolMsgIdx)
+        }
+      }
+    }
+    group.groupTitle = title || '任务已执行';
+  }
+  const isThinkingAndAnswerGroup = (group: MessageViewInfo): boolean => {
+    if (group.messageGroupInfo.length !== 2) {
+      return false;
+    }
+    const [first, second] = group.messageGroupInfo;
+    return first.type === MessageType.THINKING && second.type === MessageType.ANSWER;
+  }
+  // 在结束时处理，特殊情况：知识门户问答只有thinking 和 answer.
+  const handleDataAfterEnd = () => {
+    // 如果有多个正文组，或者没有正文组，则不处理
+    const filteredInfo = currentMeassageViewInfo.value.filter((info) => !info.isProgress && !info.isDocumentGroup);
+    if (filteredInfo.length > 1 || filteredInfo.length === 0) {
+      return;
+    }
+    const mainGroupIndex = currentMeassageViewInfo.value.findIndex((info) => !info.isProgress && !info.isDocumentGroup);
+    const mainGroup = currentMeassageViewInfo.value[mainGroupIndex];
+    // 如果输出正文是在第一个
+    if (mainGroupIndex === 0 && isThinkingAndAnswerGroup(mainGroup)) {
+      return;
+    }
+    // 取出answer 放到当前组后面，并删除当前组的answer,当前组设为执行过程
+    const answerIndex = mainGroup.messageGroupInfo.findIndex((msg) => msg.type === MessageType.ANSWER);
+    if (answerIndex >= 0) {
+      const answerMessage = mainGroup.messageGroupInfo[answerIndex];
+      mainGroup.messageGroupInfo.splice(answerIndex, 1);
+      getGroupTitle(mainGroup);
+      mainGroup.isProgress = true;
+      mainGroup.isExpanded = false;
+      currentMeassageViewInfo.value.push({
+        isExpanded: true,
+        groupTitle: '',
+        show: true,
+        messageGroupInfo: [answerMessage]
+      });
+    }
+  }
   const handleData = (message: Message) => {
     // 安全保护，避免空消息导致异常
     if (!message) {
+      return;
+    }
+    // 对话结束，end标志变为true，后续消息不再处理
+    if (message.endFlag) {
+      end.value = true;
+      handleDataAfterEnd();
       return;
     }
     if (!message.type) {
@@ -40,8 +105,9 @@ export function useMessageView() {
       return;
     }
     // 对话结束，end标志变为true，后续消息不再处理
-    if (message.type === MessageType.END || message.endFlag) {
+    if (message.type === MessageType.END) {
       end.value = true;
+      handleDataAfterEnd();
       return;
     }
     // 提取推荐问题内容，单独处理后直接返回，不进入消息分组逻辑
@@ -101,8 +167,9 @@ export function useMessageView() {
       currentMeassageViewInfo.value.push({
         isExpanded: true,
         groupTitle: '',
+        show: true,
         thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
-        messageGroupInfo: [{ ...mergingMessage(message) }]
+        messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: message.type !== MessageType.THINKING }]
       });
       return;
     }
@@ -143,35 +210,37 @@ export function useMessageView() {
       currentMeassageViewInfo.value.push({
         isExpanded: true,
         groupTitle: '',
+        show: true,
         thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
         messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: false }]
       });
-      let title = '';
-      let toolName = '';
+      // let title = '';
+      // let toolName = '';
       if (lastMeassageViewInfo.messageGroupInfo.length > 0) {
-        const answerMsgIdex = lastMeassageViewInfo.messageGroupInfo.findIndex((mgx) => {
-          return mgx.type === MessageType.ANSWER
-        })
-        if (answerMsgIdex >= 0) {
-          const answerMsg = lastMeassageViewInfo.messageGroupInfo[answerMsgIdex];
-          title = answerMsg?.content as string || '';
-          lastMeassageViewInfo.messageGroupInfo = lastMeassageViewInfo.messageGroupInfo.filter((_, idx) => idx !== answerMsgIdex)
-        } else {
-          const toolMsgIdx = lastMeassageViewInfo.messageGroupInfo.findIndex((mgx) => {
-            return mgx.type === MessageType.TOOL_USE || mgx.type === MessageType.TOOL_USE_SILENT
-          })
-          if (toolMsgIdx >= 0) {
-            const toolMsg = lastMeassageViewInfo.messageGroupInfo[toolMsgIdx];
-            try {
-              toolName = json5.parse(toolMsg?.content as string).name || '';
-            } catch {
-              toolName = '';
-            }
-            title = toolName;
-            lastMeassageViewInfo.messageGroupInfo = lastMeassageViewInfo.messageGroupInfo.filter((_, idx) => idx !== toolMsgIdx)
-          }
-        }
-        lastMeassageViewInfo.groupTitle = title;
+        // const answerMsgIdex = lastMeassageViewInfo.messageGroupInfo.findIndex((mgx) => {
+        //   return mgx.type === MessageType.ANSWER
+        // })
+        // if (answerMsgIdex >= 0) {
+        //   const answerMsg = lastMeassageViewInfo.messageGroupInfo[answerMsgIdex];
+        //   title = answerMsg?.content as string || '';
+        //   lastMeassageViewInfo.messageGroupInfo = lastMeassageViewInfo.messageGroupInfo.filter((_, idx) => idx !== answerMsgIdex)
+        // } else {
+        //   const toolMsgIdx = lastMeassageViewInfo.messageGroupInfo.findIndex((mgx) => {
+        //     return mgx.type === MessageType.TOOL_USE || mgx.type === MessageType.TOOL_USE_SILENT
+        //   })
+        //   if (toolMsgIdx >= 0) {
+        //     const toolMsg = lastMeassageViewInfo.messageGroupInfo[toolMsgIdx];
+        //     try {
+        //       toolName = json5.parse(toolMsg?.content as string).name || '';
+        //     } catch {
+        //       toolName = '';
+        //     }
+        //     title = toolName;
+        //     lastMeassageViewInfo.messageGroupInfo = lastMeassageViewInfo.messageGroupInfo.filter((_, idx) => idx !== toolMsgIdx)
+        //   }
+        // }
+        // lastMeassageViewInfo.groupTitle = title;
+        getGroupTitle(lastMeassageViewInfo);
         lastMeassageViewInfo.isProgress = true;
         lastMeassageViewInfo.isExpanded = false;
       }
@@ -181,6 +250,7 @@ export function useMessageView() {
       currentMeassageViewInfo.value.push({
         isExpanded: true,
         groupTitle: '',
+        show: true,
         isDocumentGroup: message.type === MessageType.DOCUMENTS,
         messageGroupInfo: [mergingMessage(message)]
       });
