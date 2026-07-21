@@ -11,7 +11,7 @@
       </button>
     </div>
     <template v-for="(meassageGroupView, index) in currentMeassageViewInfo" :key="index">
-      <div v-if="meassageGroupView.show">
+      <div v-if="meassageGroupView.show" class="ckc-ui-main" :class="[{ 'isProgress': meassageGroupView.isProgress}]">
         <div
           class="ckc-ui-group-title"
           :class="[{ 'isProgress': meassageGroupView.isProgress, 'isInteractive': meassageGroupView.isProgress }]"
@@ -221,6 +221,14 @@ watch(() => prop.historyMessages, (newVal) => {
     letter-spacing: 0.03em;
     font-weight: 500;
     animation: ckc-ui-pulse 1.4s ease-in-out infinite;
+  }
+  .#{$ckcUiPrefix}-main {
+    &.isProgress {
+      // background-color: #eff2f7;
+      // padding-left: 10px;
+      display: inline-block;
+      width: 100%;
+    }
   }
   .#{$ckcUiPrefix}-group-title {
     display: flex;
