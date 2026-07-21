@@ -21,12 +21,11 @@
           @keydown.enter.prevent="toggleGroupExpand(meassageGroupView)"
           @keydown.space.prevent="toggleGroupExpand(meassageGroupView)"
         >
-          <!-- <span v-if="meassageGroupView.isProgress" class="ckc-ui-group-title-icon" aria-hidden="true">
+          <span v-if="meassageGroupView.isProgress" class="ckc-ui-group-title-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8" />
-              <path d="M10 8.5L14.5 12L10 15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="12" cy="12" r="4.5" fill="currentColor" />
             </svg>
-          </span> -->
+          </span>
           <span class="ckc-ui-group-title-text">{{ meassageGroupView.groupTitle }}</span>
         </div>
         <div class="ckc-ui-group-body" :class="[{ 'isProgress': meassageGroupView.isProgress }]">
@@ -252,7 +251,7 @@ watch(() => prop.historyMessages, (newVal) => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #4F7DFF;
+    // color: #4F7DFF;
     flex-shrink: 0;
 
     svg {
@@ -284,6 +283,7 @@ watch(() => prop.historyMessages, (newVal) => {
     font-size: 13px;
     color: #7E849F;
     cursor: pointer;
+    margin-bottom: 8px;
   }
   .#{$ckcUiPrefix}-progress-btn {
       background: none;
