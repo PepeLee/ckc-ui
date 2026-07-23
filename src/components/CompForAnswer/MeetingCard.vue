@@ -65,16 +65,18 @@ interface CardEventMap {
 // 定义组件入参类型
 interface MeetingCardProps {
     meetingData: {
-        date: string;     // 日期 (如: 01/28)
-        startTime: string;// 开始时间 (如: 10:00)
-        endTime: string;  // 结束时间 (如: 11:00)
-        title: string;    // 会议标题
-        location: string; // 会议地点
+        date: string     // 日期 (如: 01/28)
+        startTime: string// 开始时间 (如: 10:00)
+        endTime: string  // 结束时间 (如: 11:00)
+        title: string    // 会议标题
+        location: string // 会议地点
         meetingdate?: string
         day?: string
         booker?: string
         status?: string
-    };
+        meetingDesc?:string
+    },
+    cardTraceId: string
 }
 const emitter = inject<Emitter<CardEventMap>>('cardEmitter', mitt<CardEventMap>());
 const props = defineProps<MeetingCardProps>();
@@ -83,7 +85,7 @@ const isShowToggleBtn = computed(() => {
     return isFirstShow.value && props.meetingData.status === 'pending'
 })
 const btnClick = () => {
-    emitter.emit('meeting-card-click', { type: 'confirm', message: '会议已预定' })
+    emitter.emit('meeting-card-click', { type: 'confirm', message: '会议已预定', cardMsg:props.meetingData.meetingDesc,cardTraceId: props.cardTraceId })
     isFirstShow.value = false
 }
 </script>

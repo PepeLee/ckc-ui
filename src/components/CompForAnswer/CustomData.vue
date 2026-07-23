@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref, watch, type Ref } from 'vue';
+import { inject, ref, watch, type Ref, getCurrentInstance } from 'vue';
 import JSON5 from 'json5';
 import FileCard from './FileCard.vue';
 import MeetingCard from './MeetingCard.vue';
@@ -9,6 +9,8 @@ const customData = ref<any>({});
 let customComponent:any = null
 // 注入 traceId
 const traceId = inject<Ref<string>>('traceId', ref(''));
+const instance = getCurrentInstance()
+const useSource = (instance?.type as any).useSource || 'pc'
 
 const customComponentMap: Record<ComponentKey, any> = {
     schedule: ScheduleCard,
@@ -63,6 +65,6 @@ watch(
 
 <template>
     <div v-if="customData.type">
-        <component :is="customComponent" :meeting-data="customData" :card-trace-id="traceId"/>
+        <component :is="customComponent" :meeting-data="customData" :card-trace-id="traceId" :use-source="useSource"/>
     </div>
 </template>

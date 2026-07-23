@@ -5,7 +5,7 @@
         <div class="ckc-ui-file-card__title" :title="props.meetingData.filename">{{props.meetingData.filename}}</div>
       </div>
     </div>
-    <button class="ckc-ui-file-card__action" type="button" @click.stop="downloadFile">
+    <button v-if="props.useSource !== 'mobile'"  class="ckc-ui-file-card__action" type="button" @click.stop="downloadFile">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 4V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
         <path d="M8 10L12 14L16 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -28,7 +28,8 @@ interface FileCardProps {
     meetingData: {
         filename: string;
         url: string;
-    }
+    },
+    useSource: string
 }
 const emitter = inject<Emitter<CardEventMap>>('cardEmitter', mitt<CardEventMap>());
 const prefix = `http://${window.location.host}`;
@@ -108,6 +109,7 @@ function blobToDataURL(blob: Blob) {
   align-items: center;
   gap: 14px;
   min-width: 0;
+  padding: 8px 0;
 }
 
 .#{$ckcUiPrefix}-file-card__content {

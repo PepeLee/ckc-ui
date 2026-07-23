@@ -46,6 +46,7 @@
   cardEmitter.on('file-card-click', (event) => {
     console.log('file-card-click', event)
   })
+  CustomData.useSource = 'mobile';
   setCustomComponents('docs', {
     'custom-data': CustomData,
   })
