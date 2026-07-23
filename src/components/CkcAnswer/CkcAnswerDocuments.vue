@@ -12,7 +12,7 @@
       }"
       :style="{ animationDelay: `${index * 0.05}s` }"
     >
-      <img class="ckc-ui-document--img" :src="getIcon(message.content as unknown as Document)" alt="avatar" />
+      <component :is="getIcon(message.content as unknown as Document)" class="ckc-ui-document--img" />
       {{ (message.content as unknown as Document).fileName }}
     </div>
 

@@ -31,7 +31,7 @@
   import CustomData from '../../../src/components/CompForAnswer/index.ts';
   import mitt from 'mitt';
   import type { Message, Document } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message-file';
+  import { message } from '../const/mock-data/message-meet';
   import { setCustomComponents } from 'markstream-vue';
   // import CustomComp from '../components/customComp.vue';
 
@@ -46,7 +46,7 @@
   cardEmitter.on('file-card-click', (event) => {
     console.log('file-card-click', event)
   })
-  CustomData.useSource = 'mobile';
+  // CustomData.useSource = 'mobile';
   setCustomComponents('docs', {
     'custom-data': CustomData,
   })

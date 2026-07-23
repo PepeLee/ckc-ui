@@ -1506,7 +1506,7 @@ export const message = [
     "type": "answer",
     "traceId": "traceId_Ip-blV",
     "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
-    "content": ".docx\",\"url",
+    "content": ".xlsx\",\"url",
     "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
     "created_at": 1784770621447,
     "position": 0

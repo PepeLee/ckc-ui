@@ -1,6 +1,7 @@
 <template>
   <div class="ckc-ui-file-card" @click="cardClick">
     <div class="ckc-ui-file-card__left">
+        <component class="ckc-ui-file--img" :is="getIcon()"></component>
       <div class="ckc-ui-file-card__content">
         <div class="ckc-ui-file-card__title" :title="props.meetingData.filename">{{props.meetingData.filename}}</div>
       </div>
@@ -18,6 +19,14 @@
 <script setup lang="ts">
 import { inject } from 'vue';
 import mitt, { type Emitter } from 'mitt';
+import uploadDefault from '../../assets/imgs/ckcDocuments/upload-default.svg'
+import uploadExcel from '../../assets/imgs/ckcDocuments/upload-excel.svg'
+import uploadImage from '../../assets/imgs/ckcDocuments/upload-image.svg'
+import uploadMarkdown from '../../assets/imgs/ckcDocuments/upload-markdown.svg'
+import uploadPdf from '../../assets/imgs/ckcDocuments/upload-pdf.svg'
+import uploadTxt from '../../assets/imgs/ckcDocuments/upload-txt.svg'
+import uploadWord from '../../assets/imgs/ckcDocuments/upload-word.svg'
+import uploadZip from '../../assets/imgs/ckcDocuments/upload-zip.svg'
 
 interface CardEventMap {
   [event: string]: unknown;
@@ -76,6 +85,39 @@ function blobToDataURL(blob: Blob) {
     reader.readAsDataURL(blob);
   });
 }
+
+function getIcon() {
+  const fileExtension = props.meetingData.filename.split('.').pop();
+  console.log('fileExtension', fileExtension)
+  switch (fileExtension) {
+    case 'pdf':
+      return uploadPdf;
+    case 'docx':
+    case 'doc':
+    case 'docm':
+    case 'dotx':
+    case 'dotm':
+      return uploadWord;
+    case 'xlsx':
+    case 'xls':
+    case 'xlsm':
+    case 'xltx':
+    case 'xltm':
+      return uploadExcel;
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+      return uploadImage;
+    case 'md':
+      return uploadMarkdown;
+    case 'txt':
+      return uploadTxt;
+    case 'zip':
+      return uploadZip;
+    default:
+      return uploadDefault;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -109,7 +151,11 @@ function blobToDataURL(blob: Blob) {
   align-items: center;
   gap: 14px;
   min-width: 0;
-  padding: 8px 0;
+}
+
+.#{$ckcUiPrefix}-file--img {
+    width: 36px;
+    height: 36px;
 }
 
 .#{$ckcUiPrefix}-file-card__content {
