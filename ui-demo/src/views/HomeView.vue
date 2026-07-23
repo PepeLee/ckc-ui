@@ -26,15 +26,28 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, provide } from 'vue';
   import CkcAnswer from '../../../src/components/CkcAnswer/index.ts';
+  import CustomData from '../../../src/components/CompForAnswer/index.ts';
+  import mitt from 'mitt';
   import type { Message, Document } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message-new';
+  import { message } from '../const/mock-data/message-file';
   import { setCustomComponents } from 'markstream-vue';
-  import CustomComp from '../components/customComp.vue';
+  // import CustomComp from '../components/customComp.vue';
 
+  const cardEmitter = mitt();
+  provide('cardEmitter', cardEmitter);
+  cardEmitter.on('schedule-card-click', (event) => {
+    console.log('schedule-card-click', event)
+  })
+  cardEmitter.on('meeting-card-click', (event) => {
+    console.log('meeting-card-click', event)
+  })
+  cardEmitter.on('file-card-click', (event) => {
+    console.log('file-card-click', event)
+  })
   setCustomComponents('docs', {
-    'custom-data': CustomComp,
+    'custom-data': CustomData,
   })
   const ckcAnswerRef = ref<InstanceType<typeof CkcAnswer> | null>(null)
   const messages = ref<Message[]>([]);
