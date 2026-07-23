@@ -1,11 +1,11 @@
 <template>
-  <div class="file-download-card" @click="cardClick">
-    <div class="file-download-card__left">
-      <div class="file-download-card__content">
-        <div class="file-download-card__title" :title="props.meetingData.filename">{{props.meetingData.filename}}</div>
+  <div class="ckc-ui-file-card" @click="cardClick">
+    <div class="ckc-ui-file-card__left">
+      <div class="ckc-ui-file-card__content">
+        <div class="ckc-ui-file-card__title" :title="props.meetingData.filename">{{props.meetingData.filename}}</div>
       </div>
     </div>
-    <button class="file-download-card__action" type="button" @click.stop="downloadFile">
+    <button class="ckc-ui-file-card__action" type="button" @click.stop="downloadFile">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 4V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
         <path d="M8 10L12 14L16 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -75,7 +75,9 @@ function blobToDataURL(blob: Blob) {
 </script>
 
 <style lang="scss" scoped>
-.file-download-card {
+@use "../../styles/index.scss" as *;
+
+.#{$ckcUiPrefix}-file-card {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -92,24 +94,24 @@ function blobToDataURL(blob: Blob) {
   margin-top: 12px;
 }
 
-.file-download-card:hover {
+.#{$ckcUiPrefix}-file-card:hover {
   transform: translateY(-1px);
   border-color: #d2dbe8;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
 }
 
-.file-download-card__left {
+.#{$ckcUiPrefix}-file-card__left {
   display: flex;
   align-items: center;
   gap: 14px;
   min-width: 0;
 }
 
-.file-download-card__content {
+.#{$ckcUiPrefix}-file-card__content {
   min-width: 0;
 }
 
-.file-download-card__title {
+.#{$ckcUiPrefix}-file-card__title {
   font-size: 14px;
   font-weight: 600;
   color: #111827;
@@ -118,7 +120,7 @@ function blobToDataURL(blob: Blob) {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.file-download-card__action {
+.#{$ckcUiPrefix}-file-card__action {
   width: 36px;
   height: 36px;
   border: none;
@@ -132,12 +134,12 @@ function blobToDataURL(blob: Blob) {
   transition: background-color 200ms ease, transform 200ms ease;
 }
 
-.file-download-card__action:hover {
+.#{$ckcUiPrefix}-file-card__action:hover {
   background: #e0ecff;
   transform: translateY(-1px);
 }
 
-.file-download-card__action svg {
+.#{$ckcUiPrefix}-file-card__action svg {
   width: 18px;
   height: 18px;
 }

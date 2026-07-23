@@ -1,20 +1,20 @@
 <template>
-    <div class="meeting-card">
-        <div class="meeting-card_wrapper">
-            <div class="meeting-card_header">
-                <div class="meeting-card_icon">
+    <div class="ckc-ui-card">
+        <div class="ckc-ui-card_wrapper">
+            <div class="ckc-ui-card_header">
+                <div class="ckc-ui-card_icon">
                     <img :src="cardImg" alt="" srcset="">
                 </div>
-                <div class="meeting-card_title">日程</div>
+                <div class="ckc-ui-card_title">日程</div>
 
-                <img v-if="meetingData.status === 'confirmed'" class="meeting-card_img"
+                <img v-if="meetingData.status === 'confirmed'" class="ckc-ui-card_img"
                     src="../../assets/imgs/card/card-confirm.png" alt="">
             </div>
 
-            <div class="meeting-card_content">
-                <h3 class="meeting-card_subject" v-if="meetingData.title">{{ meetingData.title || '未命名会议' }}</h3>
+            <div class="ckc-ui-card_content">
+                <h3 class="ckc-ui-card_subject" v-if="meetingData.title">{{ meetingData.title || '未命名会议' }}</h3>
 
-                <div class="meeting-card_info-item">
+                <div class="ckc-ui-card_info-item">
                     <div class="icon-wrapper">
                         <CardDateSvg />
                     </div>
@@ -23,23 +23,23 @@
                             meetingData.endTime }}
                     </div>
                 </div>
-                <div class="meeting-card_info-item" v-if="meetingData.attender">
+                <div class="ckc-ui-card_info-item" v-if="meetingData.attender">
                     <div class="icon-wrapper">
                         <CardLocationSvg />
                     </div>
                     <div class="info-content">{{ meetingData.attender || '未知参与人' }}</div>
                 </div>
-                <div class="meeting-card_info-item" v-if="meetingData.location">
+                <div class="ckc-ui-card_info-item" v-if="meetingData.location">
                     <div class="icon-wrapper">
                         <CardUserSvg />
                     </div>
                     <div class="info-content">{{ meetingData.location || '线上会议' }}</div>
                 </div>
             </div>
-            <div class="meeting-card_actions" v-if="isShowToggleBtn">
+            <div class="ckc-ui-card_actions" v-if="isShowToggleBtn">
                 <button class="btn-accept" @click="btnClick" round>确认</button>
             </div>
-            <div class="meeting-card_actions_confirmed" v-else-if="!isFirstShow">
+            <div class="ckc-ui-card_actions_confirmed" v-else-if="!isFirstShow">
                 <component class="toast-icon" :is="successSvg" /> 已确认
             </div>
         </div>
@@ -92,7 +92,9 @@ const props = defineProps<MeetingCardProps>();
 </script>
 
 <style lang="scss" scoped>
-.meeting-card {
+@use "../../styles/index.scss" as *;
+
+.#{$ckcUiPrefix}-card {
     margin: 12px 0;
     border-radius: 8px;
     display: flex;
@@ -120,7 +122,7 @@ const props = defineProps<MeetingCardProps>();
         background: linear-gradient(180deg, #DBE7FF 2%, #EAF1FF 100%);
         position: relative;
 
-        .meeting-card_icon {
+        .#{$ckcUiPrefix}-card_icon {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -131,12 +133,12 @@ const props = defineProps<MeetingCardProps>();
             }
         }
 
-        .meeting-card_title {
+        .#{$ckcUiPrefix}-card_title {
             font-weight: 500;
             color: #17204D;
         }
 
-        .meeting-card_img {
+        .#{$ckcUiPrefix}-card_img {
             position: absolute;
             right: 0;
             top: 0;
@@ -147,14 +149,14 @@ const props = defineProps<MeetingCardProps>();
     &_content {
         padding: 12px;
 
-        .meeting-card_subject {
+        .#{$ckcUiPrefix}-card_subject {
             margin: 0 0 6px 0;
             font-size: 16px;
             font-weight: 500;
             color: #17204D;
         }
 
-        .meeting-card_info-item {
+        .#{$ckcUiPrefix}-card_info-item {
             display: flex;
             gap: 8px;
             color: #17204D;
