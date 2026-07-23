@@ -88,7 +88,6 @@ function blobToDataURL(blob: Blob) {
 
 function getIcon() {
   const fileExtension = props.meetingData.filename.split('.').pop();
-  console.log('fileExtension', fileExtension)
   switch (fileExtension) {
     case 'pdf':
       return uploadPdf;
@@ -138,6 +137,7 @@ function getIcon() {
   width: fit-content;
   max-width: 400px;
   margin-top: 12px;
+  margin-right: 12px;
 }
 
 .#{$ckcUiPrefix}-file-card:hover {

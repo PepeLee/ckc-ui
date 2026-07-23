@@ -1403,6 +1403,9 @@ export const message = [
     "created_at": 1784770620500,
     "position": 0
   },
+
+
+
   {
     "type": "thinking",
     "traceId": "traceId_Ip-blV",
@@ -1743,6 +1746,15 @@ export const message = [
     "content": "",
     "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
     "created_at": 0,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "<custom-data-array>[{\"type\":\"fileinfo\",\"filename\":\"测试文档---33333.xlsx\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\"},{\"type\":\"fileinfo\",\"filename\":\"测试文档---11111.xlsx\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\"}]</custom-data-array>\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770620500,
     "position": 0
   },
   {
