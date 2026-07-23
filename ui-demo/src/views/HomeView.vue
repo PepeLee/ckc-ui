@@ -31,7 +31,7 @@
   import CustomData from '../../../src/components/CompForAnswer/index.ts';
   import mitt from 'mitt';
   import type { Message, Document } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message-meet';
+  import { message } from '../const/mock-data/message-file';
   import { setCustomComponents } from 'markstream-vue';
   // import CustomComp from '../components/customComp.vue';
 

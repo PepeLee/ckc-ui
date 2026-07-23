@@ -31,7 +31,7 @@ interface FileCardProps {
     }
 }
 const emitter = inject<Emitter<CardEventMap>>('cardEmitter', mitt<CardEventMap>());
-const prefix = `http://${window.location.host}/`;
+const prefix = `http://${window.location.host}`;
 const props = defineProps<FileCardProps>();
 const cardClick = () => {
     emitter.emit('file-card-click', { 
@@ -41,7 +41,10 @@ const cardClick = () => {
 }
 const downloadFile = async () => {
   try {
-    const response = await fetch(`${prefix}${props.meetingData.url}`, { mode: 'cors' });
+    const url = props.meetingData.url.startsWith('/')
+      ? `${prefix}${props.meetingData.url}`
+      : `${prefix}/${props.meetingData.url}`;
+    const response = await fetch(url, { mode: 'cors' });
     if (!response.ok) {
       throw new Error(`下载失败，状态码：${response.status}`);
     }
