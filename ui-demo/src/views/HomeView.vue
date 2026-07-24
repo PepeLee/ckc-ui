@@ -1,26 +1,28 @@
 <template>
-  <div class="about">
+  <div class="wrapper">
     <!-- useSource="mobile" -->
-    <CkcAnswer 
-      ref="ckcAnswerRef"
-      :messages="messages"  
-      :historyMessages="historyMessages"
-      render-custom-id="docs" 
-      :custom-html-tags="['custom-data']"
-      @click-recomendation="recomendationAsk"
-      useSource="mobile"
-      @click-document="documentClick">
-      <template #confirm="confirmProps">
-        {{ confirmProps.confirmInfo }}
-        <button @click="alterMessages(confirmProps)">确认信息</button>
-      </template>
-      <template #taskList="taskListProps">
-        {{ taskListProps.taskListInfo }}
-      </template>
-      <template #actions="actionsProps">
-        <button @click="alterMessages(actionsProps)">清空消息</button>
-      </template>
-    </CkcAnswer>
+     <div class="main">
+      <CkcAnswer 
+        ref="ckcAnswerRef"
+        :messages="messages"  
+        :historyMessages="historyMessages"
+        render-custom-id="docs" 
+        :custom-html-tags="['custom-data']"
+        @click-recomendation="recomendationAsk"
+        @click-document="documentClick">
+        <template #confirm="confirmProps">
+          {{ confirmProps.confirmInfo }}
+          <button @click="alterMessages(confirmProps)">确认信息</button>
+        </template>
+        <template #taskList="taskListProps">
+          {{ taskListProps.taskListInfo }}
+        </template>
+        <template #actions="actionsProps">
+          <button @click="alterMessages(actionsProps)">清空消息</button>
+        </template>
+      </CkcAnswer>
+     </div>
+
     <!-- <button @click="stopChat()">清空消息</button> -->
   </div>
 </template>
@@ -31,7 +33,7 @@
   import {CustomData, CustomDataArray } from '../../../src/components/CompForAnswer/index.ts';
   import mitt from 'mitt';
   import type { Message, Document } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message-file';
+  import { message } from '../const/mock-data/message-new';
   import { setCustomComponents } from 'markstream-vue';
   // import CustomComp from '../components/customComp.vue';
 
@@ -84,6 +86,13 @@
 </script>
 
 <style>
-
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    background-color: burlywood;
+  }
+  .main {
+    width: 800px;
+  }
 </style>
 

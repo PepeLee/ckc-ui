@@ -74,9 +74,9 @@ onMounted(async () => {
   max-height: 120px;
   overflow-y: auto;
   word-break: break-word;
-  width: 100%;
-  border-left: 5px solid #ebebeb;
-  padding-left: 10px;
+  border-left: 2px solid #bbc3da;
+  padding: 10px 16px;
+  margin-left: 5px;
   @include thinkStyle;
   .markstream-vue {
     --ms-text-body: 12px;

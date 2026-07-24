@@ -2,8 +2,9 @@
   <div class="ckc-ui-upload-heart" v-if="uploadHeartInfo && currentMeassageViewInfo.length === 0">
     {{ uploadHeartInfo.task }} 
   </div>
-  <div>
+  <div class="ckc-ui-chat-wrapper">
     <div v-if="end && showProgressHead" class="ckc-ui-progress-head" @click="triggerProgress()">
+      <MobileDeepThink style="margin-right: 6px;" ></MobileDeepThink>
       已完成
       <button class="ckc-ui-progress-btn">
         <img v-if="allProcessShow" src="../../assets/imgs/arrow-down.png" alt="avatar" />
@@ -21,14 +22,12 @@
           @keydown.enter.prevent="toggleGroupExpand(meassageGroupView)"
           @keydown.space.prevent="toggleGroupExpand(meassageGroupView)"
         >
-          <span v-if="meassageGroupView.isProgress" class="ckc-ui-group-title-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="4.5" fill="currentColor" />
-            </svg>
-          </span>
+          <ProgressSuccess v-if="meassageGroupView.isProgress" class="ckc-ui-group-title-icon" />
           <span class="ckc-ui-group-title-text">{{ meassageGroupView.groupTitle }}</span>
+          <img class="ckc-ui-arrow-btn" v-if="meassageGroupView.isExpanded && meassageGroupView.isProgress" src="../../assets/imgs/arrow-down.png" alt="avatar" />
+          <img class="ckc-ui-arrow-btn" v-if="!meassageGroupView.isExpanded && meassageGroupView.isProgress" src="../../assets/imgs/arrow-right.png" alt="avatar" />
         </div>
-        <div class="ckc-ui-group-body" :class="[{ 'isProgress': meassageGroupView.isProgress }]">
+        <div class="ckc-ui-group-body" :class="[{ 'isProgress': meassageGroupView.isProgress, 'isExpanded': meassageGroupView.isExpanded }]">
           <CkcAnswerThinkingHead 
             :messageGroupView="meassageGroupView" 
             :currentMessageViewInfo="currentMeassageViewInfo" 
@@ -95,6 +94,9 @@ import CkcAnswerContent from './CkcAnswerContent.vue';
 import CkcAnswerThinkingHead from './CkcAnswerThinkingHead.vue';
 import CkcAnswerDocuments from './CkcAnswerDocuments.vue';
 import CkcAnswerRecommendations from './CkcAnswerRecommendations.vue';
+import ProgressSuccess from '../../assets/imgs/progress-success.svg';
+import MobileDeepThink from '../svg/mobileThink.vue';
+
 const prop = withDefaults(defineProps<CkcAnswerProps>(), {
   useSource: 'pc'
 });
@@ -184,7 +186,7 @@ watch(() => prop.messages, (newVal) => {
     }
     lastProcessedIndex.value = newVal.length;
   }
-  // console.log('prop.messages', currentMeassageViewInfo.value);
+  console.log('prop.messages', currentMeassageViewInfo.value);
 }, { deep: true, immediate: true });
 
 watch(() => prop.historyMessages, (newVal) => {
@@ -221,21 +223,30 @@ watch(() => prop.historyMessages, (newVal) => {
     font-weight: 500;
     animation: ckc-ui-pulse 1.4s ease-in-out infinite;
   }
+  .#{$ckcUiPrefix}-arrow-btn {
+    width: 14px;
+    height: 14px;
+  }
+  .#{$ckcUiPrefix}-chat-wrapper {
+    background-color: #FFFFFF;
+    padding: 16px;
+    border-radius: 12px;
+  }
   .#{$ckcUiPrefix}-main {
     &.isProgress {
-      // background-color: #eff2f7;
-      // padding-left: 10px;
-      display: inline-block;
-      width: 100%;
+      background-color: #f5faff;
+      border-radius: 8px;
+      padding: 10px 24px;
+      margin-bottom: 10px;
     }
   }
+ 
   .#{$ckcUiPrefix}-group-title {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
     font-size: 14px;
     color: #17204D;
-    margin: 6px 0;
     width: fit-content;
 
     &.isProgress {
@@ -265,11 +276,13 @@ watch(() => prop.historyMessages, (newVal) => {
   .#{$ckcUiPrefix}-group-body {
     display: flex;
     flex-direction: column;
-
     &.isProgress {
       margin-left: 6px;
-      padding-left: 10px;
-      border-left: 1px solid #DDE4F0;
+      background-color: #ebf0fa;
+      margin-top: 6px;
+    }
+    &.isExpanded {
+      padding: 10px;
     }
   }
   .#{$ckcUiPrefix}-task-run-tip-loading {
@@ -280,8 +293,9 @@ watch(() => prop.historyMessages, (newVal) => {
   .#{$ckcUiPrefix}-progress-head {
     display: inline-flex;
     align-items: center;
-    font-size: 13px;
-    color: #7E849F;
+    font-size: 14px;
+    color: #576999;
+    font-weight: 500;
     cursor: pointer;
     margin-bottom: 8px;
   }

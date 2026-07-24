@@ -3,7 +3,8 @@
     <div class="ckc-ui-think-left" @click="toggleFold()">
       <template v-if="useSource==='pc'">
         <img v-if="loading" class="ckc-ui-think-img" src="../../assets/imgs/deepThink.gif" alt="avatar" />
-        <DeepThink v-if="isSuccess"></DeepThink>
+        <!-- <DeepThink v-if="isSuccess"></DeepThink> -->
+        <ProgressSuccess v-if="isSuccess"></ProgressSuccess>
       </template>
       <template v-else>
         <img v-if="loading" class="ckc-ui-think-img" src="../../assets/imgs/mobileThink.gif" alt="avatar" />
@@ -32,7 +33,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { MessageType, type MessageViewInfo } from '../types/message';
-import DeepThink from '../svg/deepThink.vue';
+// import DeepThink from '../svg/deepThink.vue';
+import ProgressSuccess from '../../assets/imgs/progress-success.svg';
 import MobileDeepThink from '../svg/mobileThink.vue';
 
 const { messageGroupView } = defineProps<{
