@@ -1,6 +1,6 @@
 {
   "name": "ckc-ui",
-  "version": "0.1.45-bata5",
+  "version": "0.1.45-bata6",
   "main": "./dist/ckc-ui.mjs",
   "module": "./dist/ckc-ui.es.js",
   "exports": {

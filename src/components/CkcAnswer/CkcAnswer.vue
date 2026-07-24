@@ -1,8 +1,8 @@
 <template>
-  <div class="ckc-ui-upload-heart" v-if="uploadHeartInfo && currentMeassageViewInfo.length === 0">
-    {{ uploadHeartInfo.task }} 
-  </div>
   <div class="ckc-ui-chat-wrapper">
+    <div class="ckc-ui-upload-heart" v-if="uploadHeartInfo && currentMeassageViewInfo.length === 0">
+      {{ uploadHeartInfo.task }} 
+    </div>
     <div v-if="end && showProgressHead" class="ckc-ui-progress-head" @click="triggerProgress()">
       <MobileDeepThink style="margin-right: 6px;" ></MobileDeepThink>
       已完成
@@ -48,10 +48,14 @@
                     <CkcAnswerToolUse 
                       v-if="message.type === MessageType.TOOL_USE" 
                       :toolUseComplete="meassageGroupView.toolUseComplete"
+                      :message-info="message"
+                      :command="message.command as string"
                       :message="message.content as string" />
                     <CkcAnswerToolUseSilent
                       v-if="message.type === MessageType.TOOL_USE_SILENT"
                       :toolUseComplete="meassageGroupView.toolUseComplete"
+                      :command="message.command as string"
+                      :message-info="message"
                       :message="message.content as string" />
                     <CkcAnswerContent 
                       v-if="message.type === MessageType.ANSWER || message.type === MessageType.EXCEPTION" 

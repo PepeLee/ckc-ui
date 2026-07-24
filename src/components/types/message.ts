@@ -33,10 +33,13 @@ export interface Message {
     sessionId: string;
     content: string | Document | string[] | undefined;
     endFlag?: boolean; // 用于标识消息是否为结束标志
+    command?: string;
+    summary?: string;
 }
 
 export interface MessageForView extends Message {
     thinkingIsExpanded?: boolean; // 仅针对 type 为 THINKING 的消息，控制其内容的展开折叠状态
+    toolIsExpanded?: boolean;
     // todo 增加显示需要的字段
 }
 

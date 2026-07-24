@@ -15,7 +15,7 @@ export function useMessageView() {
   const mergingMessage = (message: Message) : MessageForView => {
     return {
       ...message,
-      thinkingIsExpanded: true
+      thinkingIsExpanded: true,
     }
   }
   const getGroupTitle = (group: MessageViewInfo) => {
@@ -39,12 +39,12 @@ export function useMessageView() {
         if (toolMsgIdx >= 0) {
           const toolMsg = group.messageGroupInfo[toolMsgIdx];
           try {
-            toolName = json5.parse(toolMsg?.content as string).name || '';
+            toolName = toolMsg.summary || json5.parse(toolMsg?.content as string).name || '';
           } catch {
             toolName = '';
           }
           title = toolName;
-          group.messageGroupInfo = group.messageGroupInfo.filter((_, idx) => idx !== toolMsgIdx)
+          // group.messageGroupInfo = group.messageGroupInfo.filter((_, idx) => idx !== toolMsgIdx)
         }
       }
     }
@@ -56,6 +56,18 @@ export function useMessageView() {
     }
     const [first, second] = group.messageGroupInfo;
     return first.type === MessageType.THINKING && second.type === MessageType.ANSWER;
+  }
+  const foldAll = () => {
+    currentMeassageViewInfo.value.forEach((group) => {
+      if (group.isProgress && group.messageGroupInfo && Array.isArray(group.messageGroupInfo)) {
+        group.messageGroupInfo.forEach((messageInfo) => {
+          if (messageInfo.type === MessageType.THINKING) {
+            messageInfo.thinkingIsExpanded = false;
+          }
+          messageInfo.toolIsExpanded = false;
+        })
+      }
+    })
   }
   // 在结束时处理，特殊情况：知识门户问答只有thinking 和 answer.
   const handleDataAfterEnd = () => {
@@ -85,6 +97,7 @@ export function useMessageView() {
         messageGroupInfo: [answerMessage]
       });
     }
+    foldAll();
   }
   const handleData = (message: Message) => {
     // 安全保护，避免空消息导致异常
@@ -145,7 +158,6 @@ export function useMessageView() {
     }
     uploadHeartInfo.value = undefined;
 
-    // todo: 处理执行工具状态
     // 如果MessageType 是TOOL_RESULT，找到最近一条如果MessageType 为TOOL_USE 的消息的messageGroupInfo，toolUseComplete状态设置为 true
     if(message.type === MessageType.TOOL_RESULT || message.type === MessageType.TOOL_RESULT_SILENT) {
       const filterType = message.type === MessageType.TOOL_RESULT ? MessageType.TOOL_USE : MessageType.TOOL_USE_SILENT;
@@ -169,7 +181,10 @@ export function useMessageView() {
         groupTitle: '',
         show: true,
         thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
-        messageGroupInfo: [{ ...mergingMessage(message), thinkingIsExpanded: message.type === MessageType.THINKING }]
+        messageGroupInfo: [
+          { ...mergingMessage(message), 
+            thinkingIsExpanded: message.type === MessageType.THINKING
+          }]
       });
       return;
     }
@@ -202,7 +217,7 @@ export function useMessageView() {
     }
     // 如果上一条消息不是 THINKING 类型，则直接将新消息添加到当前组
     if (message.type !== MessageType.THINKING && message.type !== MessageType.DOCUMENTS) {
-      lastItemMessageGroupInfo.push(mergingMessage(message));
+      lastItemMessageGroupInfo.push({...mergingMessage(message),  toolIsExpanded: ( message.type === MessageType.TOOL_USE || message.type === MessageType.TOOL_USE_SILENT )});
       
     }
     // 如果上一条消息是 THINKING 类型，则将新消息作为一个新的分组添加到 currentMeassageViewInfo 中，并将上一条 THINKING 消息的 thinkState 设置为 success

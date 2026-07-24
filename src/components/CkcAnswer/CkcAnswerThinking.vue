@@ -77,6 +77,7 @@ onMounted(async () => {
   border-left: 2px solid #bbc3da;
   padding: 10px 16px;
   margin-left: 5px;
+  margin-top: 4px;
   @include thinkStyle;
   .markstream-vue {
     --ms-text-body: 12px;
