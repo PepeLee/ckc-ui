@@ -221,7 +221,7 @@ watch(() => prop.historyMessages, (newVal) => {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 10px 10px 4px 0;
+    padding: 10px 10px 4px 8px;
     border-radius: 999px;
     letter-spacing: 0.03em;
     font-weight: 500;

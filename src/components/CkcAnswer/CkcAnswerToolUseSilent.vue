@@ -2,7 +2,7 @@
   <div class="ckc-ui-tool-wrapper">
     <div class="ckc-ui-tool" @click="triggerExpanded" v-if="formattedJson && formattedJson.name">
       <Tool class="ckc-ui-toolicon" v-if="toolUseComplete" />
-      <img v-else class="ckc-ui-tool-loading" src="../../assets/imgs/loading.gif" alt="avatar" />
+      <img v-else class="ckc-ui-tool-loading" src="../../assets/imgs/loading.png" alt="avatar" />
       {{  formattedJson?.name }}
       <button class="ckc-ui-progress-btn"  v-if="command">
         <img v-if="messageInfo.toolIsExpanded" src="../../assets/imgs/arrow-down.png" alt="avatar" />
@@ -69,9 +69,10 @@
   // margin-right: 8px;
 }
 .#{$ckcUiPrefix}-tool-loading {
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
     margin-right: 8px;
+    animation: ckc-ui-spin 1s linear infinite;
 }
 
 .#{$ckcUiPrefix}-tool-comman {
