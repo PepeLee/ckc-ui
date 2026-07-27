@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isShow && messageGroupView.isExpanded" :class="['ckc-ui-think-head', 'is-expanded', { 'is-mobile': useSource !== 'pc' }]">
-    <div class="ckc-ui-think-left" @click="toggleFold()">
+  <div v-if="isShow && messageGroupView.isExpanded" :class="['ckc-ui-think-head', 'is-expanded', { 'is-mobile': useSource !== 'pc' }]" @click="toggleFold()">
+    <div class="ckc-ui-think-left" >
       <template v-if="useSource==='pc'">
         <img v-if="loading" class="ckc-ui-think-img" src="../../assets/imgs/deepThink.gif" alt="avatar" />
         <!-- <DeepThink v-if="isSuccess"></DeepThink> -->
@@ -23,7 +23,7 @@
         <!-- 已终止 -->
       </template>
     </div>
-    <button class="ckc-ui-think-btn" @click="toggleFold()">
+    <button class="ckc-ui-think-btn" >
       <img v-if="buttonExpanded" src="../../assets/imgs/arrow-down.png" alt="avatar" />
       <img v-else src="../../assets/imgs/arrow-right.png" alt="avatar" />
     </button>
@@ -101,6 +101,7 @@ const isBreak = computed(() => messageGroupView.thinkState === 'break');
     gap: 8px;
     flex-wrap: wrap;
     width: auto;
+    cursor: pointer;
 
     // &.is-expanded {
     //   // display: flex;

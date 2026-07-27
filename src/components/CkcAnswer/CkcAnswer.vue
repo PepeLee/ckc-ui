@@ -23,7 +23,16 @@
           @keydown.space.prevent="toggleGroupExpand(meassageGroupView)"
         >
           <ProgressSuccess v-if="meassageGroupView.isProgress" class="ckc-ui-group-title-icon" />
-          <span class="ckc-ui-group-title-text">{{ meassageGroupView.groupTitle }}</span>
+          <span class="ckc-ui-group-title-text">
+                <component
+                  :is="markdownComponent"
+                  :content="meassageGroupView.groupTitle"
+                  :custom-html-tags="prop.customHtmlTags"
+                  :loading="true"
+                  :custom-id="prop.renderCustomId"
+                />
+            <!-- {{ meassageGroupView.groupTitle }} -->
+          </span>
           <img class="ckc-ui-arrow-btn" v-if="meassageGroupView.isExpanded && meassageGroupView.isProgress" src="../../assets/imgs/arrow-down.png" alt="avatar" />
           <img class="ckc-ui-arrow-btn" v-if="!meassageGroupView.isExpanded && meassageGroupView.isProgress" src="../../assets/imgs/arrow-right.png" alt="avatar" />
         </div>
@@ -253,6 +262,10 @@ watch(() => prop.historyMessages, (newVal) => {
     color: #17204D;
     width: fit-content;
 
+    & .markstream-vue p:first-child {
+      margin: 0;
+    }
+
     &.isProgress {
       color: #17204D;
     }
@@ -283,10 +296,10 @@ watch(() => prop.historyMessages, (newVal) => {
     &.isProgress {
       margin-left: 6px;
       background-color: #ebf0fa;
-      margin-top: 6px;
     }
     &.isExpanded {
       padding: 10px;
+      margin-top: 6px;
     }
   }
   .#{$ckcUiPrefix}-task-run-tip-loading {

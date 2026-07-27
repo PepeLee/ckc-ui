@@ -9,6 +9,7 @@
         render-custom-id="docs" 
         :custom-html-tags="['custom-data']"
         @click-recomendation="recomendationAsk"
+        :markdown-component="MarkdownRender"
         @click-document="documentClick">
         <template #confirm="confirmProps">
           {{ confirmProps.confirmInfo }}
@@ -35,6 +36,7 @@
   import type { Message, Document } from '../../../src/components/types/message';
   import { message } from '../const/mock-data/message-new1';
   import { setCustomComponents } from 'markstream-vue';
+  import { MarkdownRender } from 'markstream-vue';
   // import CustomComp from '../components/customComp.vue';
 
   const cardEmitter = mitt();
@@ -74,7 +76,7 @@
       if (index < message.length) {
         messages.value.push(message[index] as Message);
         index++;
-        setTimeout(addMessage, 600); // 每200毫秒添加一条消息，模拟流式返回
+        setTimeout(addMessage, 20); // 每200毫秒添加一条消息，模拟流式返回
       }
     };
     addMessage();
