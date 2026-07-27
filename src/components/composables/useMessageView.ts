@@ -48,7 +48,9 @@ export function useMessageView() {
         }
       }
     }
-    group.groupTitle = title || '任务已执行';
+    const normalizedTitle = typeof title === 'string' ? title.trim() : '';
+    const isInvalidTitle = /^\s*(\n|\r\n)+\s*$/.test(title || '');
+    group.groupTitle = isInvalidTitle ? '任务已执行' : normalizedTitle || '任务已执行';
   }
   const isThinkingAndAnswerGroup = (group: MessageViewInfo): boolean => {
     if (group.messageGroupInfo.length !== 2) {
