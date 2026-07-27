@@ -12,6 +12,7 @@ export function useMessageView() {
   }>();
   const humanConfirmMessage = ref<Message | null>(null); // 用于存储 human_confirm 类型的消息，方便后续处理
   const taskListMessage = ref<Message | null>(null); // 用于存储 task_list 类型的消息，方便后续处理
+  const timeConsuming = ref<string>();
   const mergingMessage = (message: Message) : MessageForView => {
     return {
       ...message,
@@ -85,7 +86,7 @@ export function useMessageView() {
       return;
     }
     // 取出answer 放到当前组后面，并删除当前组的answer,当前组设为执行过程
-    const answerIndex = mainGroup.messageGroupInfo.findIndex((msg) => msg.type === MessageType.ANSWER);
+    const answerIndex = mainGroup.messageGroupInfo.findIndex((msg) => msg.type === MessageType.ANSWER || msg.type === MessageType.EXCEPTION);
     if (answerIndex >= 0) {
       const answerMessage = mainGroup.messageGroupInfo[answerIndex];
       mainGroup.messageGroupInfo.splice(answerIndex, 1);
@@ -122,6 +123,7 @@ export function useMessageView() {
     // 对话结束，end标志变为true，后续消息不再处理
     if (message.type === MessageType.END) {
       end.value = true;
+      timeConsuming.value = message.timeConsuming;
       handleDataAfterEnd();
       return;
     }
@@ -135,7 +137,21 @@ export function useMessageView() {
       return;
     }
     if (message.type === MessageType.EXCEPTION) {
+      const lastMeassageViewInfo = currentMeassageViewInfo.value[currentMeassageViewInfo.value.length - 1];
+      const lastItemMessageGroupInfo = lastMeassageViewInfo.messageGroupInfo;
+      const previousMessage = lastItemMessageGroupInfo[lastItemMessageGroupInfo.length - 1];
+      // 判断当前消息是否与上一条消息来源一致，可进行内容合并
+      const isSameTrace = previousMessage.traceId === message.traceId;
+      const isSameSession = previousMessage.sessionId === message.sessionId;
+      const isAnswerType = previousMessage.type === MessageType.ANSWER;
+      if (isSameTrace && isSameSession && isAnswerType && typeof message.content === 'string') {
+        previousMessage.content += message.content;
+      } else {
+        lastItemMessageGroupInfo.push(mergingMessage(message));
+      }
       end.value = true;
+      handleDataAfterEnd();
+      return
     }
     // 如果是 human_confirm 类型的消息，直接返回，不进入消息分组逻辑
     if (message.type === MessageType.HUMAN_CONFIRM) {
@@ -311,5 +327,15 @@ export function useMessageView() {
     //   messageGroupInfo: [mergingMessage(message)]
     // });
   }
-  return { currentMeassageViewInfo, recommendations, end, handleData, uploadHeartInfo, humanConfirmMessage, taskListMessage, progressShow };
+  return { 
+    currentMeassageViewInfo, 
+    recommendations, 
+    end, 
+    handleData, 
+    uploadHeartInfo, 
+    humanConfirmMessage, 
+    taskListMessage, 
+    progressShow,
+    timeConsuming,
+  };
 }

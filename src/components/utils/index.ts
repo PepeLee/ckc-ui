@@ -1,5 +1,26 @@
 import { MessageType, type MessageViewInfo } from '../types/message';
 
+export function formatTimeConsuming(value: string | number | undefined): string {
+  if (value === undefined || value === null || value === '') {
+    return '0分钟0秒';
+  }
+
+  const totalMilliseconds = Number(value);
+  if (!Number.isFinite(totalMilliseconds) || totalMilliseconds < 0) {
+    return '0分钟0秒';
+  }
+
+  const totalSeconds = Math.floor(totalMilliseconds / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  if (minutes === 0) {
+    return `${seconds}秒`;
+  }
+
+  return `${minutes}分钟${seconds}秒`;
+}
+
 /**
  * 查找数组中最后一个 messageGroupInfo 里包含 ANSWER 类型消息的 MessageViewInfo
  * @param currentMessageViewInfo - 消息视图信息数组

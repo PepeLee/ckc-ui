@@ -3,13 +3,14 @@
     <div class="ckc-ui-upload-heart" v-if="uploadHeartInfo && currentMeassageViewInfo.length === 0">
       {{ uploadHeartInfo.task }} 
     </div>
-    <div v-if="end && showProgressHead" class="ckc-ui-progress-head" @click="triggerProgress()">
+    <div v-if="showProgressHead" class="ckc-ui-progress-head" @click="triggerProgress()">
       <MobileDeepThink style="margin-right: 6px;" ></MobileDeepThink>
       已完成
       <button class="ckc-ui-progress-btn">
         <img v-if="allProcessShow" src="../../assets/imgs/arrow-down.png" alt="avatar" />
         <img v-else src="../../assets/imgs/arrow-right.png" alt="avatar" />
       </button>
+      <span v-if="timeConsuming" style="margin-left: 4px;">({{ formattedTimeConsuming }})</span>
     </div>
     <template v-for="(meassageGroupView, index) in currentMeassageViewInfo" :key="index">
       <div v-if="meassageGroupView.show" class="ckc-ui-main" :class="[{ 'isProgress': meassageGroupView.isProgress}]">
@@ -24,13 +25,13 @@
         >
           <ProgressSuccess v-if="meassageGroupView.isProgress" class="ckc-ui-group-title-icon" />
           <span class="ckc-ui-group-title-text">
-                <component
-                  :is="markdownComponent"
-                  :content="meassageGroupView.groupTitle"
-                  :custom-html-tags="prop.customHtmlTags"
-                  :loading="true"
-                  :custom-id="prop.renderCustomId"
-                />
+            <component
+              :is="markdownComponent"
+              :content="meassageGroupView.groupTitle"
+              :custom-html-tags="prop.customHtmlTags"
+              :loading="true"
+              :custom-id="prop.renderCustomId"
+            />
             <!-- {{ meassageGroupView.groupTitle }} -->
           </span>
           <img class="ckc-ui-arrow-btn" v-if="meassageGroupView.isExpanded && meassageGroupView.isProgress" src="../../assets/imgs/arrow-down.png" alt="avatar" />
@@ -100,6 +101,7 @@ import { watch, ref, provide, computed } from 'vue';
 import type { CkcAnswerProps } from '../types/ckc-answer-props';
 import { MessageType, type Document } from '../types/message';
 import { useMessageView } from '../composables/useMessageView';
+import { formatTimeConsuming } from '../utils';
 import CkcAnswerThinking from './CkcAnswerThinking.vue';
 import CkcAnswerToolUse from './CkcAnswerToolUse.vue';
 import CkcAnswerToolUseSilent from './CkcAnswerToolUseSilent.vue';
@@ -130,12 +132,17 @@ const {
   uploadHeartInfo, 
   progressShow,
   humanConfirmMessage,
-  taskListMessage
+  taskListMessage,
+  timeConsuming,
 } = useMessageView();
 const lastProcessedIndex = ref(0);
 const lastProcessedHistoryIndex = ref(0);
 const allProcessShow = computed(() => {
   return currentMeassageViewInfo.value.every(info => info.show);
+})
+
+const formattedTimeConsuming = computed(() => {
+  return formatTimeConsuming(timeConsuming.value);
 })
 
 function clickRecomendation(message: string) {
@@ -308,13 +315,17 @@ watch(() => prop.historyMessages, (newVal) => {
     animation: ckc-ui-spin 1s linear infinite;
   }
   .#{$ckcUiPrefix}-progress-head {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     font-size: 14px;
     color: #576999;
     font-weight: 500;
     cursor: pointer;
     margin-bottom: 8px;
+    background-color: #f5faff;
+    width: 100%;
+    padding: 10px 0 10px 4px;
+    border-radius: 8px;
   }
   .#{$ckcUiPrefix}-progress-btn {
       background: none;

@@ -35,6 +35,7 @@ export interface Message {
     endFlag?: boolean; // 用于标识消息是否为结束标志
     command?: string;
     summary?: string;
+    timeConsuming?:string;
 }
 
 export interface MessageForView extends Message {

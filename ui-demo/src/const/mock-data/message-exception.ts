@@ -5871,13 +5871,12 @@ export const message = [
     "position": 0
   },
   {
-    "type": "end",
-    "traceId": "traceId_lov_C8",
-    "sessionId": "lipeipei-013_SYS03200057_20260724130702729",
-    "content": "[{\"thinking\":\"完美!文件已经成功上传到OSS服务器。现在我需要按照技能要求返回文件卡片格式的输出。\\n\\n返回的URL是: `/center/ckeApi/api/tools/file/download?fileId=a5e0bd7a-057f-408c-906f-071a3ecffd9e`\\n\\n文件名是: `会议待办任务跟进表.md`\\n\\n我需要按照技能文档中的格式输出:\\n```json\\n{\\n  \\\"type\\\": \\\"fileinfo\\\",\\n  \\\"filename\\\": \\\"会议待办任务跟进表.md\\\",\\n  \\\"url\\\": \\\"/center/ckeApi/api/tools/file/download?fileId=a5e0bd7a-057f-408c-906f-071a3ecffd9e\\\"\\n}\\n```\"},{\"text\":\"已成功从会议纪要中提取所有待办工作，并生成了规范的会议待办任务跟进表！\\n\\n## 提取的待办任务汇总：\\n\\n从\\\"小蓝产品周会会议纪要\\\"中共提取了**5项待办任务**：\\n\\n| 序号 | 待办事项 | 负责人 | 所属部门 | 截止时间 |\\n|------|----------|--------|----------|----------|\\n| 1 | 完成全套轻量化演示脚本定稿 | 张三 | 产品部 | 2026年07月08日 |\\n| 2 | 完成所有Demo素材包汇总归档 | 李四 | 运营部 | 2026年07月10日 |\\n| 3 | 完成数据可视化解析效果优化 | 王五 | 技术部 | 2026年07月14日 |\\n| 4 | 完成一次全流程对外模拟宣讲演练 | 赵六 | 产品部 | 2026年07月09日 |\\n| 5 | 统一输出可落地任务跟进表 | 全员 | - | 持续执行 |\\n\\n## 生成的文档内容：\\n\\n该markdown文档不仅包含待办任务清单表格，还额外提供了：\\n- ✅ 任务优先级说明\\n- ✅ 关键交付要求\\n- ✅ 问题背景说明\\n- ✅ 跟进机制\\n\\n文档已上传至OSS服务器，您可以通过以下链接下载查看：\\n\\n输出产物：<custom-data>{\\\"type\\\":\\\"fileinfo\\\",\\\"filename\\\":\\\"会议待办任务跟进表.md\\\",\\\"url\\\":\\\"/center/ckeApi/api/tools/file/download?fileId=a5e0bd7a-057f-408c-906f-071a3ecffd9e\\\"}</custom-data>\"}]",
-    "conversation_id": "lipeipei-013_SYS03200057_20260724130702729",
-    "created_at": 0,
+    "content": "处理失败: Model request timeout after PT5M",
+    "conversationId": "lipeipei-013_SYS03200057_20260724130702729",
+    "createdAt": 0,
     "position": 0,
-    "timeConsuming": "11888033"
+    "sessionId": "lipeipei-013_SYS03200057_20260724130702729",
+    "traceId": "traceId_lov_C8",
+    "type": "exception"
   }
 ]
