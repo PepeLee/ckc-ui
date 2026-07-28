@@ -85,8 +85,15 @@ export function useMessageView() {
     if (mainGroupIndex === 0 && isThinkingAndAnswerGroup(mainGroup)) {
       return;
     }
-    // 取出answer 放到当前组后面，并删除当前组的answer,当前组设为执行过程
-    const answerIndex = mainGroup.messageGroupInfo.findIndex((msg) => msg.type === MessageType.ANSWER || msg.type === MessageType.EXCEPTION);
+    // 取出最后一个 answer/exception 放到当前组后面，并删除当前组中的对应消息，当前组设为执行过程
+    let answerIndex = -1;
+    for (let i = mainGroup.messageGroupInfo.length - 1; i >= 0; i--) {
+      const msg = mainGroup.messageGroupInfo[i];
+      if (msg.type === MessageType.ANSWER || msg.type === MessageType.EXCEPTION) {
+        answerIndex = i;
+        break;
+      }
+    }
     if (answerIndex >= 0) {
       const answerMessage = mainGroup.messageGroupInfo[answerIndex];
       mainGroup.messageGroupInfo.splice(answerIndex, 1);

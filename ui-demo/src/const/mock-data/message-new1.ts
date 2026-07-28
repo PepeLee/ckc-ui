@@ -4516,6 +4516,29 @@ export const message = [
     "created_at": 1784869801041,
     "position": 0
   },
+
+    {
+    "type": "answer",
+    "traceId": "traceId_lov_C8",
+    "sessionId": "lipeipei-013_SYS03200057_20260724130702729",
+    "content": "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
+    "summary": "",
+    "command": "",
+    "conversation_id": "lipeipei-013_SYS03200057_20260724130702729",
+    "created_at": 1784869801102,
+    "position": 0
+  },
+    {
+    "type": "tool_use",
+    "traceId": "traceId_lov_C8",
+    "sessionId": "lipeipei-013_SYS03200057_20260724130702729",
+    "content": "{\"id\":\"call_cb99b20237f641a3882b7ce3\",\"input\":{\"working_directory\":\".\",\"command\":\"curl -X POST ${CKEAPI_HOST}/api/tools/file/uploadMultipart -F \\\"file=@会议待办任务跟进表.md\\\"\",\"timeout\":30},\"metadata\":{},\"name\":\"命令执行\",\"state\":\"PENDING\"}",
+    "summary": "发起http请求调用",
+    "command": "curl -X POST ${CKEAPI_HOST}/api/tools/file/uploadMultipart -F \"file=@会议待办任务跟进表.md\"",
+    "conversation_id": "lipeipei-013_SYS03200057_20260724130702729",
+    "created_at": 1784869795336,
+    "position": 0
+  },
   {
     "type": "answer",
     "traceId": "traceId_lov_C8",
