@@ -10,7 +10,7 @@
         <img v-if="allProcessShow" src="../../assets/imgs/arrow-down.png" alt="avatar" />
         <img v-else src="../../assets/imgs/arrow-right.png" alt="avatar" />
       </button>
-      <span v-if="timeConsuming" style="margin-left: 4px;">({{ formattedTimeConsuming }})</span>
+      <span v-if="timeConsuming" style="margin-left: 4px;">(用时:{{ formattedTimeConsuming }})</span>
     </div>
     <template v-for="(meassageGroupView, index) in currentMeassageViewInfo" :key="index">
       <div v-if="meassageGroupView.show" class="ckc-ui-main" :class="[{ 'isProgress': meassageGroupView.isProgress}]">
