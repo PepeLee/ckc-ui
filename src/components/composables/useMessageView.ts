@@ -94,7 +94,7 @@ export function useMessageView() {
         break;
       }
     }
-    if (answerIndex >= 0) {
+    if (answerIndex > 0) {
       const answerMessage = mainGroup.messageGroupInfo[answerIndex];
       mainGroup.messageGroupInfo.splice(answerIndex, 1);
       getGroupTitle(mainGroup);
@@ -208,7 +208,7 @@ export function useMessageView() {
         thinkState: message.type === MessageType.THINKING ? 'loading' : undefined,
         messageGroupInfo: [
           { ...mergingMessage(message), 
-            thinkingIsExpanded: message.type === MessageType.THINKING
+            // thinkingIsExpanded: message.type === MessageType.THINKING
           }]
       });
       return;
