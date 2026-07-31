@@ -2,6 +2,7 @@
   <div class="wrapper">
     <!-- useSource="mobile" -->
      <div class="main">
+       <!-- <ai-report-panel items="[{&quot;type&quot;:&quot;markdown&quot;,&quot;name&quot;:&quot;来自父页面的消息&quot;,&quot;value&quot;:&quot;这是通过 `postMessage` 从父页面触发的 **AI 报告面板** 渲染测试。&quot;},{&quot;type&quot;:&quot;alertcard&quot;,&quot;name&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;,&quot;object&quot;:{&quot;title&quot;:&quot;提示&quot;,&quot;score&quot;:&quot;99&quot;,&quot;desc&quot;:&quot;当前为父页面主动下发的测试数据，用于验证跨 iframe 通信。&quot;,&quot;alert&quot;:[&quot;事项一：确认 iframe 内能收到消息&quot;,&quot;事项二：确认 Web Component 或 Portal 能正确渲染&quot;]}}]"></ai-report-panel> -->
       <CkcAnswer 
         ref="ckcAnswerRef"
         :messages="messages"  
@@ -32,9 +33,10 @@
   import { ref, onMounted, provide } from 'vue';
   import CkcAnswer from '../../../src/components/CkcAnswer/index.ts';
   import {CustomData, CustomDataArray } from '../../../src/components/CompForAnswer/index.ts';
+  import { ExtCustomTag } from '../../../src/components/ExtCompForAnswer/index.ts';
   import mitt from 'mitt';
   import type { Message, Document } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message-work-flow';
+  import { message } from '../const/mock-data/message-ext';
   import { setCustomComponents } from 'markstream-vue';
   import { MarkdownRender } from 'markstream-vue';
   // import CustomComp from '../components/customComp.vue';
@@ -54,6 +56,7 @@
   setCustomComponents('docs', {
     'custom-data': CustomData,
     'custom-data-array': CustomDataArray,
+    'ext-custom-tag': ExtCustomTag,
   })
   const ckcAnswerRef = ref<InstanceType<typeof CkcAnswer> | null>(null)
   const messages = ref<Message[]>([]);
