@@ -90,7 +90,7 @@ const btnClick = () => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use "../../styles/index.scss" as *;
 
 .#{$ckcUiPrefix}-card {

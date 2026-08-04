@@ -119,7 +119,7 @@ function getIcon() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use "../../styles/index.scss" as *;
 
 .#{$ckcUiPrefix}-file-card {

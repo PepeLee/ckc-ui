@@ -39,7 +39,7 @@ async function onDownloadClick() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .file-download-card {
   display: inline-flex;
   align-items: center;

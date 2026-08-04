@@ -1,4 +1,5 @@
 import './assets/main.css'
+import 'markstream-vue/index.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
