@@ -54,7 +54,7 @@
   setCustomComponents('docs', {
     'custom-data': CustomData,
     'custom-data-array': CustomDataArray,
-    'markdown': MarkdownCodeBlockNode,
+    // 'markdown': MarkdownCodeBlockNode,
     'code_block': CodeBlockNode
   })
   const ckcAnswerRef = ref<InstanceType<typeof CkcAnswer> | null>(null)

@@ -8,6 +8,7 @@
       :is="markdownComponent"
       :content="prop.message"
       :custom-html-tags="prop.customHtmlTags"
+      :code-block-props="{ showFontSizeButtons: false, showTooltips: false, showExpandButton: false }"
       :loading="true"
       :custom-id="prop.renderCustomId"
     />

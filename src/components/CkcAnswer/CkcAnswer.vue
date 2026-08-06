@@ -206,7 +206,7 @@ watch(() => prop.messages, (newVal) => {
     }
     lastProcessedIndex.value = newVal.length;
   }
-  console.log('prop.messages', currentMeassageViewInfo.value);
+  // console.log('prop.messages', currentMeassageViewInfo.value);
 }, { deep: true, immediate: true });
 
 watch(() => prop.historyMessages, (newVal) => {
