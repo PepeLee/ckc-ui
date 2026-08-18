@@ -34,7 +34,7 @@
   import {CustomData, CustomDataArray } from '../../../src/components/CompForAnswer/index.ts';
   import mitt from 'mitt';
   import type { Message, Document } from '../../../src/components/types/message';
-  import { message } from '../const/mock-data/message-11';
+  import { message } from '../const/mock-data/message-file';
   import { setCustomComponents, MarkdownCodeBlockNode, CodeBlockNode } from 'markstream-vue';
   import { MarkdownRender } from 'markstream-vue';
   // import CustomComp from '../components/customComp.vue';
@@ -50,7 +50,8 @@
   cardEmitter.on('file-card-click', (event) => {
     console.log('file-card-click', event)
   })
-  // CustomData.useSource = 'mobile';
+  CustomData.useSource = 'mobile';
+  CustomDataArray.useSource = 'mobile';
   setCustomComponents('docs', {
     'custom-data': CustomData,
     'custom-data-array': CustomDataArray,
