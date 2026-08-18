@@ -6,7 +6,13 @@
         :custom-html-tags="prop.customHtmlTags" 
         :code-block-props="{ showFontSizeButtons: false, showTooltips: false, showExpandButton: false }"
         :loading="true"
-        :custom-id="prop.renderCustomId" />
+        :custom-id="prop.renderCustomId"
+        :final="false"
+        :fade="false"
+        :typewriter="true"
+        :max-live-nodes="0"
+        smooth-streaming="auto"
+     />
   </div>
 </template>
 
