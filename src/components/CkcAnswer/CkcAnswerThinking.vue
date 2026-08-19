@@ -13,7 +13,7 @@
       :custom-id="prop.renderCustomId"
       :final="false"
       :fade="false"
-      :typewriter="true"
+      :typewriter="false"
       :max-live-nodes="0"
       smooth-streaming="auto"
     />
