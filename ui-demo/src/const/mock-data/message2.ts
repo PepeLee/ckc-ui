@@ -1191,61 +1191,17 @@ export const message = [
     "type": "answer",
     "traceId": "traceId_C1-uDf",
     "sessionId": "lipeipei-013_SYS00710678_20260422150711474",
-    "content": "收到",
+    "content": "\n\n",
     "conversation_id": "lipeipei-013_SYS00710678_20260422150711474",
     "created_at": 0,
     "position": 0
   },
-  {
-    "type": "answer",
-    "traceId": "traceId_C1-uDf",
-    "sessionId": "lipeipei-013_SYS00710678_20260422150711474",
-    "content": "！",
-    "conversation_id": "lipeipei-013_SYS00710678_20260422150711474",
-    "created_at": 0,
-    "position": 0
-  },
-  {
-    "type": "answer",
-    "traceId": "traceId_C1-uDf",
-    "sessionId": "lipeipei-013_SYS00710678_20260422150711474",
-    "content": "我来帮您规划",
-    "conversation_id": "lipeipei-013_SYS00710678_20260422150711474",
-    "created_at": 0,
-    "position": 0
-  },
-  {
-    "type": "answer",
-    "traceId": "traceId_C1-uDf",
-    "sessionId": "lipeipei-013_SYS00710678_20260422150711474",
-    "content": "下周下午",
-    "conversation_id": "lipeipei-013_SYS00710678_20260422150711474",
-    "created_at": 0,
-    "position": 0
-  },
-  {
-    "type": "answer",
-    "traceId": "traceId_C1-uDf",
-    "sessionId": "lipeipei-013_SYS00710678_20260422150711474",
-    "content": "的需求评审",
-    "conversation_id": "lipeipei-013_SYS00710678_20260422150711474",
-    "created_at": 0,
-    "position": 0
-  },
-  {
-    "type": "answer",
-    "traceId": "traceId_C1-uDf",
-    "sessionId": "lipeipei-013_SYS00710678_20260422150711474",
-    "content": "会。",
-    "conversation_id": "lipeipei-013_SYS00710678_20260422150711474",
-    "created_at": 0,
-    "position": 0
-  },
+
   {
     "type": "tool_use",
     "traceId": "traceId_C1-uDf",
     "sessionId": "lipeipei-013_SYS00710678_20260422150711474",
-    "content": "{\"content\":\"{\\\"command\\\": \\\"cal 4 2026\\\"}\",\"input\":{\"command\":\"cal 4 2026\"},\"metadata\":{},\"name\":\"执行脚本\"}",
+    "content": "{\"content\":\"{\\\"command\\\": \\\"cal 4 2026\\\"}\",\"input\":{\"command\":\"cal 4 2026\"},\"metadata\":{\"@type\":\"ddddd\"},\"name\":\"执行脚本111333\"}",
     "conversation_id": "lipeipei-013_SYS00710678_20260422150711474",
     "created_at": 0,
     "position": 0

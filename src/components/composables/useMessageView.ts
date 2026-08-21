@@ -25,29 +25,31 @@ export function useMessageView() {
     }
     let title = '';
     let toolName = '';
+
+    const toolMsgIdx = group.messageGroupInfo.findIndex((mgx) => {
+      return mgx.type === MessageType.TOOL_USE || mgx.type === MessageType.TOOL_USE_SILENT
+    })
+    if (toolMsgIdx >= 0) {
+      const toolMsg = group.messageGroupInfo[toolMsgIdx];
+      try {
+        toolName = toolMsg.summary || json5.parse(toolMsg?.content as string).name || '';
+      } catch {
+        toolName = '';
+      }
+      title = toolName;
+    }
     if (group.messageGroupInfo.length > 0) {
       const answerMsgIdex = group.messageGroupInfo.findIndex((mgx) => {
         return mgx.type === MessageType.ANSWER
       })
       if (answerMsgIdex >= 0) {
         const answerMsg = group.messageGroupInfo[answerMsgIdex];
-        title = answerMsg?.content as string || '';
-        group.messageGroupInfo = group.messageGroupInfo.filter((_, idx) => idx !== answerMsgIdex)
-      } else {
-        const toolMsgIdx = group.messageGroupInfo.findIndex((mgx) => {
-          return mgx.type === MessageType.TOOL_USE || mgx.type === MessageType.TOOL_USE_SILENT
-        })
-        if (toolMsgIdx >= 0) {
-          const toolMsg = group.messageGroupInfo[toolMsgIdx];
-          try {
-            toolName = toolMsg.summary || json5.parse(toolMsg?.content as string).name || '';
-          } catch {
-            toolName = '';
-          }
-          title = toolName;
-          // group.messageGroupInfo = group.messageGroupInfo.filter((_, idx) => idx !== toolMsgIdx)
+        const answerContent = answerMsg?.content as string || '';
+        if (answerContent.trim() !== '' && !(/^\s*(\n|\r\n)+\s*$/.test(answerContent || '')) ) {
+          title = answerContent;
+          group.messageGroupInfo = group.messageGroupInfo.filter((_, idx) => idx !== answerMsgIdex)
         }
-      }
+      } 
     }
     const normalizedTitle = typeof title === 'string' ? title.trim() : '';
     const isInvalidTitle = /^\s*(\n|\r\n)+\s*$/.test(title || '');

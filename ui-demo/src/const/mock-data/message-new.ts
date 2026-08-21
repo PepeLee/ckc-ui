@@ -354,7 +354,7 @@ export const message = [
     "type": "tool_use",
     "traceId": "traceId_7n0qOv",
     "sessionId": "lipeipei-013_SYS03200057_20260717103257383",
-    "content": "{\"id\":\"call_34cd40a08baf4aa59f3772dd\",\"input\":{\"working_directory\":\".\",\"command\":\"python3 skills/tencent-web-search/scripts/tencent_search.py --query \\\"平安人寿 年度财务报告 2024 PDF下载\\\" --top 10\",\"timeout\":30},\"metadata\":{},\"name\":\"命令执行\",\"state\":\"PENDING\"}",
+    "content": "{\"id\":\"call_34cd40a08baf4aa59f3772dd\",\"input\":{\"@type\":\"abc\",\"working_directory\":\".\",\"command\":\"python3 skills/tencent-web-search/scripts/tencent_search.py --query \\\"平安人寿 年度财务报告 2024 PDF下载\\\" --top 10\",\"timeout\":30},\"metadata\":{},\"name\":\"命令执行11111\",\"state\":\"PENDING\"}",
     "conversation_id": "lipeipei-013_SYS03200057_20260717103257383",
     "created_at": 1784255680237,
     "position": 0
