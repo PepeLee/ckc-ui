@@ -50,6 +50,9 @@
   cardEmitter.on('file-card-click', (event) => {
     console.log('file-card-click', event)
   })
+  cardEmitter.on('wiki-info-click', (event) => {
+    console.log('wiki-info-click', event)
+  })
   CustomData.useSource = 'mobile';
   CustomDataArray.useSource = 'mobile';
   setCustomComponents('docs', {
