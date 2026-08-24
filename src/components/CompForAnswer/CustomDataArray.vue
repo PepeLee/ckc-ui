@@ -2,9 +2,10 @@
 import { inject, ref, watch, type Ref, getCurrentInstance } from 'vue';
 import JSON5 from 'json5';
 import FileCard from './FileCard.vue';
+import WikiInfo from './WikiInfo.vue';
 import MeetingCard from './MeetingCard.vue';
 import ScheduleCard from './ScheduleCard.vue';
-type ComponentKey = 'schedule' | 'meeting' | 'fileinfo'
+type ComponentKey = 'schedule' | 'meeting' | 'fileinfo' | 'wikiinfo'
 const customDataArray = ref<any>([]);
 const customDataInfos = ref<any[]>([])
 
@@ -17,6 +18,7 @@ const customComponentMap: Record<ComponentKey, any> = {
     schedule: ScheduleCard,
     meeting: MeetingCard,
     fileinfo: FileCard,
+    wikiinfo: WikiInfo,
 }
 
 const props = defineProps<{
@@ -42,6 +44,9 @@ const findCustomComponent = (data: any) => {
     }
     if (data.type === 'fileinfo') {
         return 'fileinfo'
+    }
+    if (data.type === 'wikiinfo') {
+        return 'wikiinfo'
     }
     return 'schedule'
 }
