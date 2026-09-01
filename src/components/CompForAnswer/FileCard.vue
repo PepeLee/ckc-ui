@@ -6,19 +6,22 @@
         <div class="ckc-ui-file-card__title" :title="props.meetingData.filename">{{props.meetingData.filename}}</div>
       </div>
     </div>
-    <button v-if="props.useSource !== 'mobile'"  class="ckc-ui-file-card__action" type="button" @click.stop="downloadFile">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 4V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-        <path d="M8 10L12 14L16 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-        <path d="M6 18H18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-      </svg>
-    </button>
+    <div ref="moreElRef" class="ckc-ui-file-card__more" @click.stop="handleMoreClick">
+      <button class="ckc-ui-file-card__action" type="button" aria-label="更多操作">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="5" r="1.7" />
+          <circle cx="12" cy="12" r="1.7" />
+          <circle cx="12" cy="19" r="1.7" />
+        </svg>
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 import mitt, { type Emitter } from 'mitt';
+import { toggleFileCardPopover } from '../composables/useFileCardPopover';
 import uploadDefault from '../../assets/imgs/ckcDocuments/upload-default.svg'
 import uploadExcel from '../../assets/imgs/ckcDocuments/upload-excel.svg'
 import uploadImage from '../../assets/imgs/ckcDocuments/upload-image.svg'
@@ -49,6 +52,25 @@ const cardClick = () => {
         url: props.meetingData.url
     })
 }
+
+// 更多按钮：渲染与定位统一交给单例 popover 服务处理
+const moreElRef = ref<HTMLElement | null>(null);
+
+const handleMoreClick = () => {
+    if (!moreElRef.value) return;
+    toggleFileCardPopover({
+        anchorEl: moreElRef.value,
+        showDownload: props.useSource !== 'mobile',
+        onDownload: downloadFile,
+        onSave: () => {
+            emitter.emit('file-save', {
+                fileName: props.meetingData.filename,
+                url: props.meetingData.url
+            });
+        },
+    });
+}
+
 const downloadFile = async () => {
   try {
     const url = props.meetingData.url.startsWith('/')
@@ -170,6 +192,11 @@ function getIcon() {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.#{$ckcUiPrefix}-file-card__more {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
 }
 .#{$ckcUiPrefix}-file-card__action {
   width: 36px;
