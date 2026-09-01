@@ -2064,6 +2064,228 @@ export const message = [
     "position": 0
   },
   {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n\n## ",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625100,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "表格样式测试",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625105,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625110,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "| 字段 | 类型 | 说明 |",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625115,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625120,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "| --- | --- | --- |",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625125,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625130,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "| filename | string | 文件名 |",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625135,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625140,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "| url | string | 文件下载地址 |",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625145,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625150,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "| type | string | 卡片类型 |",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625155,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625160,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "支持对齐方式：",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625165,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625170,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "| 左对齐 | 居中对齐 | 居中对齐页码 |",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625175,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625180,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "| :--- | :---: | :---: |",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625185,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625190,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "| 苹果 | 香蕉 | <custom-data-array>[{\"type\":\"wikilink\",\"filename\":\"6月sc深化转型领导小组会议材料.pdf\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\",\"displayName\":\"P3-P12\",\"page\":[3,4,5,6,7,8,9,10,11,12]}]</custom-data-array> |",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625195,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625200,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "| 猫 | 狗 | <custom-data-array>[{\"type\":\"wikilink\",\"filename\":\"7月sc深化转型领导小组会议材料.pdf\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\",\"displayName\":\"P0-P1\",\"page\":[0,1]}]</custom-data-array> |",
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "深化转型材料<custom-data-array>[{\"type\":\"wikilink\",\"filename\":\"深化转型材料.pdf\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\",\"displayName\":\"P13\",\"page\":[3,5,8]}]</custom-data-array>",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625206,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n\n超量页码（>20）折叠示例：<custom-data-array>[{\"type\":\"wikilink\",\"filename\":\"全年汇报材料合集.pdf\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\",\"displayName\":\"全年汇报材料合集\",\"page\":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]}]</custom-data-array>",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625206,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770625210,
+    "position": 0
+  },
+  {
     "type": "heart",
     "traceId": "traceId_Ip-blV",
     "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
