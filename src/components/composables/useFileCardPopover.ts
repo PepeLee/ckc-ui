@@ -110,6 +110,9 @@ const handleDocumentClick = (event: MouseEvent) => {
 // 重算结果恒等于打开时的坐标（rect 减小多少、scrollY 就增大多少），此处保留仅为统一入口。
 const handleScroll = () => { 
 //   if (state.visible) computePosition();
+if(state.visible) {
+  state.visible = false;
+}
 };
 
 // 视口尺寸变化（窗口 resize / 移动端地址栏收起等）会改变 innerHeight/innerWidth 与翻转判定，
