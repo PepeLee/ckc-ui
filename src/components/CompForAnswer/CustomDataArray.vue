@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, inject, ref, watch, type Ref, getCurrentInstance } from 'vue';
-import JSON5 from 'json5';
 import FileCard from './FileCard.vue';
+import { parseCustomDataJson } from '../utils/parseCustomData';
 import WikiInfo from './WikiInfo.vue';
 import WikiLink from './WikiLink.vue';
 import MeetingCard from './MeetingCard.vue';
@@ -64,17 +64,11 @@ const isWikiArray = computed(() =>
 watch(
     () => props.node.content as string,
     (content) => {
-        customDataArray.value = []
-        customDataInfos.value = []
-        if (!content) return;
-        try {
-            customDataArray.value = JSON5.parse(content)
-            if (Array.isArray(customDataArray.value)) {
-                customDataInfos.value = customDataArray.value.map(cd => ({ customData: cd }))
-            }
-        } catch (error) {
-            console.info('Failed to parse custom-data:', error)
-        }
+        if (!content) return
+        const parsed = parseCustomDataJson(content)
+        if (!Array.isArray(parsed)) return
+        customDataArray.value = parsed
+        customDataInfos.value = parsed.map(cd => ({ customData: cd }))
     },
     { immediate: true }
 )
