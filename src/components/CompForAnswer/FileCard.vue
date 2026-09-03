@@ -27,6 +27,7 @@ import uploadExcel from '../../assets/imgs/ckcDocuments/upload-excel.svg'
 import uploadImage from '../../assets/imgs/ckcDocuments/upload-image.svg'
 import uploadMarkdown from '../../assets/imgs/ckcDocuments/upload-markdown.svg'
 import uploadPdf from '../../assets/imgs/ckcDocuments/upload-pdf.svg'
+import uploadPpt from '../../assets/imgs/ckcDocuments/upload-ppt.svg'
 import uploadTxt from '../../assets/imgs/ckcDocuments/upload-txt.svg'
 import uploadWord from '../../assets/imgs/ckcDocuments/upload-word.svg'
 import uploadZip from '../../assets/imgs/ckcDocuments/upload-zip.svg'
@@ -135,6 +136,12 @@ function getIcon() {
       return uploadTxt;
     case 'zip':
       return uploadZip;
+    case 'pptx':
+    case 'ppt':
+    case 'pptm':
+    case 'pptx':
+    case 'pptm':
+      return uploadPpt;
     default:
       return uploadDefault;
   }
