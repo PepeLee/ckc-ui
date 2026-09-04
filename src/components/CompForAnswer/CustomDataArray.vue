@@ -7,7 +7,6 @@ import WikiLink from './WikiLink.vue';
 import MeetingCard from './MeetingCard.vue';
 import ScheduleCard from './ScheduleCard.vue';
 type ComponentKey = 'schedule' | 'meeting' | 'fileinfo' | 'wikiinfo' | 'wikilink'
-const customDataArray = ref<any>([]);
 const customDataInfos = ref<any[]>([])
 
 // 注入 traceId
@@ -67,7 +66,6 @@ watch(
         if (!content) return
         const parsed = parseCustomDataJson(content)
         if (!Array.isArray(parsed)) return
-        customDataArray.value = parsed
         customDataInfos.value = parsed.map(cd => ({ customData: cd }))
     },
     { immediate: true }
@@ -75,20 +73,7 @@ watch(
 </script>
 
 <template>
-    <div
-        v-if="isWikiArray"
-        class="ckc-ui-custom-data-array ckc-ui-custom-data-array--wiki"
-    >
-        <component
-            v-for="(customDatainfo, index) in customDataInfos"
-            :key="index"
-            :is="customComponentMap.wikiinfo"
-            :meeting-data="customDatainfo.customData"
-            :card-trace-id="traceId"
-            :use-source="useSource"
-        />
-    </div>
-    <div v-else class="ckc-ui-custom-data-array">
+    <div class="ckc-ui-custom-data-array" :class="{ 'ckc-ui-custom-data-array--wiki': isWikiArray }">
         <component
             v-for="(customDatainfo, index) in customDataInfos"
             :key="index"

@@ -75,8 +75,6 @@ function getIcon(message: Document) {
     case 'pptx':
     case 'ppt':
     case 'pptm':
-    case 'pptx':
-    case 'pptm':
       return uploadPpt;
     default:
       return uploadDefault;
