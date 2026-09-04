@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, ref, watch, type Ref, getCurrentInstance } from 'vue';
-import JSON5 from 'json5';
 import FileCard from './FileCard.vue';
+import { parseCustomDataJson } from '../utils/parseCustomData';
 import MeetingCard from './MeetingCard.vue';
 import ScheduleCard from './ScheduleCard.vue';
 type ComponentKey = 'schedule' | 'meeting' | 'fileinfo'
@@ -47,17 +47,14 @@ const findCustomComponent = (data: any) => {
 watch(
     () => props.node.content as string,
     (content) => {
-        if (!content) return;
-        try {
-            if (!content.startsWith('{') || !content.endsWith('}')) {
-                return
-            }
-            customData.value = JSON5.parse(content)
-            const componentKey = findCustomComponent(customData.value)
-            customComponent = customComponentMap[componentKey]
-        } catch (error) {
-            console.info('Failed to parse custom-data:', error)
+        if (!content) return
+        const parsed = parseCustomDataJson(content)
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+            return
         }
+        customData.value = parsed
+        const componentKey = findCustomComponent(customData.value)
+        customComponent = customComponentMap[componentKey]
     },
     { immediate: true }
 )

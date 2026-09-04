@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { inject, ref, watch, type Ref, getCurrentInstance } from 'vue';
-import JSON5 from 'json5';
+import { computed, inject, ref, watch, type Ref, getCurrentInstance } from 'vue';
 import FileCard from './FileCard.vue';
+import { parseCustomDataJson } from '../utils/parseCustomData';
 import WikiInfo from './WikiInfo.vue';
 import WikiLink from './WikiLink.vue';
 import MeetingCard from './MeetingCard.vue';
 import ScheduleCard from './ScheduleCard.vue';
 type ComponentKey = 'schedule' | 'meeting' | 'fileinfo' | 'wikiinfo' | 'wikilink'
-const customDataArray = ref<any>([]);
 const customDataInfos = ref<any[]>([])
 
 // 注入 traceId
@@ -55,30 +54,43 @@ const findCustomComponent = (data: any) => {
     }
     return 'schedule'
 }
+
+const isWikiArray = computed(() =>
+    customDataInfos.value.length > 0
+    && customDataInfos.value.every(item => findCustomComponent(item.customData) === 'wikiinfo')
+)
+
 watch(
     () => props.node.content as string,
     (content) => {
-        if (!content) return;
-        try {
-            customDataArray.value = JSON5.parse(content)
-            if (Array.isArray(customDataArray.value)) {
-                customDataArray.value.forEach( cd => {
-                    customDataInfos.value.push({customData: cd})
-                })
-            }
-
-        } catch (error) {
-            console.info('Failed to parse custom-data:', error)
-        }
+        if (!content) return
+        const parsed = parseCustomDataJson(content)
+        if (!Array.isArray(parsed)) return
+        customDataInfos.value = parsed.map(cd => ({ customData: cd }))
     },
     { immediate: true }
 )
 </script>
 
 <template>
-    <div >
-        <template v-for="customDatainfo in customDataInfos">
-            <component :is="customComponentMap[findCustomComponent(customDatainfo.customData)]" :meeting-data="customDatainfo.customData" :card-trace-id="traceId" :use-source="useSource"/>
-        </template>  
+    <div class="ckc-ui-custom-data-array" :class="{ 'ckc-ui-custom-data-array--wiki': isWikiArray }">
+        <component
+            v-for="(customDatainfo, index) in customDataInfos"
+            :key="index"
+            :is="customComponentMap[findCustomComponent(customDatainfo.customData)]"
+            :meeting-data="customDatainfo.customData"
+            :card-trace-id="traceId"
+            :use-source="useSource"
+        />
     </div>
 </template>
+
+<style lang="scss">
+@use "../../styles/index.scss" as *;
+
+.#{$ckcUiPrefix}-custom-data-array--wiki {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+</style>
