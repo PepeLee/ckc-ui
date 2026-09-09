@@ -32,6 +32,9 @@ import uploadPpt from '../../assets/imgs/ckcDocuments/upload-ppt.svg'
 import uploadTxt from '../../assets/imgs/ckcDocuments/upload-txt.svg'
 import uploadWord from '../../assets/imgs/ckcDocuments/upload-word.svg'
 import uploadZip from '../../assets/imgs/ckcDocuments/upload-zip.svg'
+import uploadHtml from '../../assets/imgs/ckcDocuments/upload-html.svg'
+import uploadJpg from '../../assets/imgs/ckcDocuments/upload-jpg.svg'
+import uploadPng from '../../assets/imgs/ckcDocuments/upload-png.svg'
 
 interface CardEventMap {
   [event: string]: unknown;
@@ -114,7 +117,7 @@ function blobToDataURL(blob: Blob) {
 }
 
 function getIcon() {
-  const fileExtension = props.meetingData.filename.split('.').pop();
+  const fileExtension = props.meetingData.filename.split('.').pop()?.toLowerCase();
   switch (fileExtension) {
     case 'pdf':
       return uploadPdf;
@@ -132,8 +135,25 @@ function getIcon() {
       return uploadExcel;
     case 'jpg':
     case 'jpeg':
+      return uploadJpg;
     case 'png':
+      return uploadPng;
+    case 'gif':
+    case 'webp':
+    case 'bmp':
+    case 'svg':
+    case 'ico':
+    case 'tif':
+    case 'tiff':
+    case 'heic':
+    case 'heif':
+    case 'avif':
+    case 'apng':
+    case 'jfif':
       return uploadImage;
+    case 'html':
+    case 'htm':
+      return uploadHtml;
     case 'md':
       return uploadMarkdown;
     case 'txt':

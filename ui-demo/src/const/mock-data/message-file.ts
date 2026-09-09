@@ -1761,6 +1761,51 @@ export const message = [
     "type": "answer",
     "traceId": "traceId_Ip-blV",
     "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "<custom-data-array>[{\"type\":\"fileinfo\",\"filename\":\"测试文档---jpg.jpg\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\"}]</custom-data-array>\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770620500,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "<custom-data-array>[{\"type\":\"fileinfo\",\"filename\":\"测试文档---png.png\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\"}]</custom-data-array>\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770620500,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "<custom-data-array>[{\"type\":\"fileinfo\",\"filename\":\"测试文档---gif.gif\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\"}]</custom-data-array>\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770620500,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "<custom-data-array>[{\"type\":\"fileinfo\",\"filename\":\"测试文档---html.html\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\"}]</custom-data-array>\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770620500,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
+    "content": "<custom-data-array>[{\"type\":\"fileinfo\",\"filename\":\"测试文档---htm.htm\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\"}]</custom-data-array>\n",
+    "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
+    "created_at": 1784770620500,
+    "position": 0
+  },
+  {
+    "type": "answer",
+    "traceId": "traceId_Ip-blV",
+    "sessionId": "lipeipei-013_SYS03200057_20260723093103209",
     "content": "<custom-data-array>[{\"type\":\"wikiinfo\",\"filename\":\"6月sc深化转型领导小组会议材料\",\"url\":\"/center/ckeApi/api/tools/file/download?fileId=8a4ef58a-cf99-41d8-8722-4615b6a1bb2f\"}]</custom-data-array>\n",
     "conversation_id": "lipeipei-013_SYS03200057_20260723093103209",
     "created_at": 1784770620501,
