@@ -8,7 +8,7 @@
       </svg>
       <span>下载</span>
     </button>
-    <button class="ckc-ui-file-card__menu-item" type="button" @click="handleSave">
+    <button v-if="state.showSave" class="ckc-ui-file-card__menu-item" type="button" @click="handleSave">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 6.5C4 5.67 4.67 5 5.5 5H18.5C19.33 5 20 5.67 20 6.5V18.5C20 19.33 19.33 20 18.5 20H5.5C4.67 20 4 19.33 4 18.5V6.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
         <path d="M8 5V9H16V5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />

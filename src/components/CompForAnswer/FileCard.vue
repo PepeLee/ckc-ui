@@ -6,7 +6,7 @@
         <div class="ckc-ui-file-card__title" :title="props.meetingData.filename">{{props.meetingData.filename}}</div>
       </div>
     </div>
-    <div ref="moreElRef" class="ckc-ui-file-card__more" @click.stop="handleMoreClick">
+    <div v-if="showDownload || showSave" ref="moreElRef" class="ckc-ui-file-card__more" @click.stop="handleMoreClick">
       <button class="ckc-ui-file-card__action" type="button" aria-label="更多操作">
         <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="5" r="1.7" />
@@ -19,9 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import mitt, { type Emitter } from 'mitt';
 import { toggleFileCardPopover } from '../composables/useFileCardPopover';
+import { isSaveableFilename } from './saveFileFormats';
 import uploadDefault from '../../assets/imgs/ckcDocuments/upload-default.svg'
 import uploadExcel from '../../assets/imgs/ckcDocuments/upload-excel.svg'
 import uploadImage from '../../assets/imgs/ckcDocuments/upload-image.svg'
@@ -47,6 +48,8 @@ interface FileCardProps {
 const emitter = inject<Emitter<CardEventMap>>('cardEmitter', mitt<CardEventMap>());
 const prefix = `http://${window.location.host}`;
 const props = defineProps<FileCardProps>();
+const showDownload = computed(() => props.useSource !== 'mobile');
+const showSave = computed(() => isSaveableFilename(props.meetingData.filename));
 const cardClick = () => {
     emitter.emit('file-card-click', { 
         fileName: props.meetingData.filename, 
@@ -61,7 +64,8 @@ const handleMoreClick = () => {
     if (!moreElRef.value) return;
     toggleFileCardPopover({
         anchorEl: moreElRef.value,
-        showDownload: props.useSource !== 'mobile',
+        showDownload: showDownload.value,
+        showSave: showSave.value,
         onDownload: downloadFile,
         onSave: () => {
             emitter.emit('file-save', {

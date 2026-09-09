@@ -6,6 +6,7 @@ export interface FileCardPopoverState {
   top: number;
   left: number;
   showDownload: boolean;
+  showSave: boolean;
   onDownload: (() => void) | null;
   onSave: (() => void) | null;
 }
@@ -15,6 +16,8 @@ export interface FileCardPopoverOptions {
   anchorEl: HTMLElement;
   /** 是否展示「下载」项（mobile 场景隐藏） */
   showDownload: boolean;
+  /** 是否展示「保存到个人知识库」项 */
+  showSave: boolean;
   onDownload: () => void;
   onSave: () => void;
 }
@@ -30,6 +33,7 @@ const state = reactive<FileCardPopoverState>({
   top: 0,
   left: 0,
   showDownload: true,
+  showSave: true,
   onDownload: null,
   onSave: null,
 });
@@ -135,6 +139,7 @@ export function openFileCardPopover(options: FileCardPopoverOptions) {
   bindListeners();
   anchorEl = options.anchorEl;
   state.showDownload = options.showDownload;
+  state.showSave = options.showSave;
   state.onDownload = options.onDownload;
   state.onSave = options.onSave;
   computePosition();
