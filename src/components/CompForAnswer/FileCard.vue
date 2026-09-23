@@ -22,7 +22,7 @@
 import { computed, inject, ref } from 'vue';
 import mitt, { type Emitter } from 'mitt';
 import { toggleFileCardPopover } from '../composables/useFileCardPopover';
-import { isSaveableFilename } from './saveFileFormats';
+import { isSaveableFilename, useShowFileSave } from './saveFileFormats';
 import uploadDefault from '../../assets/imgs/ckcDocuments/upload-default.svg'
 import uploadExcel from '../../assets/imgs/ckcDocuments/upload-excel.svg'
 import uploadImage from '../../assets/imgs/ckcDocuments/upload-image.svg'
@@ -52,7 +52,9 @@ const emitter = inject<Emitter<CardEventMap>>('cardEmitter', mitt<CardEventMap>(
 const prefix = `http://${window.location.host}`;
 const props = defineProps<FileCardProps>();
 const showDownload = computed(() => props.useSource !== 'mobile');
-const showSave = computed(() => isSaveableFilename(props.meetingData.filename));
+// 保存按钮：使用方开关（show-file-save）开启，且当前文件后缀在可保存列表中
+const allowFileSave = useShowFileSave();
+const showSave = computed(() => allowFileSave.value && isSaveableFilename(props.meetingData.filename));
 const cardClick = () => {
     emitter.emit('file-card-click', { 
         fileName: props.meetingData.filename, 
@@ -68,6 +70,7 @@ const handleMoreClick = () => {
     toggleFileCardPopover({
         anchorEl: moreElRef.value,
         showDownload: showDownload.value,
+        // 传给单例 popover，控制菜单里是否渲染「保存到个人知识库」
         showSave: showSave.value,
         onDownload: downloadFile,
         onSave: () => {

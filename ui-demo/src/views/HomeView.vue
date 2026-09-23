@@ -8,6 +8,7 @@
         :historyMessages="historyMessages"
         render-custom-id="docs" 
         :custom-html-tags="['custom-data']"
+        :show-file-save="true"
         @click-recomendation="recomendationAsk"
         :markdown-component="MarkdownRender"
         @click-document="documentClick">
