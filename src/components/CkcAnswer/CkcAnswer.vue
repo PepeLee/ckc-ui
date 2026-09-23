@@ -102,6 +102,7 @@ import type { CkcAnswerProps } from '../types/ckc-answer-props';
 import { MessageType, type Document } from '../types/message';
 import { useMessageView } from '../composables/useMessageView';
 import { formatTimeConsuming } from '../utils';
+import { SHOW_FILE_SAVE_KEY, syncShowFileSave } from '../CompForAnswer/saveFileFormats';
 import CkcAnswerThinking from './CkcAnswerThinking.vue';
 import CkcAnswerToolUse from './CkcAnswerToolUse.vue';
 import CkcAnswerToolUseSilent from './CkcAnswerToolUseSilent.vue';
@@ -112,14 +113,20 @@ import CkcAnswerRecommendations from './CkcAnswerRecommendations.vue';
 import ProgressSuccess from '../../assets/imgs/progress-success.svg';
 import MobileDeepThink from '../svg/mobileThink.vue';
 
-const prop = withDefaults(defineProps<CkcAnswerProps>(), {
-  useSource: 'pc'
+const prop = withDefaults(defineProps<CkcAnswerProps & { showFileSave?: boolean }>(), {
+  useSource: 'pc',
+  showFileSave: true, // 与类型交叉声明，确保编译进运行时 props
 });
 
 // 提供 markdown 渲染组件，默认使用 markstream-vue，也可外部传入
 if (prop.markdownComponent) {
   provide('markdownComponent', prop.markdownComponent);
 }
+// 文件保存开关：provide 给能注入的后代；sync 给 markstream 自定义节点兜底
+provide(SHOW_FILE_SAVE_KEY, computed(() => prop.showFileSave));
+watch(() => prop.showFileSave, (enabled) => {
+  syncShowFileSave(enabled);
+}, { immediate: true });
 const emit = defineEmits<{  
   (e: 'clickRecomendation', message: string) : void 
   (e: 'clickDocument', message: Document) : void 

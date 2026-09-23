@@ -8,14 +8,16 @@
       </svg>
       <span>下载</span>
     </button>
+    <!-- showSave 由 FileCard 按「使用方开关 + 文件后缀」计算后传入 -->
     <button v-if="state.showSave" class="ckc-ui-file-card__menu-item" type="button" @click="handleSave">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 6.5C4 5.67 4.67 5 5.5 5H18.5C19.33 5 20 5.67 20 6.5V18.5C20 19.33 19.33 20 18.5 20H5.5C4.67 20 4 19.33 4 18.5V6.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
         <path d="M8 5V9H16V5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
         <path d="M8 14H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
         <path d="M12 14V18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
         <path d="M10 18H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-      </svg>
+      </svg> -->
+      <officeSaveAs />
       <span>保存到个人知识库</span>
     </button>
   </div>
@@ -25,7 +27,7 @@
 import { computed, type CSSProperties } from 'vue';
 // 仅类型导入，编译期擦除，避免与 useFileCardPopover 形成运行时循环依赖
 import type { FileCardPopoverState } from '../composables/useFileCardPopover';
-
+import officeSaveAs from '../../assets/imgs/office_save_as.svg'
 const props = defineProps<{
   state: FileCardPopoverState;
   onClose: () => void;

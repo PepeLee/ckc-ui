@@ -16,7 +16,7 @@ export interface FileCardPopoverOptions {
   anchorEl: HTMLElement;
   /** 是否展示「下载」项（mobile 场景隐藏） */
   showDownload: boolean;
-  /** 是否展示「保存到个人知识库」项 */
+  /** 是否展示「保存到个人知识库」项（FileCard 已综合开关与后缀） */
   showSave: boolean;
   onDownload: () => void;
   onSave: () => void;
@@ -139,6 +139,7 @@ export function openFileCardPopover(options: FileCardPopoverOptions) {
   bindListeners();
   anchorEl = options.anchorEl;
   state.showDownload = options.showDownload;
+  // 本次打开的菜单项可见性，来自触发该 popover 的 FileCard
   state.showSave = options.showSave;
   state.onDownload = options.onDownload;
   state.onSave = options.onSave;
