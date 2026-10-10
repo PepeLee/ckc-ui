@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "katex": "^0.18.1",
-    "markstream-vue": "1.0.6",
+    "markstream-vue": "^2.0.16",
     "mermaid": "^11.16.0",
     "stream-diffs": "^0.0.2",
     "vue": "^3.5.32",
