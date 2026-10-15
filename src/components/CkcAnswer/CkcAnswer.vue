@@ -87,8 +87,8 @@
     </div>
     <div class="ckc-ui-task-run-tip" v-if="!end && prop.messages && prop.messages.length > 0">
       <img class="ckc-ui-task-run-tip-loading" src="../../assets/imgs/loading1.png" alt="avatar" />
-      任务执行中...
-      <span class="ckc-ui-task-run-tip-text"> | 高峰时间段资源紧张，请耐心等待或重试</span>
+      <span class="ckc-ui-task-run-tip-title">任务执行中...</span>
+      <span class="ckc-ui-task-run-tip-text">| 高峰时间段资源紧张，请耐心等待或重试</span>
     </div>
     <div v-if="end && $slots.actions">
       <slot name="actions" :messageViewInfo="currentMeassageViewInfo"></slot>
@@ -242,9 +242,7 @@ watch(() => prop.historyMessages, (newVal) => {
   }
   .#{$ckcUiPrefix}-task-run-tip {
     font-size: 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
+    line-height: 1.5;
     padding: 10px 10px 4px 8px;
     border-radius: 999px;
     letter-spacing: 0.03em;
@@ -320,11 +318,17 @@ watch(() => prop.historyMessages, (newVal) => {
   .#{$ckcUiPrefix}-task-run-tip-loading {
     width: 16px;
     height: 16px;
+    margin-right: 0.35rem;
+    vertical-align: middle;
     animation: ckc-ui-spin 1s linear infinite;
+  }
+  .#{$ckcUiPrefix}-task-run-tip-title {
+    white-space: nowrap;
   }
   .#{$ckcUiPrefix}-task-run-tip-text {
     font-size: 13px;
     color: #576999;
+    margin-left: 0.35rem;
   }
   .#{$ckcUiPrefix}-progress-head {
     display: flex;
