@@ -18,6 +18,7 @@ interface WikiInfoProps {
     type: string;
     filename: string;
     url: string;
+    uploadId?: string;
     [key: string]: any;
   };
   cardTraceId: string;
@@ -30,6 +31,7 @@ const handleClick = () => {
     type: props.meetingData.type,
     fileName: props.meetingData.filename,
     url: props.meetingData.url,
+    uploadId: props.meetingData.uploadId,
     cardTraceId: props.cardTraceId,
     rawData: props.meetingData,
   });

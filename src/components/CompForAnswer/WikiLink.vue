@@ -19,6 +19,7 @@ interface WikiLinkProps {
     type: string;
     filename: string;
     url: string;
+    uploadId?: string;
     /** 页面展示名称，缺省时回退到 filename */
     displayName?: string;
     /** PDF 对应页码信息，支持单值或数组（如 3、[3,5,8]、"3,5,8"） */
@@ -57,6 +58,7 @@ const handleClick = () => {
     fileName: props.meetingData.filename,
     displayName: props.meetingData.displayName,
     url: props.meetingData.url,
+    uploadId: props.meetingData.uploadId,
     page: pages.value.length ? Math.min(...(pages.value.map(Number))) : props.meetingData.page,
     pages: pages.value,
     cardTraceId: props.cardTraceId,
